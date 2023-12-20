@@ -15,14 +15,14 @@ class LoginScreen extends StatelessWidget {
               child: Image.asset('lib/images/picle_logo.png'),
             ),
           ),
-          const Flexible(
+          Flexible(
             flex: 1,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 20,
-                ),
+                Image.asset('lib/images/login_with_google.png'),
+                const SizedBox(height: 20),
+                Image.asset('lib/images/login_with_kakao.png'),
               ],
             ),
           ),
