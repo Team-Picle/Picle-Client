@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:picle/screens/splash_screen.dart';
 
 void main() {
+  // 웹 환경에서 카카오 로그인을 정상적으로 완료하려면 runApp() 호출 전 아래 메서드 호출 필요
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // runApp() 호출 전 Flutter SDK 초기화
+  KakaoSdk.init(
+    nativeAppKey: '801dc4cda8fc9ecbbf58c83ab229179b',
+    javaScriptAppKey: 'a992cef1da01df7485dfef6422b819b9',
+  );
   runApp(const MyApp());
 }
 
