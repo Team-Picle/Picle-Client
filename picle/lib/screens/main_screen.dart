@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:picle/widgets/avatar.dart';
 import 'package:picle/widgets/calender.dart';
+import 'package:picle/widgets/schedule_list.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -22,6 +23,7 @@ class MainScreen extends StatelessWidget {
             ),
             child: Calendar(),
           ),
+          ScheduleList(),
         ],
       );
     );
