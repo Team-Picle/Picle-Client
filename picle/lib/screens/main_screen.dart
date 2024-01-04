@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:picle/widgets/avatar.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -6,7 +7,10 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text('메인 페이지'),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        child: Avatar(),
+      ),
     );
   }
 }
