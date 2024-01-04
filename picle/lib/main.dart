@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:picle/screens/splash_screen.dart';
+import 'package:picle/app.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() {
+void main() async {
+  await initializeDateFormatting();
   // 웹 환경에서 카카오 로그인을 정상적으로 완료하려면 runApp() 호출 전 아래 메서드 호출 필요
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -33,8 +36,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
         cardColor: const Color(0xFFEDEEF0),
-      ),
-      home: const SplashScreen(),
+      ),      
+      home: const App(),
     );
   }
 }
