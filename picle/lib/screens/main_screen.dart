@@ -42,6 +42,9 @@ class _MainScreenState extends State<MainScreen> {
                 child: Calendar(),
               ),
               ScheduleList(),
+              SizedBox(
+                height: 10,
+              ),
             ],
           );
         },

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:picle/providers/todo_provider.dart';
 import 'package:picle/models/todo_model.dart';
 import 'package:picle/widgets/list/list_item.dart';
+import 'package:picle/widgets/button.dart';
 
 class TodoList extends StatelessWidget {
   const TodoList({super.key});
@@ -12,17 +13,24 @@ class TodoList extends StatelessWidget {
     context.read<TodoProvider>().fetchTodoList();
     List<Todo> todoList = context.watch<TodoProvider>().todoList;
 
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      primary: false,
-      itemCount: todoList.length,
-      itemBuilder: (_, index) {
-        Todo todo = todoList[index];
-        return ListItem(
-          text: todo.content,
-          isChecked: todo.completed,
-        );
-      },
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            primary: false,
+            itemCount: todoList.length,
+            itemBuilder: (_, index) {
+              Todo todo = todoList[index];
+              return ListItem(
+                text: todo.content,
+                isChecked: todo.completed,
+              );
+            },
+          ),
+        ),
+        const Button(text: '투두 등록하기'),
+      ],
     );
   }
 }
