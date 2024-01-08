@@ -41,6 +41,8 @@ dependencies:
   uuid: ^4.2.2
   kakao_flutter_sdk: ^1.7.0
   google_sign_in: ^6.2.1
+  flutter_svg: ^2.0.9
+  image_picker: ^1.0.6
 
 dev_dependencies:
   flutter_test:
