@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
         cardColor: const Color(0xFFEDEEF0),
-      ),      
-      home: const App(),
+      ),
+      home: const SplashScreen(),
     );
   }
 }
