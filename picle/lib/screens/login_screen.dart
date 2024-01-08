@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:picle/app.dart';
@@ -20,7 +21,7 @@ class LoginScreen extends StatelessWidget {
           Flexible(
             flex: 3,
             child: Center(
-              child: Image.asset('lib/images/picle_logo.png'),
+              child: SvgPicture.asset('lib/images/picle_logo.svg'),
             ),
           ),
           Flexible(
