@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:picle/screens/splash_screen.dart';
-import 'package:picle/app.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {

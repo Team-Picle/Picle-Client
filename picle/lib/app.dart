@@ -38,9 +38,9 @@ class _AppState extends State<App> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Image.asset(
-            'lib/images/picle_logo.png',
-            scale: 2,
+          title: SvgPicture.asset(
+            'lib/images/picle_logo.svg',
+            height: 25,
           ),
           actions: [
             IconButton(

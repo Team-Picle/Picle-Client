@@ -5,7 +5,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:picle/app.dart';
 import 'package:picle/models/user_model.dart';
-import 'package:picle/screens/temp_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
