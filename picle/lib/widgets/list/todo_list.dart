@@ -10,21 +10,24 @@ class TodoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<TodoProvider>().fetchTodoList();
-    List<Todo> todoList = context.watch<TodoProvider>().todoList;
-
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            primary: false,
-            itemCount: todoList.length,
-            itemBuilder: (_, index) {
-              Todo todo = todoList[index];
-              return ListItem(
-                text: todo.content,
-                isChecked: todo.isCompleted,
+          child: Consumer<TodoProvider>(
+            builder: (context, provider, child) {
+              List<Todo> todoList = provider.todoList;
+
+              return ListView.builder(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                primary: false,
+                itemCount: todoList.length,
+                itemBuilder: (_, index) {
+                  Todo todo = todoList[index];
+                  return ListItem(
+                    text: todo.content,
+                    isChecked: todo.isCompleted,
+                  );
+                },
               );
             },
           ),
