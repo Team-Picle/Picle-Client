@@ -15,7 +15,7 @@
       },
       "content": "동생 졸업식 가기",
       "date": "2024-01-03",
-      "completed": false
+      "isCompleted": false
     },
     {
       "createdAt": "2024-01-03 15:04:46",
@@ -30,7 +30,7 @@
       },
       "content": "청년매입임대주택 신청",
       "date": "2024-01-03",
-      "completed": false
+      "isCompleted": false
     },
     {
       "createdAt": "2024-01-03 15:05:58",
@@ -45,7 +45,7 @@
       },
       "content": "deleteTodo API 구현",
       "date": "2024-01-03",
-      "completed": false
+      "isCompleted": false
     },
     {
       "createdAt": "2024-01-03 14:53:09",
@@ -60,7 +60,7 @@
       },
       "content": "하잇",
       "date": "2024-01-03",
-      "completed": true
+      "isCompleted": true
     }
   ]
 }

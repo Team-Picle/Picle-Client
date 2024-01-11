@@ -24,7 +24,7 @@ class TodoList extends StatelessWidget {
               Todo todo = todoList[index];
               return ListItem(
                 text: todo.content,
-                isChecked: todo.completed,
+                isChecked: todo.isCompleted,
               );
             },
           ),
