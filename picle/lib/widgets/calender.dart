@@ -39,7 +39,8 @@ class _CalendarState extends State<Calendar> {
               _selectedDay = selectedDay;
               _focusedDay = focusedDay;
             });
-            await provider.fetchTodoList(selectedDay);
+            provider.updateDate(selectedDay);
+            await provider.fetchTodoList();
           },
           calendarFormat: _calendarFormat,
           onFormatChanged: (format) {
