@@ -87,4 +87,21 @@ class TodoProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<void> deleteTodo(todoId) async {
+    todoList.removeWhere((todo) => todo.id == todoId);
+
+    // String apiUrl = '/api/v1/todo/delete?{userId}&$todoId';
+    // final response = await http.delete(Uri.parse(apiUrl));
+
+    // if (response.statusCode == 200) {
+    //   // 성공적으로 데이터를 보냈을 경우
+    //   todoList.removeWhere((todo) => todo.id == todoId);
+    // } else {
+    //   // 요청이 실패한 경우
+    //   print('${response['code']}: ${response['message']}');
+    // }
+
+    notifyListeners();
+  }
 }

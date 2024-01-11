@@ -23,6 +23,7 @@ class RoutineList extends StatelessWidget {
             itemBuilder: (_, index) {
               Routine routine = routineList[index];
               return ListItem(
+                id: routine.routineId,
                 text: routine.content,
                 isChecked: routine.completed,
               );
