@@ -1,0 +1,59 @@
+{
+    "code": 200,
+    "message": "지금까지 성공한 챌린지 목록 조회에 성공했습니다.",
+    "data": [
+      {
+        "id": 1,
+        "user": {
+          "id": 8,
+          "clientKey": "103678304063442524929",
+          "nickname": "피클개디언즈",
+          "profileImage": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
+          "socialPlatform": "GOOGLE"
+        },
+        "content": "LG Twins 파이팅",
+        "progress": 100,
+        "completed": true
+      },
+      {
+        "id": 2,
+        "user": {
+          "id": 8,
+          "clientKey": "103678304063442524929",
+          "nickname": "피클개디언즈",
+          "profileImage": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
+          "socialPlatform": "GOOGLE"
+        },
+        "content": "청년희망적금",
+        "progress": 98,
+        "completed": true
+      },
+      {
+        "id": 3,
+        "user": {
+          "id": 8,
+          "clientKey": "103678304063442524929",
+          "nickname": "피클개디언즈",
+          "profileImage": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
+          "socialPlatform": "GOOGLE"
+        },
+        "content": "이 챌린지는 영국에서부터 시작되어 ...",
+        "progress": 100,
+        "completed": true
+      },
+      {
+        "id": 4,
+        "user": {
+          "id": 8,
+          "clientKey": "103678304063442524929",
+          "nickname": "피클개디언즈",
+          "profileImage": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
+          "socialPlatform": "GOOGLE"
+        },
+        "content": "부자 어른 되기",
+        "progress": 75,
+        "completed": true
+      }
+    ]
+  }
+  

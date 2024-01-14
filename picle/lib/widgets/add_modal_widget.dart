@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:picle/models/default_button_model.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:picle/widgets/default_button.dart';
 
 void addBottomModal({
   required BuildContext context,
@@ -74,10 +74,9 @@ void addBottomModal({
             const SizedBox(height: 27),
             needImg ? renderAddImg() : renderEmpty(),
             const SizedBox(height: 30),
-            ElevatedButton(
-              style: buttonStyle,
-              onPressed: null,
-              child: Text(buttonText),
+            DefaultButton(
+              onPressed: () {},
+              buttonText: buttonText,
             ),
           ],
         ),
