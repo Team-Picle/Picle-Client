@@ -12,6 +12,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
+      // 파라미터로 보내..~
       onPressed: () => addBottomModal(
         context: context,
         title: '루틴을 입력하세요.',

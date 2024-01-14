@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:picle/widgets/default_button.dart';
 import 'package:provider/provider.dart';
 import 'package:picle/providers/todo_provider.dart';
 import 'package:picle/models/todo_model.dart';
@@ -29,7 +30,10 @@ class TodoList extends StatelessWidget {
             },
           ),
         ),
-        const Button(text: '투두 등록하기'),
+        DefaultButton(
+          buttonText: '투두 등록하기',
+          onPressed: () {},
+        ),
       ],
     );
   }
