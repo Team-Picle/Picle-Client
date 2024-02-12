@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:picle/providers/todo_provider.dart';
 import 'package:picle/models/todo_model.dart';
 import 'package:picle/widgets/list/list_item.dart';
-import 'package:picle/widgets/button.dart';
 
 class TodoList extends StatelessWidget {
   const TodoList({super.key});
