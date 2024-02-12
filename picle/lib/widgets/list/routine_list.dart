@@ -39,6 +39,7 @@ class RoutineList extends StatelessWidget {
                       '\n매일 같은 구도로 사진을 촬영해서 인증해보세요!',
                   buttonText: '루틴 등록하기',
                   needImg: true,
+                  needDate: true,
                 )),
       ],
     );
