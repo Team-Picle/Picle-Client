@@ -1,14 +1,22 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:picle/models/routine_model.dart';
+import 'package:picle/providers/image_provider.dart';
 import 'package:picle/widgets/date_picker.dart';
 import 'package:picle/widgets/default_button.dart';
-import 'package:picle/widgets/image_dialog.dart';
 
+const cloudName = 'dqhllkoz8';
+final picker = ImagePicker();
 Set<String> selectedDays = {};
 DateTime selectedDate = DateTime.now();
 DateTime? selectedTime;
 bool timePicked = false;
+String? imgUrl = '';
+XFile? image;
 Routine routine = Routine(
   userId: 111,
   routineId: 1,
@@ -17,6 +25,7 @@ Routine routine = Routine(
       '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}',
   time:
       '${selectedTime?.hour.toString().padLeft(2, '0')}:${selectedTime?.minute.toString().padLeft(2, '0')}',
+  registrationImgUrl: imgUrl,
   completed: false,
 );
 
@@ -32,29 +41,23 @@ void addBottomModal({
 
   titleController.text = title;
   selectedDays = {};
+  image = null;
 
   showModalBottomSheet(
     backgroundColor: Colors.white,
     context: context,
     builder: (BuildContext context) => StatefulBuilder(
       builder: (BuildContext context, setState) {
-        setState(() {
-          selectedDays = {};
-          selectedDate = DateTime.now();
-          selectedTime = null;
-          timePicked = false;
+        // 화면 높이에 따라 조절
+        double screenHeight = MediaQuery.of(context).size.height;
+        double bottomSheetHeight = screenHeight * 0.35;
 
-          routine = Routine(
-            userId: 111,
-            routineId: 1,
-            content: '',
-            date:
-                '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}',
-            time:
-                '${selectedTime?.hour.toString().padLeft(2, '0')}:${selectedTime?.minute.toString().padLeft(2, '0')}',
-            completed: false,
-          );
-        });
+        if (image != null) {
+          bottomSheetHeight = screenHeight * 0.8;
+        } else if (needDate) {
+          bottomSheetHeight = needImg ? screenHeight * 0.7 : screenHeight * 0.4;
+        }
+
         Widget renderEmpty() {
           return Container();
         }
@@ -85,7 +88,78 @@ void addBottomModal({
               ),
               GestureDetector(
                 onTap: () async {
-                  showImageSourceDialog(context);
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          image = null;
+                        },
+                        child: Center(
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: CupertinoAlertDialog(
+                              title: const Text(
+                                '이미지 등록',
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const SizedBox(height: 10),
+                                  CupertinoDialogAction(
+                                    child: const Text('갤러리에서 선택'),
+                                    onPressed: () async {
+                                      try {
+                                        final selectedImage =
+                                            await picker.pickImage(
+                                                source: ImageSource.gallery);
+                                        setState(() {
+                                          image = selectedImage;
+                                        });
+                                        Navigator.pop(context);
+                                      } catch (e) {
+                                        print(
+                                            'Error occurred while picking image: $e');
+                                      }
+                                    },
+                                  ),
+                                  CupertinoDialogAction(
+                                    child: const Text('카메라 실행'),
+                                    onPressed: () async {
+                                      try {
+                                        final selectedImage =
+                                            await picker.pickImage(
+                                                source: ImageSource.camera);
+                                        setState(() {
+                                          image = selectedImage;
+                                        });
+                                        Navigator.pop(context);
+                                      } catch (e) {
+                                        print(
+                                            'Error occurred while picking image: $e');
+                                      }
+                                    },
+                                  ),
+                                  CupertinoDialogAction(
+                                    child: const Text(
+                                      '취소',
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      image = null;
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,13 +178,6 @@ void addBottomModal({
               ),
             ],
           );
-        }
-
-        // 화면 높이에 따라 조절
-        double screenHeight = MediaQuery.of(context).size.height;
-        double bottomSheetHeight = screenHeight * 0.35;
-        if (needDate) {
-          bottomSheetHeight = needImg ? screenHeight * 0.7 : screenHeight * 0.4;
         }
 
         return SizedBox(
@@ -149,21 +216,34 @@ void addBottomModal({
                       fontSize: 15,
                     ),
                   ),
-                  const SizedBox(height: 27),
+                  const SizedBox(height: 10),
+                  if (image != null)
+                    Image.file(
+                      File(image!.path),
+                      height: 300.0,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  const SizedBox(height: 20),
                   needDate ? (const RenderAddDate()) : renderEmpty(),
                   const SizedBox(height: 5),
                   needImg ? renderAddImg() : renderEmpty(),
                   const SizedBox(height: 30),
                   DefaultButton(
-                    onPressed: () {
+                    onPressed: () async {
                       setState(() {
                         selectedDays = {};
                         selectedDate = DateTime.now();
                         selectedTime = DateTime.now();
                         timePicked = false;
+                        image = null;
                       });
-
+                      var publicId = await uploadImage(
+                          image, routine.routineId.toString());
+                      imgUrl =
+                          'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
                       Navigator.pop(context);
+                      print(imgUrl);
                     },
                     buttonText: buttonText,
                   ),
