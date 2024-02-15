@@ -4,6 +4,7 @@ class Routine {
   String content;
   String date;
   String? time;
+  String? registrationImgUrl;
   bool completed;
 
   Routine({
@@ -12,6 +13,7 @@ class Routine {
     required this.content,
     required this.date,
     this.time,
+    this.registrationImgUrl,
     required this.completed,
   });
 
@@ -21,5 +23,6 @@ class Routine {
         content = json['content'],
         date = json['date'],
         time = json['time'],
+        registrationImgUrl = json['registrationImgUrl'],
         completed = json['completed'];
 }
