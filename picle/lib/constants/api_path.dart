@@ -7,4 +7,6 @@ final apiPath = {
       '/api/v1/routine/createRoutine/$userId/$routineId',
   'finishRoutine': (userId, routineId) =>
       '/api/v1/routine/finish/$userId/$routineId',
+  'deleteRoutine': (userId, routineId) =>
+      '/api/v1/routine/delete/$userId/$routineId',
 };

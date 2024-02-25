@@ -134,4 +134,18 @@ class RoutineProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Future<void> deleteRoutine(userId, routineId) async {
+    try {
+      final uri = Uri.https(
+          serverEndpoint, apiPath['deleteRoutine']!(userId, routineId));
+      await http.delete(uri, headers: {'Content-Type': 'application/json'});
+      routineList.removeWhere((routine) => routine.routineId == routineId);
+    } catch (error) {
+      // Toast message 보여주기 '루틴을 삭제할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
+    }
+
+    notifyListeners();
+  }
 }
