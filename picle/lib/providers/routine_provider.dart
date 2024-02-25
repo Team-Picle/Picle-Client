@@ -148,4 +148,29 @@ class RoutineProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<void> updatePreview(userId, routineId, {time, repeatDays}) async {
+    try {
+      final uri = Uri.https(
+          serverEndpoint, apiPath['updateRoutine']!(userId, routineId));
+      final jsonData = {
+        if (time != null) 'time': time,
+        if (repeatDays != null) 'repeatDays': repeatDays
+      };
+      final requestBody = json.encode(jsonData);
+      final response = await http.patch(uri,
+          body: requestBody, headers: {'Content-Type': 'application/json'});
+      final responseBody = json.decode(response.body);
+      Map<String, dynamic> data = responseBody['data'];
+      previewList = previewList
+          .map((preview) =>
+              preview.routineId == routineId ? Routine.fromJson(data) : preview)
+          .toList();
+    } catch (error) {
+      // Toast message 보여주기 '루틴을 수정할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
+    }
+
+    notifyListeners();
+  }
 }
