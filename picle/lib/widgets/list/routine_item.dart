@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:picle/providers/todo_provider.dart';
+import 'package:picle/providers/routine_provider.dart';
 import 'package:provider/provider.dart';
 
-class ListItem extends StatefulWidget {
+const imgUrl = '';
+const longitude = '';
+const latitude = '';
+
+class RoutineItem extends StatefulWidget {
+  final int userId;
   final int id;
   final String text;
   final bool isChecked;
 
-  const ListItem({
+  const RoutineItem({
     super.key,
+    required this.userId,
     required this.id,
     required this.text,
     required this.isChecked,
   });
 
   @override
-  State<ListItem> createState() => _TodoItemState();
+  State<RoutineItem> createState() => _RoutineItemState();
 }
 
-class _TodoItemState extends State<ListItem> {
+class _RoutineItemState extends State<RoutineItem> {
   bool _isChecked = false;
 
   @override
@@ -29,7 +35,7 @@ class _TodoItemState extends State<ListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TodoProvider>(
+    return Consumer<RoutineProvider>(
       builder: (context, provider, child) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,6 +62,8 @@ class _TodoItemState extends State<ListItem> {
                     setState(() {
                       _isChecked = value!;
                     });
+                    provider.verifyRoutine(
+                        widget.userId, widget.id, imgUrl, longitude, latitude);
                   }),
             ),
             const SizedBox(
@@ -77,7 +85,7 @@ class _TodoItemState extends State<ListItem> {
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
               onPressed: () async {
-                await provider.deleteTodo(widget.id);
+                await provider.deleteRoutine(widget.userId, widget.id);
               },
               icon: const Icon(Icons.more_horiz),
             )
