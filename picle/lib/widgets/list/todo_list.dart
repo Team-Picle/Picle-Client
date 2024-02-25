@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:picle/widgets/default_button.dart';
-import 'package:provider/provider.dart';
-import 'package:picle/providers/todo_provider.dart';
 import 'package:picle/models/todo_model.dart';
-import 'package:picle/widgets/list/list_item.dart';
+import 'package:picle/providers/todo_provider.dart';
+import 'package:picle/widgets/default_button.dart';
+import 'package:picle/widgets/list/todo_item.dart';
+import 'package:provider/provider.dart';
 
 class TodoList extends StatelessWidget {
   const TodoList({super.key});
@@ -23,7 +23,8 @@ class TodoList extends StatelessWidget {
                 itemCount: todoList.length,
                 itemBuilder: (_, index) {
                   Todo todo = todoList[index];
-                  return ListItem(
+                  return TodoItem(
+                    userId: todo.userId,
                     id: todo.id,
                     text: todo.content,
                     isChecked: todo.isCompleted,
