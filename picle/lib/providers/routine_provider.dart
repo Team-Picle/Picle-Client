@@ -71,4 +71,32 @@ class RoutineProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<void> registerRoutine(content, imgUrl, time, startRepeatDate,
+      repeatDays, destinationLongitude, destinationLatitude) async {
+    try {
+      final url = Uri.https(serverEndpoint, apiPath['createPreview']!(userId));
+      final jsonData = {
+        'content': content,
+        'registrationImgUrl': imgUrl,
+        'time': time,
+        'startRepeatDate': startRepeatDate,
+        'repeatDays': repeatDays,
+        'destinationLongitude': destinationLongitude,
+        'destinationLatitude': destinationLatitude
+      };
+      final requestBody = json.encode(jsonData);
+      final response = await http.post(url,
+          body: requestBody, headers: {'Content-Type': 'application/json'});
+
+      final responseData = json.decode(response.body);
+      Map<String, dynamic> data = responseData['data'];
+      previewList = [...previewList, Routine.fromJson(data)];
+    } catch (error) {
+      // Toast message 보여주기 '루틴을 등록에 실패했습니다'
+      // print('${response['code']}: ${response['message']}');
+    }
+
+    notifyListeners();
+  }
 }
