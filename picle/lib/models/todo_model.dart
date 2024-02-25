@@ -1,22 +1,22 @@
 class Todo {
+  final int id;
   final int userId;
-  final int todoId;
-  final String content;
-  final String date;
-  final bool completed;
+  String content;
+  String date;
+  bool isCompleted;
 
   Todo({
+    required this.id,
     required this.userId,
-    required this.todoId,
     required this.content,
     required this.date,
-    required this.completed,
+    required this.isCompleted,
   });
 
   Todo.fromJson(Map<String, dynamic> json)
-      : userId = json['user']['id'],
-        todoId = json['id'],
+      : id = json['id'],
+        userId = json['userId'],
         content = json['content'],
         date = json['date'],
-        completed = json['completed'];
+        isCompleted = json['isCompleted'];
 }
