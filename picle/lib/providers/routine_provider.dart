@@ -99,4 +99,26 @@ class RoutineProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<void> addRoutine(userId, routineId) async {
+    try {
+      final queryParams = {
+        'date': date,
+      };
+      final uri = Uri.https(serverEndpoint,
+          apiPath['createRoutine']!(userId, routineId), queryParams);
+      final response =
+          await http.post(uri, headers: {'Content-Type': 'application/json'});
+
+      final responseData = json.decode(response.body);
+      Map<String, dynamic> data = responseData['data'];
+      routineList = [...routineList, Routine.fromJson(data)];
+      previewList.removeWhere((preview) => preview.routineId == routineId);
+    } catch (error) {
+      // Toast message 보여주기 '루틴 추가에 실패했습니다'
+      // print('${response['code']}: ${response['message']}');
+    }
+
+    notifyListeners();
+  }
 }
