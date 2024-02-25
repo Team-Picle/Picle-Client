@@ -27,6 +27,7 @@ class RoutineList extends StatelessWidget {
                   itemBuilder: (_, index) {
                     Routine routine = previewList[index];
                     return RoutineItem(
+                      userId: routine.userId,
                       id: routine.routineId,
                       text: routine.content,
                       isChecked: routine.isCompleted,
@@ -46,6 +47,7 @@ class RoutineList extends StatelessWidget {
                   itemBuilder: (_, index) {
                     Routine routine = routineList[index];
                     return RoutineItem(
+                      userId: routine.userId,
                       id: routine.routineId,
                       text: routine.content,
                       isChecked: routine.isCompleted,
