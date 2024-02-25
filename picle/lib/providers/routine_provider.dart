@@ -121,4 +121,17 @@ class RoutineProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<void> finishRoutine(routineId) async {
+    try {
+      final uri = Uri.https(
+          serverEndpoint, apiPath['finishRoutine']!(userId, routineId));
+      await http.delete(uri, headers: {'Content-Type': 'application/json'});
+      previewList.removeWhere((preview) => preview.routineId == routineId);
+    } catch (error) {
+      // Toast message 보여주기 '루틴을 종료할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
+    }
+    notifyListeners();
+  }
 }

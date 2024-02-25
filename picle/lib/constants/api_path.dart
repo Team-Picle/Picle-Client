@@ -5,4 +5,6 @@ final apiPath = {
   'createPreview': (userId) => '/api/v1/routine/createPreview/$userId',
   'createRoutine': (userId, routineId) =>
       '/api/v1/routine/createRoutine/$userId/$routineId',
+  'finishRoutine': (userId, routineId) =>
+      '/api/v1/routine/finish/$userId/$routineId',
 };
