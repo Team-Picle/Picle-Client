@@ -173,4 +173,32 @@ class RoutineProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<void> verifyRoutine(
+      userId, routineId, imgUrl, longitude, latitude) async {
+    try {
+      final queryParams = {'date': date};
+      final uri = Uri.https(serverEndpoint,
+          apiPath['verifyRoutine']!(userId, routineId), queryParams);
+      final jsonData = {
+        'verifiedImgUrl': imgUrl,
+        'currentLongitude': longitude,
+        'currentLatitude': latitude
+      };
+      final requestBody = json.encode(jsonData);
+      final response = await http.patch(uri,
+          body: requestBody, headers: {'Content-Type': 'application/json'});
+      final responseBody = json.decode(response.body);
+      Map<String, dynamic> data = responseBody['data'];
+      routineList = routineList
+          .map((routine) =>
+              routine.routineId == routineId ? Routine.fromJson(data) : routine)
+          .toList();
+    } catch (error) {
+      // Toast message 보여주기 '루틴을 완료할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
+    }
+
+    notifyListeners();
+  }
 }

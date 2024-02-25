@@ -11,4 +11,6 @@ final apiPath = {
       '/api/v1/routine/delete/$userId/$routineId',
   'updateRoutine': (userId, routineId) =>
       '/api/v1/routine/update/$userId/$routineId',
+  'verifyRoutine': (userId, routineId) =>
+      '/api/v1/routine/verify/$userId/$routineId',
 };
