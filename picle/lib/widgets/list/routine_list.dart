@@ -1,36 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:picle/models/routine_model.dart';
+import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/widgets/add_modal_widget.dart';
 import 'package:picle/widgets/default_button.dart';
+import 'package:picle/widgets/list/routine_item.dart';
 import 'package:provider/provider.dart';
-import 'package:picle/providers/routine_provider.dart';
-import 'package:picle/models/routine_model.dart';
-import 'package:picle/widgets/list/list_item.dart';
 
 class RoutineList extends StatelessWidget {
   const RoutineList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    context.read<RoutineProvider>().fetchRoutineList();
-    List<Routine> routineList = context.watch<RoutineProvider>().routineList;
-
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            primary: false,
-            itemCount: routineList.length,
-            itemBuilder: (_, index) {
-              Routine routine = routineList[index];
-              return ListItem(
-                id: routine.routineId,
-                text: routine.content,
-                isChecked: routine.completed,
-              );
-            },
-          ),
-        ),
+            child: Column(
+          children: [
+            Consumer<RoutineProvider>(
+              builder: (context, provider, child) {
+                List<Routine> previewList = provider.previewList;
+
+                return ListView.builder(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  primary: false,
+                  itemCount: previewList.length,
+                  itemBuilder: (_, index) {
+                    Routine routine = previewList[index];
+                    return RoutineItem(
+                      id: routine.routineId,
+                      text: routine.content,
+                      isChecked: routine.isCompleted,
+                    );
+                  },
+                );
+              },
+            ),
+            Consumer<RoutineProvider>(
+              builder: (context, provider, child) {
+                List<Routine> routineList = provider.routineList;
+
+                return ListView.builder(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  primary: false,
+                  itemCount: routineList.length,
+                  itemBuilder: (_, index) {
+                    Routine routine = routineList[index];
+                    return RoutineItem(
+                      id: routine.routineId,
+                      text: routine.content,
+                      isChecked: routine.isCompleted,
+                    );
+                  },
+                );
+              },
+            )
+          ],
+        )),
         DefaultButton(
             buttonText: '루틴 등록하기',
             onPressed: () => addBottomModal(
