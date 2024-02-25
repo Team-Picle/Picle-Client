@@ -1,5 +1,9 @@
 const serverEndpoint = 'www.picle.server.com';
 final apiPath = {
+  'getTodos': (userId) => '/api/v1/todo/getByDate/$userId',
+  'createTodo': (userId) => '/api/todo/create/$userId',
+  'deleteTodo': (userId, todoId) => '/api/v1/todo/delete/$userId/$todoId',
+  'updateTodo': (userId, todoId) => '/api/v1/todo/update/$userId/$todoId',
   'getPreviews': (userId) => '/api/v1/routine/getPreviews/$userId',
   'getRoutines': (userId) => '/api/v1/routine/getByDate/$userId',
   'createPreview': (userId) => '/api/v1/routine/createPreview/$userId',
