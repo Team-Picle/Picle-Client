@@ -27,8 +27,8 @@ class TodoProvider extends ChangeNotifier {
       final queryParams = {
         'date': date,
       };
-      final uri = Uri.https(
-          serverEndpoint, '/api/v1/todo/getByDate/$userId', queryParams);
+      final uri =
+          Uri.https(serverEndpoint, apiPath['getTodos']!(userId), queryParams);
       final response =
           await http.get(uri, headers: {'Content-Type': 'application/json'});
       final responseBody = json.decode(response.body);
@@ -51,7 +51,7 @@ class TodoProvider extends ChangeNotifier {
         'date': date,
       };
       final requestBody = json.encode(jsonData);
-      final uri = Uri.https(serverEndpoint, '/api/todo/create/$userId');
+      final uri = Uri.https(serverEndpoint, apiPath['createTodo']!(userId));
       final response = await http.post(uri,
           body: requestBody, headers: {'Content-Type': 'application/json'});
       final responseBody = json.decode(response.body);
@@ -67,7 +67,7 @@ class TodoProvider extends ChangeNotifier {
   Future<void> deleteTodo(userId, todoId) async {
     try {
       final uri =
-          Uri.https(serverEndpoint, '/api/v1/todo/delete/$userId/$todoId');
+          Uri.https(serverEndpoint, apiPath['deleteTodo']!(userId, todoId));
       await http.delete(uri, headers: {
         'Content-Type': 'application/json',
       });
@@ -84,7 +84,7 @@ class TodoProvider extends ChangeNotifier {
       {content, todoDate, isCompleted}) async {
     try {
       final uri =
-          Uri.https(serverEndpoint, '/api/v1/todo/update/$userId/$todoId');
+          Uri.https(serverEndpoint, apiPath['updateTodo']!(userId, todoId));
       final jsonData = {
         if (content != null) 'content': content,
         if (todoDate != null) 'date': todoDate,
