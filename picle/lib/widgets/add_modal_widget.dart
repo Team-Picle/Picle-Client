@@ -15,7 +15,7 @@ Set<String> selectedDays = {};
 DateTime selectedDate = DateTime.now();
 DateTime? selectedTime;
 bool timePicked = false;
-String? imgUrl = '';
+String imgUrl = '';
 XFile? image;
 Routine routine = Routine(
   userId: 111,
@@ -25,8 +25,13 @@ Routine routine = Routine(
       '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}',
   time:
       '${selectedTime?.hour.toString().padLeft(2, '0')}:${selectedTime?.minute.toString().padLeft(2, '0')}',
+  startRepeatDate: '2024-01-01',
+  repeatDays: ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"],
+  destinationLongitude: 37.549,
+  destinationLatitude: 126.9595,
   registrationImgUrl: imgUrl,
-  completed: false,
+  isCompleted: false,
+  isPreview: false,
 );
 
 void addBottomModal({

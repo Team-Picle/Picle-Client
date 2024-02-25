@@ -1,28 +1,43 @@
 class Routine {
-  int userId;
-  int routineId;
-  String content;
-  String date;
-  String? time;
-  String? registrationImgUrl;
-  bool completed;
+  final int userId;
+  final int routineId;
+  final String content;
+  final String registrationImgUrl;
+  final String date;
+  final String time;
+  final String startRepeatDate;
+  final List<dynamic> repeatDays;
+  final double destinationLongitude;
+  final double destinationLatitude;
+  final bool isCompleted;
+  final bool isPreview;
 
   Routine({
     required this.userId,
     required this.routineId,
     required this.content,
+    required this.registrationImgUrl,
     required this.date,
-    this.time,
-    this.registrationImgUrl,
-    required this.completed,
+    required this.time,
+    required this.startRepeatDate,
+    required this.repeatDays,
+    required this.destinationLongitude,
+    required this.destinationLatitude,
+    required this.isCompleted,
+    required this.isPreview,
   });
 
   Routine.fromJson(Map<String, dynamic> json)
-      : userId = json['user']['id'],
-        routineId = json['id'],
+      : userId = json['userId'],
+        routineId = json['routineId'],
         content = json['content'],
+        registrationImgUrl = json['registrationImgUrl'],
         date = json['date'],
         time = json['time'],
-        registrationImgUrl = json['registrationImgUrl'],
-        completed = json['completed'];
+        startRepeatDate = json['startRepeatDate'],
+        repeatDays = json['repeatDays'],
+        destinationLongitude = json['destinationLongitude'],
+        destinationLatitude = json['destinationLatitude'],
+        isCompleted = json['isCompleted'],
+        isPreview = json['isPreview'];
 }

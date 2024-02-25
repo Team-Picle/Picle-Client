@@ -6,6 +6,7 @@ import 'package:picle/widgets/default_button.dart';
 
 DateTime nowDate = DateTime.now();
 DateTime? nowTime;
+var routine = {};
 
 Future<DateTime?> showDatePickerModal(
     BuildContext context, DateTime initialDate) async {
@@ -37,7 +38,7 @@ Future<DateTime?> showDatePickerModal(
             ),
             DefaultButton(
               onPressed: () {
-                routine.date =
+                routine['date'] =
                     '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}';
                 Navigator.pop(context, selectedDate);
                 nowDate = DateTime.now();
@@ -130,7 +131,7 @@ Future<DateTime?> showTimePickerModal(BuildContext context) async {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      routine.time =
+                      routine['time'] =
                           '${selectedTime?.hour.toString().padLeft(2, '0')}:${selectedTime?.minute.toString().padLeft(2, '0')}';
                       Navigator.pop(context, selectedTime);
                       timePicked = true;

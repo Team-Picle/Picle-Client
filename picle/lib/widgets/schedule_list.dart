@@ -36,7 +36,7 @@ class _ScheduleListState extends State<ScheduleList>
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
-            unselectedLabelColor: Color(0XFFC8C8C8),
+            unselectedLabelColor: const Color(0XFFC8C8C8),
             unselectedLabelStyle: const TextStyle(
               fontWeight: FontWeight.normal,
             ),
