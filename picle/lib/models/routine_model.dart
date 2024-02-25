@@ -1,15 +1,19 @@
 class Routine {
-  final int userId;
-  final int routineId;
-  final String content;
-  final String date;
-  final bool completed;
+  int userId;
+  int routineId;
+  String content;
+  String date;
+  String? time;
+  String? registrationImgUrl;
+  bool completed;
 
   Routine({
     required this.userId,
     required this.routineId,
     required this.content,
     required this.date,
+    this.time,
+    this.registrationImgUrl,
     required this.completed,
   });
 
@@ -18,5 +22,7 @@ class Routine {
         routineId = json['id'],
         content = json['content'],
         date = json['date'],
+        time = json['time'],
+        registrationImgUrl = json['registrationImgUrl'],
         completed = json['completed'];
 }
