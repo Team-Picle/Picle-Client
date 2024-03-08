@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/providers/todo_provider.dart';
 import 'package:picle/widgets/avatar.dart';
 import 'package:picle/widgets/calender.dart';
 import 'package:picle/widgets/schedule_list.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

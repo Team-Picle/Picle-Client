@@ -3,64 +3,25 @@
   "message": "해당 날짜의 투두 리스트 조회에 성공했습니다.",
   "data": [
     {
-      "createdAt": "2024-01-03 14:53:09",
-      "modifiedAt": "2024-01-03 14:53:09",
       "id": 1,
-      "user": {
-        "id": 8,
-        "clientKey": "103678304063442524929",
-        "nickname": "피클개디언즈",
-        "profileImage": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
-        "socialPlatform": "GOOGLE"
-      },
-      "content": "동생 졸업식 가기",
-      "date": "2024-01-03",
-      "isCompleted": false
-    },
-    {
-      "createdAt": "2024-01-03 15:04:46",
-      "modifiedAt": "2024-01-03 15:04:46",
-      "id": 2,
-      "user": {
-        "id": 8,
-        "clientKey": "103678304063442524929",
-        "nickname": "피클개디언즈",
-        "profileImage": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
-        "socialPlatform": "GOOGLE"
-      },
-      "content": "청년매입임대주택 신청",
-      "date": "2024-01-03",
-      "isCompleted": false
-    },
-    {
-      "createdAt": "2024-01-03 15:05:58",
-      "modifiedAt": "2024-01-03 15:05:58",
-      "id": 3,
-      "user": {
-        "id": 8,
-        "clientKey": "103678304063442524929",
-        "nickname": "피클개디언즈",
-        "profileImage": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
-        "socialPlatform": "GOOGLE"
-      },
-      "content": "deleteTodo API 구현",
-      "date": "2024-01-03",
-      "isCompleted": false
-    },
-    {
-      "createdAt": "2024-01-03 14:53:09",
-      "modifiedAt": "2024-01-03 14:53:09",
-      "id": 4,
-      "user": {
-        "id": 8,
-        "clientKey": "103678304063442524929",
-        "nickname": "피클개디언즈",
-        "profileImage": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
-        "socialPlatform": "GOOGLE"
-      },
-      "content": "하잇",
+      "userId": 1,
+      "content": "동생 카페 사주기",
       "date": "2024-01-03",
       "isCompleted": true
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "content": "API Docs 수정",
+      "date": "2024-01-03",
+      "isCompleted": true
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "content": "API Docs 전달",
+      "date": "2024-01-03",
+      "isCompleted": false
     }
   ]
 }

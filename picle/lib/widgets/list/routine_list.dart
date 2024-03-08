@@ -3,6 +3,7 @@ import 'package:picle/models/routine_model.dart';
 import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/widgets/add_modal_widget.dart';
 import 'package:picle/widgets/default_button.dart';
+import 'package:picle/widgets/list/preview_item.dart';
 import 'package:picle/widgets/list/routine_item.dart';
 import 'package:provider/provider.dart';
 
@@ -13,51 +14,36 @@ class RoutineList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
-            child: Column(
-          children: [
-            Consumer<RoutineProvider>(
-              builder: (context, provider, child) {
-                List<Routine> previewList = provider.previewList;
+        Expanded(child:
+            Consumer<RoutineProvider>(builder: (context, provider1, child) {
+          return Consumer<RoutineProvider>(
+              builder: (context, provider2, child) {
+            List<dynamic> combinedList = [
+              ...provider1.previewList,
+              ...provider2.routineList
+            ];
 
-                return ListView.builder(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  primary: false,
-                  itemCount: previewList.length,
-                  itemBuilder: (_, index) {
-                    Routine routine = previewList[index];
-                    return RoutineItem(
-                      userId: routine.userId,
-                      id: routine.routineId,
-                      text: routine.content,
-                      isChecked: routine.isCompleted,
-                    );
-                  },
-                );
-              },
-            ),
-            Consumer<RoutineProvider>(
-              builder: (context, provider, child) {
-                List<Routine> routineList = provider.routineList;
-
-                return ListView.builder(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  primary: false,
-                  itemCount: routineList.length,
-                  itemBuilder: (_, index) {
-                    Routine routine = routineList[index];
-                    return RoutineItem(
-                      userId: routine.userId,
-                      id: routine.routineId,
-                      text: routine.content,
-                      isChecked: routine.isCompleted,
-                    );
-                  },
-                );
-              },
-            )
-          ],
-        )),
+            return ListView.builder(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                primary: false,
+                itemCount: combinedList.length,
+                itemBuilder: (_, index) {
+                  dynamic item = combinedList[index];
+                  return item is Routine
+                      ? RoutineItem(
+                          userId: item.userId,
+                          id: item.routineId,
+                          text: item.content,
+                          isChecked: item.isCompleted,
+                        )
+                      : PreviewItem(
+                          userId: item.userId,
+                          id: item.routineId,
+                          text: item.content,
+                        );
+                });
+          });
+        })),
         DefaultButton(
             buttonText: '루틴 등록하기',
             onPressed: () => addBottomModal(

@@ -1,14 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:picle/constants/index.dart';
+import 'package:picle/models/preview_model.dart';
 import 'package:picle/models/routine_model.dart';
 
 var userId = 1;
 
 class RoutineProvider extends ChangeNotifier {
-  List<Routine> previewList = [];
+  List<Preview> previewList = [];
   List<Routine> routineList = [];
 
   String date = DateTime.now() //
@@ -26,48 +28,72 @@ class RoutineProvider extends ChangeNotifier {
   }
 
   Future<void> fetchPreviewList() async {
-    try {
-      final queryParams = {
-        'date': date,
-      };
-      final uri = Uri.https(
-          serverEndpoint, apiPath['getPreviews']!(userId), queryParams);
-      final response =
-          await http.get(uri, headers: {'Content-Type': 'application/json'});
-      final responseBody = json.decode(response.body);
+    final response = await rootBundle.loadString('lib/data/preview_list.json');
+    final data = json.decode(response);
 
+    if (data['code'] == 200) {
       previewList = [
-        for (Map<String, dynamic> routine in responseBody['data'])
-          Routine.fromJson(routine)
+        for (Map<String, dynamic> preview in data['data'])
+          Preview.fromJson(preview),
       ];
-    } catch (error) {
-      // Toast message 보여주기 '미리보기를 불로오지 못 했습니다'
-      // print('${response['code']}: ${response['message']}');
+    } else {
+      previewList = [];
+      throw Exception('Fail to load date');
     }
+    // try {
+    //   final queryParams = {
+    //     'date': date,
+    //   };
+    //   final uri = Uri.https(
+    //       serverEndpoint, apiPath['getPreviews']!(userId), queryParams);
+    //   final response =
+    //       await http.get(uri, headers: {'Content-Type': 'application/json'});
+    //   final responseBody = json.decode(response.body);
+
+    //   previewList = [
+    //     for (Map<String, dynamic> routine in responseBody['data'])
+    //       Routine.fromJson(routine)
+    //   ];
+    // } catch (error) {
+    //   // Toast message 보여주기 '미리보기를 불로오지 못 했습니다'
+    //   // print('${response['code']}: ${response['message']}');
+    // }
 
     notifyListeners();
   }
 
   Future<void> fetchRoutineList() async {
-    // final response = await rootBundle.loadString('lib/data/routine_list.json');
-    try {
-      final queryParams = {
-        'date': date,
-      };
-      final uri = Uri.https(
-          serverEndpoint, apiPath['getRoutines']!(userId), queryParams);
-      final response =
-          await http.get(uri, headers: {'Content-Type': 'application/json'});
-      final responseBody = json.decode(response.body);
+    final response = await rootBundle.loadString('lib/data/routine_list.json');
+    final data = json.decode(response);
 
+    if (data['code'] == 200) {
       routineList = [
-        for (Map<String, dynamic> routine in responseBody['data'])
-          Routine.fromJson(routine)
+        for (Map<String, dynamic> routine in data['data'])
+          Routine.fromJson(routine),
       ];
-    } catch (error) {
-      // Toast message 보여주기 '루틴을 불러오지 못 했습니다'
-      // print('${response['code']}: ${response['message']}');
+    } else {
+      routineList = [];
+      throw Exception('Fail to load date');
     }
+
+    // try {
+    //   final queryParams = {
+    //     'date': date,
+    //   };
+    //   final uri = Uri.https(
+    //       serverEndpoint, apiPath['getRoutines']!(userId), queryParams);
+    //   final response =
+    //       await http.get(uri, headers: {'Content-Type': 'application/json'});
+    //   final responseBody = json.decode(response.body);
+
+    //   routineList = [
+    //     for (Map<String, dynamic> routine in responseBody['data'])
+    //       Routine.fromJson(routine)
+    //   ];
+    // } catch (error) {
+    //   // Toast message 보여주기 '루틴을 불러오지 못 했습니다'
+    //   // print('${response['code']}: ${response['message']}');
+    // }
 
     notifyListeners();
   }
@@ -91,7 +117,7 @@ class RoutineProvider extends ChangeNotifier {
 
       final responseData = json.decode(response.body);
       Map<String, dynamic> data = responseData['data'];
-      previewList = [...previewList, Routine.fromJson(data)];
+      previewList = [...previewList, Preview.fromJson(data)];
     } catch (error) {
       // Toast message 보여주기 '루틴을 등록에 실패했습니다'
       // print('${response['code']}: ${response['message']}');
@@ -164,7 +190,7 @@ class RoutineProvider extends ChangeNotifier {
       Map<String, dynamic> data = responseBody['data'];
       previewList = previewList
           .map((preview) =>
-              preview.routineId == routineId ? Routine.fromJson(data) : preview)
+              preview.routineId == routineId ? Preview.fromJson(data) : preview)
           .toList();
     } catch (error) {
       // Toast message 보여주기 '루틴을 수정할 수 없습니다'
