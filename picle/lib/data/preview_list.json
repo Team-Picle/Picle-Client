@@ -1,0 +1,22 @@
+{
+  "code": 200,
+  "message": "해당 날짜의 루틴 미리보기 리스트입니다.",
+  "data": [
+    {
+      "routineId": 1,
+      "userId": 8,
+      "content": "미라클 모닝",
+      "time": "06:00:00",
+      "startRepeatDate": "2024-01-01",
+      "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"]
+    },
+    {
+      "routineId": 2,
+      "userId": 8,
+      "content": "필라테스 가기",
+      "time": "10:00:00",
+      "startRepeatDate": "2024-01-14",
+      "repeatDays": ["TUESDAY", "MONDAY"]
+    }
+  ]
+}
