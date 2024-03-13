@@ -1,6 +1,7 @@
 class Routine {
   final int userId;
   final int routineId;
+  final int routineIdentifier;
   final String content;
   final String registrationImgUrl;
   final String date;
@@ -15,6 +16,7 @@ class Routine {
   Routine({
     required this.userId,
     required this.routineId,
+    required this.routineIdentifier,
     required this.content,
     required this.registrationImgUrl,
     required this.date,
@@ -30,6 +32,7 @@ class Routine {
   Routine.fromJson(Map<String, dynamic> json)
       : userId = json['userId'],
         routineId = json['routineId'],
+        routineIdentifier = json['routineIdentifier'],
         content = json['content'],
         registrationImgUrl = json['registrationImgUrl'],
         date = json['date'],
