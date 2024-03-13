@@ -29,7 +29,7 @@ class RoutineList extends StatelessWidget {
                 itemCount: combinedList.length,
                 itemBuilder: (_, index) {
                   dynamic item = combinedList[index];
-                  return item is Routine
+                  dynamic listItem = item is Routine
                       ? RoutineItem(
                           userId: item.userId,
                           id: item.routineId,
@@ -41,6 +41,10 @@ class RoutineList extends StatelessWidget {
                           id: item.routineId,
                           text: item.content,
                         );
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 3.0),
+                    child: listItem,
+                  );
                 });
           });
         })),

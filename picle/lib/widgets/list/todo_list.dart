@@ -23,11 +23,14 @@ class TodoList extends StatelessWidget {
                 itemCount: todoList.length,
                 itemBuilder: (_, index) {
                   Todo todo = todoList[index];
-                  return TodoItem(
-                    userId: todo.userId,
-                    id: todo.id,
-                    text: todo.content,
-                    isChecked: todo.isCompleted,
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 3.0),
+                    child: TodoItem(
+                      userId: todo.userId,
+                      id: todo.id,
+                      text: todo.content,
+                      isChecked: todo.isCompleted,
+                    ),
                   );
                 },
               );

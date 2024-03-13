@@ -39,36 +39,38 @@ class _RoutineItemState extends State<RoutineItem> {
       builder: (context, provider, child) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Transform.scale(
-              scale: 1.3,
-              child: Checkbox(
-                  semanticLabel: '테스트',
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  visualDensity: const VisualDensity(
-                    horizontal: VisualDensity.minimumDensity,
-                    vertical: VisualDensity.minimumDensity,
-                  ),
-                  value: _isChecked,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(
-                      color: Colors.green,
-                      width: 1,
+            SizedBox(
+              width: 24,
+              child: Transform.scale(
+                scale: 1.2,
+                child: Checkbox(
+                    semanticLabel: '테스트',
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: const VisualDensity(
+                      horizontal: VisualDensity.minimumDensity,
+                      vertical: VisualDensity.minimumDensity,
                     ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  activeColor: const Color(0xFF54C29B),
-                  onChanged: (value) {
-                    setState(() {
-                      _isChecked = value!;
-                    });
-                    provider.verifyRoutine(
-                        widget.userId, widget.id, imgUrl, longitude, latitude);
-                  }),
+                    value: _isChecked,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        color: Colors.green,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    activeColor: const Color(0xFF54C29B),
+                    onChanged: (value) {
+                      setState(() {
+                        _isChecked = value!;
+                      });
+                      provider.verifyRoutine(widget.userId, widget.id, imgUrl,
+                          longitude, latitude);
+                    }),
+              ),
             ),
-            const SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             Expanded(
               child: Text(
                 widget.text,
@@ -77,17 +79,19 @@ class _RoutineItemState extends State<RoutineItem> {
                 ),
               ),
             ),
-            IconButton(
-              visualDensity: const VisualDensity(
-                horizontal: VisualDensity.minimumDensity,
-                vertical: VisualDensity.minimumDensity,
+            SizedBox(
+              width: 24,
+              child: IconButton(
+                visualDensity: const VisualDensity(
+                  horizontal: VisualDensity.minimumDensity,
+                  vertical: VisualDensity.minimumDensity,
+                ),
+                padding: EdgeInsets.zero,
+                onPressed: () async {
+                  await provider.deleteRoutine(widget.userId, widget.id);
+                },
+                icon: const Icon(Icons.more_horiz),
               ),
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(),
-              onPressed: () async {
-                await provider.deleteRoutine(widget.userId, widget.id);
-              },
-              icon: const Icon(Icons.more_horiz),
             )
           ],
         );
