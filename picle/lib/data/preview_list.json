@@ -17,6 +17,46 @@
       "time": "10:00:00",
       "startRepeatDate": "2024-01-14",
       "repeatDays": ["TUESDAY", "MONDAY"]
+    },
+    {
+      "routineId": 3,
+      "userId": 8,
+      "content": "루틴...",
+      "time": "06:00:00",
+      "startRepeatDate": "2024-01-01",
+      "repeatDays": ["TUESDAY", "MONDAY"]
+    },
+    {
+      "routineId": 4,
+      "userId": 8,
+      "content": "청년매입임대주택 신청",
+      "time": "06:00:00",
+      "startRepeatDate": "2024-01-03",
+      "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"]
+    },
+    {
+      "routineId": 5,
+      "userId": 8,
+      "content": "루틴 리스트 더미 데이터",
+      "time": "06:00:00",
+      "startRepeatDate": "2024-01-01",
+      "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"]
+    },
+    {
+      "routineId": 6,
+      "userId": 8,
+      "content": "화락 바베큐 맛있더라 얘들아",
+      "time": "06:00:00",
+      "startRepeatDate": "2024-01-14",
+      "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"]
+    },
+    {
+      "routineId": 7,
+      "userId": 8,
+      "content": "미리보기 필터링 된건가...?",
+      "time": "06:00:00",
+      "startRepeatDate": "2024-03-13",
+      "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"]
     }
   ]
 }

@@ -18,6 +18,7 @@ bool timePicked = false;
 String imgUrl = '';
 XFile? image;
 Routine routine = Routine(
+  routineIdentifier: 1,
   userId: 111,
   routineId: 1,
   content: '',
