@@ -18,8 +18,8 @@ class RoutineProvider extends ChangeNotifier {
       .split(' ')[0];
 
   RoutineProvider() {
-    fetchPreviewList();
     fetchRoutineList();
+    fetchPreviewList();
   }
 
   void updateDate(selectedDate) {
@@ -32,14 +32,18 @@ class RoutineProvider extends ChangeNotifier {
     final data = json.decode(response);
 
     if (data['code'] == 200) {
+      List<int> routineIdList =
+          routineList.map((routine) => routine.routineIdentifier).toList();
       previewList = [
         for (Map<String, dynamic> preview in data['data'])
-          Preview.fromJson(preview),
+          if (!routineIdList.contains(preview['routineId']))
+            Preview.fromJson(preview)
       ];
     } else {
       previewList = [];
       throw Exception('Fail to load date');
     }
+
     // try {
     //   final queryParams = {
     //     'date': date,
@@ -50,9 +54,12 @@ class RoutineProvider extends ChangeNotifier {
     //       await http.get(uri, headers: {'Content-Type': 'application/json'});
     //   final responseBody = json.decode(response.body);
 
+    //   List<int> routineIdList =
+    //       routineList.map((routine) => routine.routineIdentifier).toList();
     //   previewList = [
-    //     for (Map<String, dynamic> routine in responseBody['data'])
-    //       Routine.fromJson(routine)
+    //     for (Map<String, dynamic> preview in responseBody['data'])
+    //       if (!routineIdList.contains(preview['routineId']))
+    //         Preview.fromJson(preview)
     //   ];
     // } catch (error) {
     //   // Toast message 보여주기 '미리보기를 불로오지 못 했습니다'
