@@ -29,30 +29,48 @@ class _PreviewItemState extends State<PreviewItem> {
       builder: (context, provider, child) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              width: 10,
+            SizedBox(
+              width: 24,
+              child: IconButton(
+                  visualDensity: const VisualDensity(
+                    horizontal: VisualDensity.minimumDensity,
+                    vertical: VisualDensity.minimumDensity,
+                  ),
+                  padding: EdgeInsets.zero,
+                  onPressed: () async {},
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.grey,
+                  )),
+              // const SizedBox(
+              //   width: 10,
+              // ),
             ),
+            const SizedBox(width: 10),
             Expanded(
               child: Text(
                 widget.text,
                 style: const TextStyle(
                   fontSize: 16,
+                  color: Colors.grey,
                 ),
               ),
             ),
-            IconButton(
-              visualDensity: const VisualDensity(
-                horizontal: VisualDensity.minimumDensity,
-                vertical: VisualDensity.minimumDensity,
-              ),
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(),
-              onPressed: () async {
-                await provider.deleteRoutine(widget.userId, widget.id);
-              },
-              icon: const Icon(Icons.more_horiz),
-            )
+            SizedBox(
+                width: 24,
+                child: IconButton(
+                  visualDensity: const VisualDensity(
+                    horizontal: VisualDensity.minimumDensity,
+                    vertical: VisualDensity.minimumDensity,
+                  ),
+                  padding: EdgeInsets.zero,
+                  onPressed: () async {
+                    await provider.deleteRoutine(widget.userId, widget.id);
+                  },
+                  icon: const Icon(Icons.more_horiz),
+                ))
           ],
         );
       },
