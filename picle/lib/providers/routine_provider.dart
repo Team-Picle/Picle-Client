@@ -11,7 +11,8 @@ var userId = 1;
 
 class RoutineProvider extends ChangeNotifier {
   List<Preview> previewList = [];
-  List<Routine> routineList = [];
+  List<Routine> uncheckRoutineList = [];
+  List<Routine> checkRoutineList = [];
 
   String date = DateTime.now() //
       .toString()
@@ -32,8 +33,9 @@ class RoutineProvider extends ChangeNotifier {
     final data = json.decode(response);
 
     if (data['code'] == 200) {
-      List<int> routineIdList =
-          routineList.map((routine) => routine.routineIdentifier).toList();
+      List<int> routineIdList = [...uncheckRoutineList, ...checkRoutineList]
+          .map((routine) => routine.routineIdentifier)
+          .toList();
       previewList = [
         for (Map<String, dynamic> preview in data['data'])
           if (!routineIdList.contains(preview['routineId']))
@@ -55,7 +57,7 @@ class RoutineProvider extends ChangeNotifier {
     //   final responseBody = json.decode(response.body);
 
     //   List<int> routineIdList =
-    //       routineList.map((routine) => routine.routineIdentifier).toList();
+    //       [...uncheckRoutineList, ...checkRoutineList].map((routine) => routine.routineIdentifier).toList();
     //   previewList = [
     //     for (Map<String, dynamic> preview in responseBody['data'])
     //       if (!routineIdList.contains(preview['routineId']))
@@ -74,12 +76,15 @@ class RoutineProvider extends ChangeNotifier {
     final data = json.decode(response);
 
     if (data['code'] == 200) {
-      routineList = [
+      uncheckRoutineList = [
         for (Map<String, dynamic> routine in data['data'])
-          Routine.fromJson(routine),
+          if (routine['isCompleted'] == false) Routine.fromJson(routine),
+      ];
+      checkRoutineList = [
+        for (Map<String, dynamic> routine in data['data'])
+          if (routine['isCompleted'] == true) Routine.fromJson(routine),
       ];
     } else {
-      routineList = [];
       throw Exception('Fail to load date');
     }
 
@@ -93,9 +98,13 @@ class RoutineProvider extends ChangeNotifier {
     //       await http.get(uri, headers: {'Content-Type': 'application/json'});
     //   final responseBody = json.decode(response.body);
 
-    //   routineList = [
+    //   uncheckRoutineList = [
     //     for (Map<String, dynamic> routine in responseBody['data'])
-    //       Routine.fromJson(routine)
+    //       if (routine['isCompleted'] == false) Routine.fromJson(routine),
+    //   ];
+    //   checkRoutineList = [
+    //     for (Map<String, dynamic> routine in responseBody['data'])
+    //       if (routine['isCompleted'] == true) Routine.fromJson(routine),
     //   ];
     // } catch (error) {
     //   // Toast message 보여주기 '루틴을 불러오지 못 했습니다'
@@ -133,51 +142,83 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addRoutine(userId, routineId) async {
-    try {
-      final queryParams = {
-        'date': date,
-      };
-      final uri = Uri.https(serverEndpoint,
-          apiPath['createRoutine']!(userId, routineId), queryParams);
-      final response =
-          await http.post(uri, headers: {'Content-Type': 'application/json'});
+  int id = 100;
+  // api 연결 시에는 content param 삭제
+  Future<void> addRoutine(userId, routineId, content) async {
+    Map<String, dynamic> data = {
+      'userId': userId,
+      'routineId': id,
+      'routineIdentifier': routineId,
+      'content': content,
+      'registrationImgUrl': '',
+      'date': '',
+      'time': '',
+      'startRepeatDate': '',
+      'repeatDays': [],
+      'destinationLongitude': 0.0,
+      'destinationLatitude': 0.0,
+      'isCompleted': false,
+      'isPreview': false
+    };
+    uncheckRoutineList = [Routine.fromJson(data), ...uncheckRoutineList];
+    previewList.removeWhere((preview) => preview.routineId == routineId);
+    id = id + 1;
 
-      final responseData = json.decode(response.body);
-      Map<String, dynamic> data = responseData['data'];
-      routineList = [...routineList, Routine.fromJson(data)];
-      previewList.removeWhere((preview) => preview.routineId == routineId);
-    } catch (error) {
-      // Toast message 보여주기 '루틴 추가에 실패했습니다'
-      // print('${response['code']}: ${response['message']}');
-    }
+    // try {
+    //   final queryParams = {
+    //     'date': date,
+    //   };
+    //   final uri = Uri.https(serverEndpoint,
+    //       apiPath['createRoutine']!(userId, routineId), queryParams);
+    //   final response =
+    //       await http.post(uri, headers: {'Content-Type': 'application/json'});
+
+    //   final responseData = json.decode(response.body);
+    //   Map<String, dynamic> data = responseData['data'];
+    //   uncheckRoutineList = [Routine.fromJson(data), ...uncheckRoutineList];
+    //   previewList.removeWhere((preview) => preview.routineId == routineId);
+    // } catch (error) {
+    //   // Toast message 보여주기 '루틴 추가에 실패했습니다'
+    //   // print('${response['code']}: ${response['message']}');
+    // }
 
     notifyListeners();
   }
 
-  Future<void> finishRoutine(routineId) async {
-    try {
-      final uri = Uri.https(
-          serverEndpoint, apiPath['finishRoutine']!(userId, routineId));
-      await http.delete(uri, headers: {'Content-Type': 'application/json'});
-      previewList.removeWhere((preview) => preview.routineId == routineId);
-    } catch (error) {
-      // Toast message 보여주기 '루틴을 종료할 수 없습니다'
-      // print('${response['code']}: ${response['message']}');
-    }
+  Future<void> finishRoutine(userId, routineId) async {
+    previewList.removeWhere((preview) => preview.routineId == routineId);
+
+    // try {
+    //   final uri = Uri.https(
+    //       serverEndpoint, apiPath['finishRoutine']!(userId, routineId));
+    //   await http.delete(uri, headers: {'Content-Type': 'application/json'});
+    //   previewList.removeWhere((preview) => preview.routineId == routineId);
+    // } catch (error) {
+    //   // Toast message 보여주기 '루틴을 종료할 수 없습니다'
+    //   // print('${response['code']}: ${response['message']}');
+    // }
+
     notifyListeners();
   }
 
   Future<void> deleteRoutine(userId, routineId) async {
-    try {
-      final uri = Uri.https(
-          serverEndpoint, apiPath['deleteRoutine']!(userId, routineId));
-      await http.delete(uri, headers: {'Content-Type': 'application/json'});
-      routineList.removeWhere((routine) => routine.routineId == routineId);
-    } catch (error) {
-      // Toast message 보여주기 '루틴을 삭제할 수 없습니다'
-      // print('${response['code']}: ${response['message']}');
-    }
+    uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);
+    checkRoutineList.removeWhere((routine) => routine.routineId == routineId);
+    await fetchPreviewList();
+
+    // try {
+    //   final uri = Uri.https(
+    //       serverEndpoint, apiPath['deleteRoutine']!(userId, routineId));
+    //   await http.delete(uri, headers: {'Content-Type': 'application/json'});
+    //   uncheckRoutineList
+    //       .removeWhere((routine) => routine.routineId == routineId);
+    //   checkRoutineList.removeWhere((routine) => routine.routineId == routineId);
+
+    //   await fetchPreviewList();
+    // } catch (error) {
+    //   // Toast message 보여주기 '루틴을 삭제할 수 없습니다'
+    //   // print('${response['code']}: ${response['message']}');
+    // }
 
     notifyListeners();
   }
@@ -209,28 +250,48 @@ class RoutineProvider extends ChangeNotifier {
 
   Future<void> verifyRoutine(
       userId, routineId, imgUrl, longitude, latitude) async {
-    try {
-      final queryParams = {'date': date};
-      final uri = Uri.https(serverEndpoint,
-          apiPath['verifyRoutine']!(userId, routineId), queryParams);
-      final jsonData = {
-        'verifiedImgUrl': imgUrl,
-        'currentLongitude': longitude,
-        'currentLatitude': latitude
-      };
-      final requestBody = json.encode(jsonData);
-      final response = await http.patch(uri,
-          body: requestBody, headers: {'Content-Type': 'application/json'});
-      final responseBody = json.decode(response.body);
-      Map<String, dynamic> data = responseBody['data'];
-      routineList = routineList
-          .map((routine) =>
-              routine.routineId == routineId ? Routine.fromJson(data) : routine)
-          .toList();
-    } catch (error) {
-      // Toast message 보여주기 '루틴을 완료할 수 없습니다'
-      // print('${response['code']}: ${response['message']}');
-    }
+    var target = uncheckRoutineList
+        .firstWhere((routine) => routine.routineId == routineId);
+    uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);
+
+    Map<String, dynamic> data = {
+      'userId': target.userId,
+      'routineId': target.routineId,
+      'routineIdentifier': target.routineIdentifier,
+      'content': target.content,
+      'registrationImgUrl': target.registrationImgUrl,
+      'date': target.date,
+      'time': target.time,
+      'startRepeatDate': target.startRepeatDate,
+      'repeatDays': target.repeatDays,
+      'destinationLongitude': target.destinationLongitude,
+      'destinationLatitude': target.destinationLatitude,
+      'isCompleted': true,
+      'isPreview': target.isPreview
+    };
+    checkRoutineList = [...checkRoutineList, Routine.fromJson(data)];
+
+    // try {
+    //   final queryParams = {'date': date};
+    //   final uri = Uri.https(serverEndpoint,
+    //       apiPath['verifyRoutine']!(userId, routineId), queryParams);
+    //   final jsonData = {
+    //     'verifiedImgUrl': imgUrl,
+    //     'currentLongitude': longitude,
+    //     'currentLatitude': latitude
+    //   };
+    //   final requestBody = json.encode(jsonData);
+    //   final response = await http.patch(uri,
+    //       body: requestBody, headers: {'Content-Type': 'application/json'});
+    //   final responseBody = json.decode(response.body);
+    //   Map<String, dynamic> data = responseBody['data'];
+    //   uncheckRoutineList
+    //       .removeWhere((routine) => routine.routineId == routineId);
+    //   checkRoutineList = [...checkRoutineList, Routine.fromJson(data)];
+    // } catch (error) {
+    //   // Toast message 보여주기 '루틴을 완료할 수 없습니다'
+    //   // print('${response['code']}: ${response['message']}');
+    // }
 
     notifyListeners();
   }

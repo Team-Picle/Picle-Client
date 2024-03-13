@@ -4,7 +4,7 @@
   "data": [
     {
       "routineIdentifier": 3,
-      "routineId": 1,
+      "routineId": 8,
       "userId": 8,
       "content": "루틴...",
       "registrationImgUrl": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
@@ -19,7 +19,7 @@
     },
     {
       "routineIdentifier": 4,
-      "routineId": 2,
+      "routineId": 9,
       "userId": 8,
       "content": "청년매입임대주택 신청",
       "registrationImgUrl": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
@@ -34,7 +34,7 @@
     },
     {
       "routineIdentifier": 5,
-      "routineId": 3,
+      "routineId": 10,
       "userId": 8,
       "content": "루틴 리스트 더미 데이터",
       "registrationImgUrl": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
@@ -49,7 +49,7 @@
     },
     {
       "routineIdentifier": 6,
-      "routineId": 4,
+      "routineId": 11,
       "userId": 8,
       "content": "화락 바베큐 맛있더라 얘들아",
       "registrationImgUrl": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
