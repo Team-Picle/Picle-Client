@@ -6,32 +6,19 @@ const imgUrl = '';
 const longitude = '';
 const latitude = '';
 
-class RoutineItem extends StatefulWidget {
+class RoutineItem extends StatelessWidget {
   final int userId;
-  final int id;
+  final int routineId;
   final String text;
   final bool isChecked;
 
   const RoutineItem({
     super.key,
     required this.userId,
-    required this.id,
+    required this.routineId,
     required this.text,
     required this.isChecked,
   });
-
-  @override
-  State<RoutineItem> createState() => _RoutineItemState();
-}
-
-class _RoutineItemState extends State<RoutineItem> {
-  bool _isChecked = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _isChecked = widget.isChecked;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +39,7 @@ class _RoutineItemState extends State<RoutineItem> {
                       horizontal: VisualDensity.minimumDensity,
                       vertical: VisualDensity.minimumDensity,
                     ),
-                    value: _isChecked,
+                    value: isChecked,
                     shape: RoundedRectangleBorder(
                       side: const BorderSide(
                         color: Colors.green,
@@ -62,18 +49,17 @@ class _RoutineItemState extends State<RoutineItem> {
                     ),
                     activeColor: const Color(0xFF54C29B),
                     onChanged: (value) {
-                      setState(() {
-                        _isChecked = value!;
-                      });
-                      provider.verifyRoutine(widget.userId, widget.id, imgUrl,
-                          longitude, latitude);
+                      if (value == true) {
+                        provider.verifyRoutine(
+                            userId, routineId, imgUrl, longitude, latitude);
+                      }
                     }),
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
-                widget.text,
+                text,
                 style: const TextStyle(
                   fontSize: 16,
                 ),
@@ -88,7 +74,7 @@ class _RoutineItemState extends State<RoutineItem> {
                 ),
                 padding: EdgeInsets.zero,
                 onPressed: () async {
-                  await provider.deleteRoutine(widget.userId, widget.id);
+                  await provider.deleteRoutine(userId, routineId);
                 },
                 icon: const Icon(Icons.more_horiz),
               ),

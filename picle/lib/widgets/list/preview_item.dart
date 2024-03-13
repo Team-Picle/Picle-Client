@@ -6,23 +6,20 @@ const imgUrl = '';
 const longitude = '';
 const latitude = '';
 
-class PreviewItem extends StatefulWidget {
+class PreviewItem extends StatelessWidget {
   final int userId;
-  final int id;
-  final String text;
+  final int routineId;
+  final String content;
+  final String time;
 
   const PreviewItem({
     super.key,
     required this.userId,
-    required this.id,
-    required this.text,
+    required this.routineId,
+    required this.content,
+    required this.time,
   });
 
-  @override
-  State<PreviewItem> createState() => _PreviewItemState();
-}
-
-class _PreviewItemState extends State<PreviewItem> {
   @override
   Widget build(BuildContext context) {
     return Consumer<RoutineProvider>(
@@ -39,19 +36,19 @@ class _PreviewItemState extends State<PreviewItem> {
                     vertical: VisualDensity.minimumDensity,
                   ),
                   padding: EdgeInsets.zero,
-                  onPressed: () async {},
+                  onPressed: () async {
+                    await provider.addRoutine(
+                        userId, routineId, content); // api 연결 시에는 content 삭제
+                  },
                   icon: const Icon(
                     Icons.add,
                     color: Colors.grey,
                   )),
-              // const SizedBox(
-              //   width: 10,
-              // ),
             ),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
-                widget.text,
+                content,
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.grey,
@@ -67,7 +64,7 @@ class _PreviewItemState extends State<PreviewItem> {
                   ),
                   padding: EdgeInsets.zero,
                   onPressed: () async {
-                    await provider.deleteRoutine(widget.userId, widget.id);
+                    await provider.finishRoutine(userId, routineId);
                   },
                   icon: const Icon(Icons.more_horiz),
                 ))
