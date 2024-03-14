@@ -160,7 +160,7 @@ class RoutineProvider extends ChangeNotifier {
       'isCompleted': false,
       'isPreview': false
     };
-    uncheckRoutineList = [Routine.fromJson(data), ...uncheckRoutineList];
+    uncheckRoutineList = [...uncheckRoutineList, Routine.fromJson(data)];
     previewList.removeWhere((preview) => preview.routineId == routineId);
     id = id + 1;
 
@@ -175,7 +175,7 @@ class RoutineProvider extends ChangeNotifier {
 
     //   final responseData = json.decode(response.body);
     //   Map<String, dynamic> data = responseData['data'];
-    //   uncheckRoutineList = [Routine.fromJson(data), ...uncheckRoutineList];
+    //   uncheckRoutineList = [...uncheckRoutineList, Routine.fromJson(data)];
     //   previewList.removeWhere((preview) => preview.routineId == routineId);
     // } catch (error) {
     //   // Toast message 보여주기 '루틴 추가에 실패했습니다'
