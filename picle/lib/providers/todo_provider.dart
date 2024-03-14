@@ -119,7 +119,6 @@ class TodoProvider extends ChangeNotifier {
       };
       uncheckTodoList.removeWhere((todo) => todo.id == todoId);
       checkTodoList = [...checkTodoList, Todo.fromJson(data)];
-      checkTodoList.sort(((a, b) => a.id.compareTo(b.id)));
     } else {
       var todo = checkTodoList.firstWhere((todo) => todo.id == todoId);
       Map<String, dynamic> data = {
@@ -131,7 +130,6 @@ class TodoProvider extends ChangeNotifier {
       };
       checkTodoList.removeWhere((todo) => todo.id == todoId);
       uncheckTodoList = [...uncheckTodoList, Todo.fromJson(data)];
-      uncheckTodoList.sort(((a, b) => a.id.compareTo(b.id)));
     }
 
     // try {
@@ -149,11 +147,9 @@ class TodoProvider extends ChangeNotifier {
     //   if (isCompleted) {
     //     uncheckTodoList.removeWhere((todo) => todo.id == todoId);
     //     checkTodoList = [...checkTodoList, Todo.fromJson(data)];
-    //     checkTodoList.sort(((a, b) => a.id.compareTo(b.id)));
     //   } else {
     //     checkTodoList.removeWhere((todo) => todo.id == todoId);
     //     uncheckTodoList = [...checkTodoList, Todo.fromJson(data)];
-    //     uncheckTodoList.sort(((a, b) => a.id.compareTo(b.id)));
     //   }
     // } catch (error) {
     //   // Toast message 보여주기 '투두를 수정할 수 없습니다'
