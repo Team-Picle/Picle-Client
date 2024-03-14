@@ -17,9 +17,9 @@ class RoutineList extends StatelessWidget {
         Expanded(child:
             Consumer<RoutineProvider>(builder: (context, provider, child) {
           List<dynamic> combinedList = [
-            ...provider.previewList,
             ...provider.uncheckRoutineList,
-            ...provider.checkRoutineList
+            ...provider.checkRoutineList,
+            ...provider.previewList,
           ];
 
           return ListView.builder(
