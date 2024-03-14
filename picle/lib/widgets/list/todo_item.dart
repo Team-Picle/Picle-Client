@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:picle/providers/todo_provider.dart';
 import 'package:provider/provider.dart';
 
-class TodoItem extends StatefulWidget {
+class TodoItem extends StatelessWidget {
   final int userId;
   final int id;
   final String text;
@@ -15,19 +15,6 @@ class TodoItem extends StatefulWidget {
     required this.text,
     required this.isChecked,
   });
-
-  @override
-  State<TodoItem> createState() => _TodoItemState();
-}
-
-class _TodoItemState extends State<TodoItem> {
-  bool _isChecked = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _isChecked = widget.isChecked;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +34,7 @@ class _TodoItemState extends State<TodoItem> {
                     horizontal: VisualDensity.minimumDensity,
                     vertical: VisualDensity.minimumDensity,
                   ),
-                  value: _isChecked,
+                  value: isChecked,
                   shape: RoundedRectangleBorder(
                     side: const BorderSide(
                       color: Colors.green,
@@ -57,11 +44,7 @@ class _TodoItemState extends State<TodoItem> {
                   ),
                   activeColor: const Color(0xFF54C29B),
                   onChanged: (value) {
-                    setState(() {
-                      _isChecked = value!;
-                    });
-                    provider.updateTodo(widget.userId, widget.id,
-                        isCompleted: value);
+                    provider.completeTodo(userId, id, value);
                   }),
             ),
           ),
@@ -70,7 +53,7 @@ class _TodoItemState extends State<TodoItem> {
           ),
           Expanded(
             child: Text(
-              widget.text,
+              text,
               style: const TextStyle(
                 fontSize: 16,
               ),
