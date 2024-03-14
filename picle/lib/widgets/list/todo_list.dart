@@ -15,7 +15,10 @@ class TodoList extends StatelessWidget {
         Expanded(
           child: Consumer<TodoProvider>(
             builder: (context, provider, child) {
-              List<Todo> todoList = provider.todoList;
+              List<Todo> todoList = [
+                ...provider.uncheckTodoList,
+                ...provider.checkTodoList
+              ];
 
               return ListView.builder(
                 padding: const EdgeInsets.symmetric(vertical: 10),
