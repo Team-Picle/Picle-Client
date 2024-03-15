@@ -3,6 +3,10 @@
         android:label="picle"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCf7cL0JHbwtIONZrJqEwHHyx9etVb-Ygg"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -25,6 +29,7 @@
             </intent-filter>
         </activity>
         <manifest>
+        
   <application>
 
   <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
