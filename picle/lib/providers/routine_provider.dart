@@ -144,7 +144,7 @@ class RoutineProvider extends ChangeNotifier {
 
   int id = 100;
   // api 연결 시에는 content param 삭제
-  Future<void> addRoutine(userId, routineId, content) async {
+  Future<void> addRoutine(userId, routineId, content, time) async {
     Map<String, dynamic> data = {
       'userId': userId,
       'routineId': id,
@@ -152,13 +152,13 @@ class RoutineProvider extends ChangeNotifier {
       'content': content,
       'registrationImgUrl': '',
       'date': '',
-      'time': '',
       'startRepeatDate': '',
       'repeatDays': [],
       'destinationLongitude': 0.0,
       'destinationLatitude': 0.0,
       'isCompleted': false,
-      'isPreview': false
+      'isPreview': false,
+      if (time != null) 'time': time,
     };
     uncheckRoutineList = [...uncheckRoutineList, Routine.fromJson(data)];
     previewList.removeWhere((preview) => preview.routineId == routineId);

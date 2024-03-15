@@ -5,7 +5,7 @@ class Routine {
   final String content;
   final String registrationImgUrl;
   final String date;
-  final String time;
+  final String? time;
   final String startRepeatDate;
   final List<dynamic> repeatDays;
   final double destinationLongitude;
@@ -20,7 +20,7 @@ class Routine {
     required this.content,
     required this.registrationImgUrl,
     required this.date,
-    required this.time,
+    this.time,
     required this.startRepeatDate,
     required this.repeatDays,
     required this.destinationLongitude,
