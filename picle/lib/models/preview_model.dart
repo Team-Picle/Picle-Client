@@ -2,7 +2,7 @@ class Preview {
   final int userId;
   final int routineId;
   final String content;
-  final String time;
+  final String? time;
   final String startRepeatDate;
   final List<dynamic> repeatDays;
 
@@ -10,7 +10,7 @@ class Preview {
     required this.userId,
     required this.routineId,
     required this.content,
-    required this.time,
+    this.time,
     required this.startRepeatDate,
     required this.repeatDays,
   });

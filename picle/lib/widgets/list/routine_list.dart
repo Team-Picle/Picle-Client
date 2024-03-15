@@ -32,8 +32,10 @@ class RoutineList extends StatelessWidget {
                     ? RoutineItem(
                         userId: item.userId,
                         routineId: item.routineId,
-                        text: item.content,
-                        isChecked: item.isCompleted)
+                        content: item.content,
+                        isChecked: item.isCompleted,
+                        time: item.time,
+                      )
                     : PreviewItem(
                         userId: item.userId,
                         routineId: item.routineId,
