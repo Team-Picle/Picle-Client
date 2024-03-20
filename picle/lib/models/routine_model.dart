@@ -8,8 +8,8 @@ class Routine {
   final String? time;
   final String startRepeatDate;
   final List<dynamic> repeatDays;
-  final double destinationLongitude;
-  final double destinationLatitude;
+  double destinationLongitude;
+  double destinationLatitude;
   final bool isCompleted;
   final bool isPreview;
 

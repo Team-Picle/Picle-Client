@@ -3,11 +3,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:picle/models/routine_model.dart';
 import 'package:picle/providers/image_provider.dart';
 import 'package:picle/widgets/date_picker.dart';
 import 'package:picle/widgets/default_button.dart';
+// import 'package:picle/widgets/gps_picker.dart';
 
 const cloudName = 'dqhllkoz8';
 final picker = ImagePicker();
@@ -17,6 +20,8 @@ DateTime? selectedTime;
 bool timePicked = false;
 String imgUrl = '';
 XFile? image;
+bool destinationPicked = false;
+// routine provider 구조를 잘 모르겠어서 일단 객체로 구현함..
 Routine routine = Routine(
   routineIdentifier: 1,
   userId: 111,
@@ -28,8 +33,8 @@ Routine routine = Routine(
       '${selectedTime?.hour.toString().padLeft(2, '0')}:${selectedTime?.minute.toString().padLeft(2, '0')}',
   startRepeatDate: '2024-01-01',
   repeatDays: ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"],
-  destinationLongitude: 37.549,
-  destinationLatitude: 126.9595,
+  destinationLongitude: 126.9595,
+  destinationLatitude: 37.549,
   registrationImgUrl: imgUrl,
   isCompleted: false,
   isPreview: false,
@@ -72,7 +77,15 @@ void addBottomModal({
           return Column(
             children: [
               GestureDetector(
-                onTap: () async {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          const GoogleMapsWidget(), // GoogleMapsWidget으로 이동
+                    ),
+                  );
+                },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -86,6 +99,15 @@ void addBottomModal({
                         fontSize: 16,
                       ),
                     ),
+                    // const SizedBox(width: 20),
+                    // if (destinationPicked == true) // 사용자의 위치가 등록된 경우
+                    //   Text(
+                    //     '위도: ${routine.destinationLatitude.toStringAsFixed(4)}, 경도: ${routine.destinationLongitude.toStringAsFixed(4)}',
+                    //     style: const TextStyle(
+                    //       fontSize: 12,
+                    //       color: Colors.grey,
+                    //     ),
+                    //   ),
                   ],
                 ),
               ),
@@ -262,6 +284,98 @@ void addBottomModal({
       },
     ),
   );
+}
+
+class GoogleMapsWidget extends StatefulWidget {
+  const GoogleMapsWidget({super.key});
+
+  @override
+  _GoogleMapsWidgetState createState() => _GoogleMapsWidgetState();
+}
+
+class _GoogleMapsWidgetState extends State<GoogleMapsWidget> {
+  late GoogleMapController mapController;
+  LatLng? currentLocation;
+  LatLng? selectedLocation;
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Google Maps'),
+      ),
+      body: (currentLocation != null)
+          ? GoogleMap(
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: currentLocation!,
+                zoom: 16.0,
+              ),
+              onTap: _onMapTap,
+              markers: Set.of((selectedLocation != null)
+                  ? [
+                      Marker(
+                        markerId: const MarkerId('selected-location'),
+                        position: selectedLocation!,
+                      ),
+                    ]
+                  : []),
+            )
+          : const Center(
+              child: CircularProgressIndicator(),
+            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          if (selectedLocation != null) {
+            print(
+                '선택된 위치: 위도 ${selectedLocation!.latitude}, 경도 ${selectedLocation!.longitude}');
+            setState(() {
+              routine.destinationLatitude = selectedLocation!.latitude;
+              routine.destinationLongitude = selectedLocation!.longitude;
+              destinationPicked = true;
+            });
+            Navigator.pop(context);
+          } else {
+            print('위치를 먼저 선택해주세요.');
+          }
+        },
+        child: const Icon(Icons.check),
+      ),
+    );
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    setState(() {
+      mapController = controller;
+    });
+  }
+
+  void _onMapTap(LatLng latLng) {
+    setState(() {
+      selectedLocation = latLng;
+    });
+  }
+
+  void _getCurrentLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      setState(() {
+        currentLocation = LatLng(position.latitude, position.longitude);
+      });
+    } catch (e) {
+      print('Error getting current location: $e');
+      setState(() {
+        currentLocation = const LatLng(37.545605, 126.963605); // 명신관으로 기본 위치 설정
+      });
+    }
+  }
 }
 
 class DayPicker extends StatefulWidget {
