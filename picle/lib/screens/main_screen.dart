@@ -17,37 +17,42 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<TodoProvider>(
-            create: (_) => TodoProvider(),
-          ),
-          ChangeNotifierProvider<RoutineProvider>(
-            create: (_) => RoutineProvider(),
-          ),
-        ],
-        builder: (context, child) {
-          return const Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Avatar(),
+      body: SingleChildScrollView(
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<TodoProvider>(
+              create: (_) => TodoProvider(),
+            ),
+            ChangeNotifierProvider<RoutineProvider>(
+              create: (_) => RoutineProvider(),
+            ),
+          ],
+          builder: (context, child) {
+            return SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Avatar(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
+                    child: Calendar(),
+                  ),
+                  ScheduleList(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
-                child: Calendar(),
-              ),
-              ScheduleList(),
-              SizedBox(
-                height: 10,
-              ),
-            ],
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
