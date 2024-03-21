@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:picle/providers/todo_provider.dart';
 import 'package:provider/provider.dart';
 
-class TodoItem extends StatelessWidget {
+class TodoItem extends StatefulWidget {
   final int userId;
   final int id;
   final String text;
@@ -15,6 +15,31 @@ class TodoItem extends StatelessWidget {
     required this.text,
     required this.isChecked,
   });
+
+  @override
+  State<TodoItem> createState() => _TodoItemState();
+}
+
+class _TodoItemState extends State<TodoItem> {
+  final TextEditingController _controller = TextEditingController();
+  FocusNode textFocus = FocusNode();
+  late String content;
+  late bool isUpdate;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.text = widget.text;
+    content = widget.text;
+    isUpdate = false;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    textFocus.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +59,7 @@ class TodoItem extends StatelessWidget {
                     horizontal: VisualDensity.minimumDensity,
                     vertical: VisualDensity.minimumDensity,
                   ),
-                  value: isChecked,
+                  value: widget.isChecked,
                   shape: RoundedRectangleBorder(
                     side: const BorderSide(
                       color: Colors.green,
@@ -44,21 +69,53 @@ class TodoItem extends StatelessWidget {
                   ),
                   activeColor: const Color(0xFF54C29B),
                   onChanged: (value) {
-                    provider.completeTodo(userId, id, value);
+                    provider.completeTodo(widget.userId, widget.id, value);
                   }),
             ),
           ),
           const SizedBox(
             width: 10,
           ),
-          Expanded(
-            child: Text(
-              text,
-              style: const TextStyle(
-                fontSize: 16,
+          if (!isUpdate)
+            Expanded(
+              child: Text(
+                widget.text,
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            )
+          else
+            Expanded(
+              child: TextField(
+                controller: _controller,
+                focusNode: textFocus,
+                autofocus: true,
+                decoration: const InputDecoration(
+                  hintText: '수정할 내용을 입력해주세요.',
+                  contentPadding: EdgeInsets.symmetric(vertical: 0),
+                  border: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey, width: 1),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF54C29B), width: 2),
+                  ),
+                ),
+                onChanged: (text) {
+                  setState(() {
+                    content = text;
+                  });
+                },
+                onEditingComplete: () {
+                  setState(() {
+                    isUpdate = false;
+                  });
+                  provider.updateTodo(widget.userId, widget.id,
+                      content: _controller.text);
+                },
               ),
             ),
-          ),
           SizedBox(
             width: 24,
             child: IconButton(
@@ -67,7 +124,11 @@ class TodoItem extends StatelessWidget {
                 vertical: VisualDensity.minimumDensity,
               ),
               padding: EdgeInsets.zero,
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  isUpdate = true;
+                });
+              },
               icon: const Icon(Icons.more_horiz),
             ),
           ),
