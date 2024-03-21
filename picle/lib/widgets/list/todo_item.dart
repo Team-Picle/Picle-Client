@@ -22,7 +22,6 @@ class TodoItem extends StatefulWidget {
 
 class _TodoItemState extends State<TodoItem> {
   final TextEditingController _controller = TextEditingController();
-  FocusNode textFocus = FocusNode();
   late String content;
   late bool isUpdate;
 
@@ -37,7 +36,6 @@ class _TodoItemState extends State<TodoItem> {
   @override
   void dispose() {
     _controller.dispose();
-    textFocus.dispose();
     super.dispose();
   }
 
@@ -89,7 +87,6 @@ class _TodoItemState extends State<TodoItem> {
             Expanded(
               child: TextField(
                 controller: _controller,
-                focusNode: textFocus,
                 autofocus: true,
                 decoration: const InputDecoration(
                   hintText: '수정할 내용을 입력해주세요.',
@@ -102,6 +99,13 @@ class _TodoItemState extends State<TodoItem> {
                     borderSide: BorderSide(color: Color(0xFF54C29B), width: 2),
                   ),
                 ),
+                onTapOutside: (event) {
+                  _controller.text = widget.text;
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  setState(() {
+                    isUpdate = false;
+                  });
+                },
                 onChanged: (text) {
                   setState(() {
                     content = text;
