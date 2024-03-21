@@ -29,23 +29,23 @@
       "routineId": 4,
       "userId": 8,
       "content": "청년매입임대주택 신청",
-      "time": "18:00:00",
+      "time": "03:54:00",
       "startRepeatDate": "2024-01-03",
       "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"]
     },
     {
       "routineId": 5,
       "userId": 8,
-      "content": "루틴 리스트 더미 데이터",
-      "time": "21:30:00",
+      "content": "푸시 알림 해제!!!",
+      "time": "03:54:00",
       "startRepeatDate": "2024-01-01",
       "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"]
     },
     {
       "routineId": 6,
       "userId": 8,
-      "content": "푸시 알림 테스트",
-      "time": "03:35:00",
+      "content": "푸시 알림 테스트!!!",
+      "time": "03:54:00",
       "startRepeatDate": "2024-01-14",
       "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"]
     },

@@ -157,12 +157,12 @@ class RoutineProvider extends ChangeNotifier {
     };
     uncheckRoutineList = [...uncheckRoutineList, Routine.fromJson(data)];
     previewList.removeWhere((preview) => preview.routineId == routineId);
-    id = id + 1;
 
     final dateTime = '$date $time';
     if (time != null) {
       showNotification(id: id, content: content, date: dateTime);
     }
+    id = id + 1;
 
     // try {
     //   final queryParams = {
@@ -277,6 +277,7 @@ class RoutineProvider extends ChangeNotifier {
       'isPreview': target.isPreview
     };
     checkRoutineList = [...checkRoutineList, Routine.fromJson(data)];
+    await notifications.cancel(routineId);
 
     // try {
     //   final queryParams = {'date': date};
@@ -295,6 +296,7 @@ class RoutineProvider extends ChangeNotifier {
     //   uncheckRoutineList
     //       .removeWhere((routine) => routine.routineId == routineId);
     //   checkRoutineList = [...checkRoutineList, Routine.fromJson(data)];
+    //   await notifications.cancel(routineId);
     // } catch (error) {
     //   // Toast message 보여주기 '루틴을 완료할 수 없습니다'
     //   // print('${response['code']}: ${response['message']}');
