@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/widgets/routine_time.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,8 @@ class PreviewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String date = Provider.of<DateProvider>(context).getDate();
+
     return Consumer<RoutineProvider>(
       builder: (context, provider, child) {
         return Column(children: [
@@ -40,7 +43,7 @@ class PreviewItem extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     onPressed: () async {
                       await provider.addRoutine(userId, routineId, content,
-                          time); // api 연결 시에는 content 삭제
+                          date, time); // api 연결 시에는 content 삭제
                     },
                     icon: const Icon(
                       Icons.add,

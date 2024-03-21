@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picle/models/todo_model.dart';
+import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/todo_provider.dart';
 import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/list/todo_item.dart';
@@ -10,6 +11,8 @@ class TodoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String date = Provider.of<DateProvider>(context).getDate();
+
     return Column(
       children: [
         Expanded(

@@ -44,8 +44,8 @@
     {
       "routineId": 6,
       "userId": 8,
-      "content": "화락 바베큐 맛있더라 얘들아",
-      "time": "12:20:00",
+      "content": "푸시 알림 테스트",
+      "time": "03:35:00",
       "startRepeatDate": "2024-01-14",
       "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"]
     },

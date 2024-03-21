@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:picle/constants/index.dart';
 import 'package:picle/models/preview_model.dart';
 import 'package:picle/models/routine_model.dart';
+import 'package:picle/notification.dart';
 
 var userId = 1;
 
@@ -14,21 +15,15 @@ class RoutineProvider extends ChangeNotifier {
   List<Routine> uncheckRoutineList = [];
   List<Routine> checkRoutineList = [];
 
-  String date = DateTime.now() //
-      .toString()
-      .split(' ')[0];
-
   RoutineProvider() {
-    fetchRoutineList();
-    fetchPreviewList();
+    String today = DateTime.now() //
+        .toString()
+        .split(' ')[0];
+    fetchRoutineList(today);
+    fetchPreviewList(today);
   }
 
-  void updateDate(selectedDate) {
-    date = selectedDate.toString().split(' ')[0];
-    notifyListeners();
-  }
-
-  Future<void> fetchPreviewList() async {
+  Future<void> fetchPreviewList(date) async {
     final response = await rootBundle.loadString('lib/data/preview_list.json');
     final data = json.decode(response);
 
@@ -71,7 +66,7 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchRoutineList() async {
+  Future<void> fetchRoutineList(date) async {
     final response = await rootBundle.loadString('lib/data/routine_list.json');
     final data = json.decode(response);
 
@@ -144,7 +139,7 @@ class RoutineProvider extends ChangeNotifier {
 
   int id = 100;
   // api 연결 시에는 content param 삭제
-  Future<void> addRoutine(userId, routineId, content, time) async {
+  Future<void> addRoutine(userId, routineId, content, date, time) async {
     Map<String, dynamic> data = {
       'userId': userId,
       'routineId': id,
@@ -164,6 +159,11 @@ class RoutineProvider extends ChangeNotifier {
     previewList.removeWhere((preview) => preview.routineId == routineId);
     id = id + 1;
 
+    final dateTime = '$date $time';
+    if (time != null) {
+      showNotification(id: id, content: content, date: dateTime);
+    }
+
     // try {
     //   final queryParams = {
     //     'date': date,
@@ -177,6 +177,12 @@ class RoutineProvider extends ChangeNotifier {
     //   Map<String, dynamic> data = responseData['data'];
     //   uncheckRoutineList = [...uncheckRoutineList, Routine.fromJson(data)];
     //   previewList.removeWhere((preview) => preview.routineId == routineId);
+    //   if (data['time'] != null) {
+    //     showNotification(
+    //         id: data['routineId'],
+    //         content: data['content'],
+    //         date: '$date ${data['time']}');
+    //   }
     // } catch (error) {
     //   // Toast message 보여주기 '루틴 추가에 실패했습니다'
     //   // print('${response['code']}: ${response['message']}');
@@ -201,10 +207,11 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteRoutine(userId, routineId) async {
+  Future<void> deleteRoutine(userId, routineId, date) async {
     uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);
     checkRoutineList.removeWhere((routine) => routine.routineId == routineId);
-    await fetchPreviewList();
+    await fetchPreviewList(date);
+    await notifications.cancel(routineId);
 
     // try {
     //   final uri = Uri.https(
@@ -213,8 +220,8 @@ class RoutineProvider extends ChangeNotifier {
     //   uncheckRoutineList
     //       .removeWhere((routine) => routine.routineId == routineId);
     //   checkRoutineList.removeWhere((routine) => routine.routineId == routineId);
-
-    //   await fetchPreviewList();
+    //   await fetchPreviewList(date);
+    //   await notifications.cancel(routineId);
     // } catch (error) {
     //   // Toast message 보여주기 '루틴을 삭제할 수 없습니다'
     //   // print('${response['code']}: ${response['message']}');
@@ -249,7 +256,7 @@ class RoutineProvider extends ChangeNotifier {
   }
 
   Future<void> verifyRoutine(
-      userId, routineId, imgUrl, longitude, latitude) async {
+      userId, routineId, imgUrl, longitude, latitude, date) async {
     var target = uncheckRoutineList
         .firstWhere((routine) => routine.routineId == routineId);
     uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);

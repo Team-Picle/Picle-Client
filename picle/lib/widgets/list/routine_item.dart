@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/widgets/routine_time.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,8 @@ class RoutineItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<RoutineProvider>(
       builder: (context, provider, child) {
+        String date = Provider.of<DateProvider>(context).getDate();
+
         return Column(children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,8 +57,8 @@ class RoutineItem extends StatelessWidget {
                       activeColor: const Color(0xFF54C29B),
                       onChanged: (value) {
                         if (value == true) {
-                          provider.verifyRoutine(
-                              userId, routineId, imgUrl, longitude, latitude);
+                          provider.verifyRoutine(userId, routineId, imgUrl,
+                              longitude, latitude, date);
                         }
                       }),
                 ),
@@ -78,7 +81,7 @@ class RoutineItem extends StatelessWidget {
                   ),
                   padding: EdgeInsets.zero,
                   onPressed: () async {
-                    await provider.deleteRoutine(userId, routineId);
+                    await provider.deleteRoutine(userId, routineId, date);
                   },
                   icon: const Icon(Icons.more_horiz),
                 ),
