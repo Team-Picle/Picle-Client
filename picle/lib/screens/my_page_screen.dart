@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
 
-  static String name = '엘지우승V4';
+  static String name = '개디언즈';
 
   @override
   Widget build(BuildContext context) {
