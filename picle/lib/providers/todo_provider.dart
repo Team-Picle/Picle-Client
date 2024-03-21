@@ -11,20 +11,14 @@ var userId = 1;
 class TodoProvider extends ChangeNotifier {
   List<Todo> uncheckTodoList = [];
   List<Todo> checkTodoList = [];
-  String date = DateTime.now() //
-      .toString()
-      .split(' ')[0];
 
   TodoProvider() {
-    fetchTodoList();
+    fetchTodoList(DateTime.now() //
+        .toString()
+        .split(' ')[0]);
   }
 
-  void updateDate(selectedDate) {
-    date = selectedDate.toString().split(' ')[0];
-    notifyListeners();
-  }
-
-  Future<void> fetchTodoList() async {
+  Future<void> fetchTodoList(date) async {
     final response = await rootBundle.loadString('lib/data/todo_list.json');
     final data = json.decode(response);
 
@@ -67,7 +61,7 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addTodo(userId, content) async {
+  Future<void> addTodo(userId, content, date) async {
     try {
       final jsonData = {
         'content': content,
@@ -159,7 +153,7 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateTodo(userId, todoId, {content, todoDate}) async {
+  Future<void> updateTodo(userId, todoId, {content, date}) async {
     uncheckTodoList = uncheckTodoList
         .map((todo) => todo.id == todoId
             ? Todo(
@@ -180,12 +174,13 @@ class TodoProvider extends ChangeNotifier {
                 isCompleted: todo.isCompleted)
             : todo)
         .toList();
+
     // try {
     //   final uri =
     //       Uri.https(serverEndpoint, apiPath['updateTodo']!(userId, todoId));
     //   final jsonData = {
     //     if (content != null) 'content': content,
-    //     if (todoDate != null) 'date': todoDate,
+    //     if (todoDate != null) 'date': date,
     //   };
     //   final requestBody = json.encode(jsonData);
     //   final response = await http.patch(uri, body: requestBody, headers: {

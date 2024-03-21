@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:picle/providers/todo_provider.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:picle/providers/date_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({super.key});
@@ -18,7 +18,7 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TodoProvider>(
+    return Consumer<DateProvider>(
       builder: (context, provider, child) {
         return TableCalendar(
           firstDay: DateTime.utc(2010, 10, 16),
@@ -40,7 +40,7 @@ class _CalendarState extends State<Calendar> {
               _focusedDay = focusedDay;
             });
             provider.updateDate(selectedDay);
-            await provider.fetchTodoList();
+            // await provider.fetchTodoList();
           },
           calendarFormat: _calendarFormat,
           onFormatChanged: (format) {

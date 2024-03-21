@@ -15,51 +15,6 @@
       "destinationLatitude": 126.9595,
       "isCompleted": false,
       "isPreview": false
-    },
-    {
-      "routineIdentifier": 4,
-      "routineId": 9,
-      "userId": 8,
-      "content": "청년매입임대주택 신청",
-      "registrationImgUrl": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
-      "date": "2024-01-03",
-      "time": "18:00:00",
-      "startRepeatDate": "2024-01-01",
-      "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"],
-      "destinationLongitude": 37.549,
-      "destinationLatitude": 126.9595,
-      "isCompleted": true,
-      "isPreview": false
-    },
-    {
-      "routineIdentifier": 5,
-      "routineId": 10,
-      "userId": 8,
-      "content": "루틴 리스트 더미 데이터",
-      "registrationImgUrl": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
-      "date": "2024-01-03",
-      "time": "21:30:00",
-      "startRepeatDate": "2024-01-01",
-      "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"],
-      "destinationLongitude": 37.549,
-      "destinationLatitude": 126.9595,
-      "isCompleted": true,
-      "isPreview": false
-    },
-    {
-      "routineIdentifier": 6,
-      "routineId": 11,
-      "userId": 8,
-      "content": "화락 바베큐 맛있더라 얘들아",
-      "registrationImgUrl": "https://lh3.googleusercontent.com/a/ACg8ocL0Qem3Tmkp9hBddwJ0JMLSEAWBYQI7dG4Ze5Ewy4IK=s96-c",
-      "date": "2024-01-03",
-      "time": "12:20:00",
-      "startRepeatDate": "2024-01-01",
-      "repeatDays": ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"],
-      "destinationLongitude": 37.549,
-      "destinationLatitude": 126.9595,
-      "isCompleted": true,
-      "isPreview": false
     }
   ]
 }

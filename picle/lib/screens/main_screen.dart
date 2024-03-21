@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/providers/todo_provider.dart';
 import 'package:picle/widgets/avatar.dart';
@@ -6,14 +7,9 @@ import 'package:picle/widgets/calender.dart';
 import 'package:picle/widgets/schedule_list.dart';
 import 'package:provider/provider.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +21,9 @@ class _MainScreenState extends State<MainScreen> {
             ),
             ChangeNotifierProvider<RoutineProvider>(
               create: (_) => RoutineProvider(),
+            ),
+            ChangeNotifierProvider<DateProvider>(
+              create: (_) => DateProvider(),
             ),
           ],
           builder: (context, child) {
