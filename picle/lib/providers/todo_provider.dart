@@ -160,30 +160,50 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<void> updateTodo(userId, todoId, {content, todoDate}) async {
-    try {
-      final uri =
-          Uri.https(serverEndpoint, apiPath['updateTodo']!(userId, todoId));
-      final jsonData = {
-        if (content != null) 'content': content,
-        if (todoDate != null) 'date': todoDate,
-      };
-      final requestBody = json.encode(jsonData);
-      final response = await http.patch(uri, body: requestBody, headers: {
-        'Content-Type': 'application/json',
-      });
+    uncheckTodoList = uncheckTodoList
+        .map((todo) => todo.id == todoId
+            ? Todo(
+                id: todoId,
+                userId: userId,
+                content: content!,
+                date: todo.date,
+                isCompleted: todo.isCompleted)
+            : todo)
+        .toList();
+    checkTodoList = checkTodoList
+        .map((todo) => todo.id == todoId
+            ? Todo(
+                id: todoId,
+                userId: userId,
+                content: content!,
+                date: todo.date,
+                isCompleted: todo.isCompleted)
+            : todo)
+        .toList();
+    // try {
+    //   final uri =
+    //       Uri.https(serverEndpoint, apiPath['updateTodo']!(userId, todoId));
+    //   final jsonData = {
+    //     if (content != null) 'content': content,
+    //     if (todoDate != null) 'date': todoDate,
+    //   };
+    //   final requestBody = json.encode(jsonData);
+    //   final response = await http.patch(uri, body: requestBody, headers: {
+    //     'Content-Type': 'application/json',
+    //   });
 
-      final responseBody = json.decode(response.body);
-      Map<String, dynamic> data = responseBody['data'];
-      uncheckTodoList = uncheckTodoList
-          .map((todo) => todo.id == todoId ? Todo.fromJson(data) : todo)
-          .toList();
-      checkTodoList = checkTodoList
-          .map((todo) => todo.id == todoId ? Todo.fromJson(data) : todo)
-          .toList();
-    } catch (error) {
-      // Toast message 보여주기 '투두를 수정할 수 없습니다'
-      // print('${response['code']}: ${response['message']}');
-    }
+    //   final responseBody = json.decode(response.body);
+    //   Map<String, dynamic> data = responseBody['data'];
+    //   uncheckTodoList = uncheckTodoList
+    //       .map((todo) => todo.id == todoId ? Todo.fromJson(data) : todo)
+    //       .toList();
+    //   checkTodoList = checkTodoList
+    //       .map((todo) => todo.id == todoId ? Todo.fromJson(data) : todo)
+    //       .toList();
+    // } catch (error) {
+    //   // Toast message 보여주기 '투두를 수정할 수 없습니다'
+    //   // print('${response['code']}: ${response['message']}');
+    // }
 
     notifyListeners();
   }
