@@ -11,8 +11,6 @@ class TodoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String date = Provider.of<DateProvider>(context).getDate();
-
     return Column(
       children: [
         Expanded(
@@ -45,7 +43,10 @@ class TodoList extends StatelessWidget {
         ),
         DefaultButton(
           buttonText: '투두 등록하기',
-          onPressed: () {},
+          onPressed: () {
+            String date = context.read<DateProvider>().getDate();
+            context.read<TodoProvider>().addTodo(1, '투두 추가입니다!', date);
+          },
         ),
       ],
     );

@@ -1,7 +1,7 @@
-const serverEndpoint = 'www.picle.server.com';
+const serverEndpoint = '13.124.96.237:8080';
 final apiPath = {
   'getTodos': (userId) => '/api/v1/todo/getByDate/$userId',
-  'createTodo': (userId) => '/api/todo/create/$userId',
+  'createTodo': (userId) => '/api/v1/todo/create/$userId',
   'deleteTodo': (userId, todoId) => '/api/v1/todo/delete/$userId/$todoId',
   'updateTodo': (userId, todoId) => '/api/v1/todo/update/$userId/$todoId',
   'getPreviews': (userId) => '/api/v1/routine/getPreviews/$userId',
