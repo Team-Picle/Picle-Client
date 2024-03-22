@@ -18,22 +18,6 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<void> fetchTodoList(date) async {
-    // final response = await rootBundle.loadString('lib/data/todo_list.json');
-    // final data = json.decode(response);
-
-    // if (data['code'] == 200) {
-    //   uncheckTodoList = [
-    //     for (Map<String, dynamic> todo in data['data'])
-    //       if (!todo['isCompleted']) Todo.fromJson(todo),
-    //   ];
-    //   checkTodoList = [
-    //     for (Map<String, dynamic> todo in data['data'])
-    //       if (todo['isCompleted']) Todo.fromJson(todo),
-    //   ];
-    // } else {
-    //   throw Exception('Fail to load date');
-    // }
-
     try {
       final queryParams = {
         'date': date,
@@ -59,6 +43,22 @@ class TodoProvider extends ChangeNotifier {
       // Toast message 보여주기 '투두 불러오기에 실패했습니다'
       // print('${response['code']}: ${response['message']}');
     }
+
+    // final response = await rootBundle.loadString('lib/data/todo_list.json');
+    // final data = json.decode(response);
+
+    // if (data['code'] == 200) {
+    //   uncheckTodoList = [
+    //     for (Map<String, dynamic> todo in data['data'])
+    //       if (!todo['isCompleted']) Todo.fromJson(todo),
+    //   ];
+    //   checkTodoList = [
+    //     for (Map<String, dynamic> todo in data['data'])
+    //       if (todo['isCompleted']) Todo.fromJson(todo),
+    //   ];
+    // } else {
+    //   throw Exception('Fail to load date');
+    // }
 
     notifyListeners();
   }
@@ -105,52 +105,52 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<void> completeTodo(userId, todoId, isCompleted) async {
-    if (isCompleted) {
-      var todo = uncheckTodoList.firstWhere((todo) => todo.id == todoId);
-      Map<String, dynamic> data = {
-        'id': todoId,
-        'userId': userId,
-        'content': todo.content,
-        'date': todo.date,
-        'isCompleted': isCompleted
-      };
-      uncheckTodoList.removeWhere((todo) => todo.id == todoId);
-      checkTodoList = [...checkTodoList, Todo.fromJson(data)];
-    } else {
-      var todo = checkTodoList.firstWhere((todo) => todo.id == todoId);
-      Map<String, dynamic> data = {
-        'id': todoId,
-        'userId': userId,
-        'content': todo.content,
-        'date': todo.date,
-        'isCompleted': isCompleted
-      };
-      checkTodoList.removeWhere((todo) => todo.id == todoId);
-      uncheckTodoList = [...uncheckTodoList, Todo.fromJson(data)];
+    try {
+      final uri =
+          Uri.http(serverEndpoint, apiPath['updateTodo']!(userId, todoId));
+      final jsonData = {'isCompleted': isCompleted};
+      final requestBody = json.encode(jsonData);
+      final response = await http.patch(uri, body: requestBody, headers: {
+        'Content-Type': 'application/json',
+      });
+
+      final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+      Map<String, dynamic> data = responseBody['data'];
+
+      if (isCompleted) {
+        uncheckTodoList.removeWhere((todo) => todo.id == todoId);
+        checkTodoList = [...checkTodoList, Todo.fromJson(data)];
+      } else {
+        checkTodoList.removeWhere((todo) => todo.id == todoId);
+        uncheckTodoList = [...checkTodoList, Todo.fromJson(data)];
+      }
+    } catch (error) {
+      // Toast message 보여주기 '투두를 수정할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
     }
 
-    // try {
-    //   final uri =
-    //       Uri.https(serverEndpoint, apiPath['updateTodo']!(userId, todoId));
-    //   final jsonData = {'isCompleted': isCompleted};
-    //   final requestBody = json.encode(jsonData);
-    //   final response = await http.patch(uri, body: requestBody, headers: {
-    //     'Content-Type': 'application/json',
-    //   });
-
-    //   final responseBody = json.decode(response.body);
-    //   Map<String, dynamic> data = responseBody['data'];
-
-    //   if (isCompleted) {
-    //     uncheckTodoList.removeWhere((todo) => todo.id == todoId);
-    //     checkTodoList = [...checkTodoList, Todo.fromJson(data)];
-    //   } else {
-    //     checkTodoList.removeWhere((todo) => todo.id == todoId);
-    //     uncheckTodoList = [...checkTodoList, Todo.fromJson(data)];
-    //   }
-    // } catch (error) {
-    //   // Toast message 보여주기 '투두를 수정할 수 없습니다'
-    //   // print('${response['code']}: ${response['message']}');
+    // if (isCompleted) {
+    //   var todo = uncheckTodoList.firstWhere((todo) => todo.id == todoId);
+    //   Map<String, dynamic> data = {
+    //     'id': todoId,
+    //     'userId': userId,
+    //     'content': todo.content,
+    //     'date': todo.date,
+    //     'isCompleted': isCompleted
+    //   };
+    //   uncheckTodoList.removeWhere((todo) => todo.id == todoId);
+    //   checkTodoList = [...checkTodoList, Todo.fromJson(data)];
+    // } else {
+    //   var todo = checkTodoList.firstWhere((todo) => todo.id == todoId);
+    //   Map<String, dynamic> data = {
+    //     'id': todoId,
+    //     'userId': userId,
+    //     'content': todo.content,
+    //     'date': todo.date,
+    //     'isCompleted': isCompleted
+    //   };
+    //   checkTodoList.removeWhere((todo) => todo.id == todoId);
+    //   uncheckTodoList = [...uncheckTodoList, Todo.fromJson(data)];
     // }
 
     notifyListeners();
