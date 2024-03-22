@@ -43,11 +43,12 @@ class PreviewItem extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     onPressed: () async {
                       await provider.addRoutine(
-                          userId: userId,
-                          routineId: routineId,
-                          content: content,
-                          date: '',
-                          time: time); // api 연결 시에는 content 삭제
+                        userId: userId,
+                        routineId: routineId,
+                        content: content,
+                        date: date,
+                        time: time,
+                      ); // api 연결 시에는 content 삭제
                     },
                     icon: const Icon(
                       Icons.add,
