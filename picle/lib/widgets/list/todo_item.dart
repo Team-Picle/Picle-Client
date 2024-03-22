@@ -129,10 +129,10 @@ class _TodoItemState extends State<TodoItem> {
               ),
               padding: EdgeInsets.zero,
               onPressed: () {
-                // setState(() {
-                //   isUpdate = true;
-                // });
-                provider.deleteTodo(widget.userId, widget.id);
+                setState(() {
+                  isUpdate = true;
+                });
+                // provider.deleteTodo(widget.userId, widget.id);
               },
               icon: const Icon(Icons.more_horiz),
             ),
