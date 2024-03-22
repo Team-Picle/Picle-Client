@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:picle/models/routine_model.dart';
-import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/widgets/add_modal_widget.dart';
 import 'package:picle/widgets/default_button.dart';
@@ -13,8 +12,6 @@ class RoutineList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String date = Provider.of<DateProvider>(context).getDate();
-
     return Column(
       children: [
         Expanded(child:
