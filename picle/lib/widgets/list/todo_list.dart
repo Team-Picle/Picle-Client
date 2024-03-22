@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picle/models/todo_model.dart';
+import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/todo_provider.dart';
 import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/list/todo_item.dart';
@@ -42,7 +43,10 @@ class TodoList extends StatelessWidget {
         ),
         DefaultButton(
           buttonText: '투두 등록하기',
-          onPressed: () {},
+          onPressed: () {
+            String date = context.read<DateProvider>().getDate();
+            context.read<TodoProvider>().addTodo(1, '투두 추가입니다!', date);
+          },
         ),
       ],
     );

@@ -70,15 +70,19 @@ class TodoProvider extends ChangeNotifier {
         'date': date,
       };
       final requestBody = json.encode(jsonData);
-      final uri = Uri.https(serverEndpoint, apiPath['createTodo']!(userId));
-      final response = await http.post(uri,
-          body: requestBody, headers: {'Content-Type': 'application/json'});
-      final responseBody = json.decode(response.body);
+      final uri = Uri.http(serverEndpoint, apiPath['createTodo']!(userId));
+      final response = await http.post(uri, body: requestBody, headers: {
+        'Content-Type': 'application/json',
+        'Accept-Charset': 'utf-8',
+      });
+      final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+
       uncheckTodoList = [
         ...uncheckTodoList,
         Todo.fromJson(responseBody['data'])
       ];
     } catch (error) {
+      print(error);
       // Toast message 보여주기 '투두를 추가할 수 없습니다'
       // print('${response['code']}: ${response['message']}');
     }
