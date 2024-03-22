@@ -89,13 +89,14 @@ class TodoProvider extends ChangeNotifier {
   Future<void> deleteTodo(userId, todoId) async {
     try {
       final uri =
-          Uri.https(serverEndpoint, apiPath['deleteTodo']!(userId, todoId));
+          Uri.http(serverEndpoint, apiPath['deleteTodo']!(userId, todoId));
       await http.delete(uri, headers: {
         'Content-Type': 'application/json',
       });
       uncheckTodoList.removeWhere((todo) => todo.id == todoId);
       checkTodoList.removeWhere((todo) => todo.id == todoId);
     } catch (error) {
+      print(error);
       // Toast message 보여주기 '투두 삭제에 실패했습니다'
       // print('${response['code']}: ${response['message']}');
     }
