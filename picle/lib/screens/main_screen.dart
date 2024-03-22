@@ -28,7 +28,7 @@ class MainScreen extends StatelessWidget {
           ],
           builder: (context, child) {
             return SizedBox(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height * 0.77,
               child: const Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

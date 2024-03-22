@@ -57,8 +57,13 @@ class RoutineItem extends StatelessWidget {
                       activeColor: const Color(0xFF54C29B),
                       onChanged: (value) {
                         if (value == true) {
-                          provider.verifyRoutine(userId, routineId, imgUrl,
-                              longitude, latitude, date);
+                          provider.verifyRoutine(
+                              userId: userId,
+                              routineId: routineId,
+                              imgUrl: '',
+                              longitude: 0.0,
+                              latitude: 0.0,
+                              date: '');
                         }
                       }),
                 ),
@@ -81,7 +86,8 @@ class RoutineItem extends StatelessWidget {
                   ),
                   padding: EdgeInsets.zero,
                   onPressed: () async {
-                    await provider.deleteRoutine(userId, routineId, date);
+                    await provider.deleteRoutine(
+                        userId: userId, routineId: routineId, date: '');
                   },
                   icon: const Icon(Icons.more_horiz),
                 ),
