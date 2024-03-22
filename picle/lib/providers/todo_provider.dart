@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:picle/constants/index.dart';
 import 'package:picle/models/todo_model.dart';
@@ -44,6 +44,7 @@ class TodoProvider extends ChangeNotifier {
     //   final response =
     //       await http.get(uri, headers: {'Content-Type': 'application/json'});
     //   final responseBody = json.decode(response.body);
+    //   Map<String, dynamic> data = responseBody['data'];
 
     //   uncheckTodoList = [
     //     for (Map<String, dynamic> todo in data['data'])
