@@ -109,8 +109,14 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> registerRoutine(content, imgUrl, time, startRepeatDate,
-      repeatDays, destinationLongitude, destinationLatitude) async {
+  Future<void> registerRoutine(
+      {content,
+      imgUrl,
+      time,
+      startRepeatDate,
+      repeatDays,
+      destinationLongitude,
+      destinationLatitude}) async {
     try {
       final url = Uri.https(serverEndpoint, apiPath['createPreview']!(userId));
       final jsonData = {
@@ -139,7 +145,7 @@ class RoutineProvider extends ChangeNotifier {
 
   int id = 100;
   // api 연결 시에는 content param 삭제
-  Future<void> addRoutine(userId, routineId, content, date, time) async {
+  Future<void> addRoutine({userId, routineId, content, date, time}) async {
     Map<String, dynamic> data = {
       'userId': userId,
       'routineId': id,
@@ -207,7 +213,7 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteRoutine(userId, routineId, date) async {
+  Future<void> deleteRoutine({userId, routineId, date}) async {
     uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);
     checkRoutineList.removeWhere((routine) => routine.routineId == routineId);
     await fetchPreviewList(date);
@@ -230,7 +236,7 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updatePreview(userId, routineId, {time, repeatDays}) async {
+  Future<void> updatePreview({userId, routineId, time, repeatDays}) async {
     try {
       final uri = Uri.https(
           serverEndpoint, apiPath['updateRoutine']!(userId, routineId));
@@ -256,7 +262,7 @@ class RoutineProvider extends ChangeNotifier {
   }
 
   Future<void> verifyRoutine(
-      userId, routineId, imgUrl, longitude, latitude, date) async {
+      {userId, routineId, imgUrl, longitude, latitude, date}) async {
     var target = uncheckRoutineList
         .firstWhere((routine) => routine.routineId == routineId);
     uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);
