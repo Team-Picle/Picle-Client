@@ -152,7 +152,7 @@ class RoutineProvider extends ChangeNotifier {
       'routineIdentifier': routineId,
       'content': content,
       'registrationImgUrl': '',
-      'date': '',
+      'date': date,
       'startRepeatDate': '',
       'repeatDays': [],
       'destinationLongitude': 0.0,
@@ -163,11 +163,26 @@ class RoutineProvider extends ChangeNotifier {
     };
     uncheckRoutineList = [...uncheckRoutineList, Routine.fromJson(data)];
     previewList.removeWhere((preview) => preview.routineId == routineId);
+    print(uncheckRoutineList);
+    print(previewList);
 
-    final dateTime = '$date $time';
-    if (time != null) {
-      showNotification(id: id, content: content, date: dateTime);
+    notifyListeners();
+
+    if (time == null) {
+      id = id + 1;
+      return;
     }
+
+    String dateTime = '$date $time';
+    DateTime routineTime = DateTime.parse(dateTime);
+    DateTime now = DateTime.now();
+
+    if (routineTime.compareTo(now) < 0) {
+      id = id + 1;
+      return;
+    }
+
+    showNotification(id: id, content: content, date: dateTime);
     id = id + 1;
 
     // try {
@@ -183,18 +198,29 @@ class RoutineProvider extends ChangeNotifier {
     //   Map<String, dynamic> data = responseData['data'];
     //   uncheckRoutineList = [...uncheckRoutineList, Routine.fromJson(data)];
     //   previewList.removeWhere((preview) => preview.routineId == routineId);
-    //   if (data['time'] != null) {
-    //     showNotification(
-    //         id: data['routineId'],
-    //         content: data['content'],
-    //         date: '$date ${data['time']}');
+
+    // notifyListeners();
+
+    //   if (data['time'] == null) {
+    //     return;
     //   }
+
+    //   final dateTime = '$date $time';
+    //   DateTime routineTime = DateTime.parse(dateTime);
+    //   DateTime now = DateTime.now();
+
+    //   if (routineTime.compareTo(now) < 0) {
+    //     return;
+    //   }
+
+    //   showNotification(
+    //       id: data['routineId'],
+    //       content: data['content'],
+    //       date: '$date ${data['time']}');
     // } catch (error) {
     //   // Toast message 보여주기 '루틴 추가에 실패했습니다'
     //   // print('${response['code']}: ${response['message']}');
     // }
-
-    notifyListeners();
   }
 
   Future<void> finishRoutine(userId, routineId) async {
