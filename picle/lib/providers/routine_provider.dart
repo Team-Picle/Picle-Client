@@ -133,16 +133,17 @@ class RoutineProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  Future<void> registerRoutine(
-      {content,
-      imgUrl,
-      time,
-      startRepeatDate,
-      repeatDays,
-      destinationLongitude,
-      destinationLatitude}) async {
+  Future<void> registerRoutine({
+    content,
+    imgUrl,
+    time,
+    startRepeatDate,
+    repeatDays,
+    destinationLongitude,
+    destinationLatitude,
+  }) async {
     try {
-      final url = Uri.https(serverEndpoint, apiPath['createPreview']!(userId));
+      final url = Uri.http(serverEndpoint, apiPath['createPreview']!(userId));
       final jsonData = {
         'content': content,
         'registrationImgUrl': imgUrl,
@@ -155,9 +156,9 @@ class RoutineProvider extends ChangeNotifier {
       final requestBody = json.encode(jsonData);
       final response = await http.post(url,
           body: requestBody, headers: {'Content-Type': 'application/json'});
+      final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
 
-      final responseData = json.decode(response.body);
-      Map<String, dynamic> data = responseData['data'];
+      Map<String, dynamic> data = responseBody['data'];
       previewList = [...previewList, Preview.fromJson(data)];
     } catch (error) {
       print('[ERROR] registerRoutine: $error');
