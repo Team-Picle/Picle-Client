@@ -93,8 +93,10 @@ class RoutineProvider extends ChangeNotifier {
       };
       final uri = Uri.http(
           serverEndpoint, apiPath['getPreviews']!(userId), queryParams);
-      final response =
-          await http.get(uri, headers: {'Content-Type': 'application/json'});
+      final response = await http.get(
+        uri,
+        headers: {'Content-Type': 'application/json'},
+      );
       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
 
       List<int> routineIdList = [...uncheckRoutineList, ...checkRoutineList]
@@ -274,23 +276,23 @@ class RoutineProvider extends ChangeNotifier {
     // await notifications.cancel(routineId);
   }
 
-  Future<void> updatePreview({userId, routineId, time, repeatDays}) async {
+  Future<void> updatePreview(
+      {userId, routineId, time, repeatDays, date}) async {
     try {
-      final uri = Uri.https(
-          serverEndpoint, apiPath['updateRoutine']!(userId, routineId));
+      final uri = Uri.http(
+          serverEndpoint, apiPath['updatePreview']!(userId, routineId));
       final jsonData = {
         if (time != null) 'time': time,
         if (repeatDays != null) 'repeatDays': repeatDays
       };
       final requestBody = json.encode(jsonData);
-      final response = await http.patch(uri,
-          body: requestBody, headers: {'Content-Type': 'application/json'});
-      final responseBody = json.decode(response.body);
-      Map<String, dynamic> data = responseBody['data'];
-      previewList = previewList
-          .map((preview) =>
-              preview.routineId == routineId ? Preview.fromJson(data) : preview)
-          .toList();
+      await http.patch(
+        uri,
+        body: requestBody,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      await fetchPreviewList(date);
     } catch (error) {
       print('[ERROR] updateRoutine: $error');
       // Toast message 보여주기 '루틴을 수정할 수 없습니다'
