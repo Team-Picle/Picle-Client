@@ -35,7 +35,11 @@ initNotification(context) async {
   );
 }
 
-showNotification({id, content, date}) async {
+showNotification({
+  id,
+  content,
+  date,
+}) async {
   tz.initializeTimeZones();
 
   var androidDetails = const AndroidNotificationDetails(

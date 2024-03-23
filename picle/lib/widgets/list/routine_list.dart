@@ -63,12 +63,12 @@ class RoutineList extends StatelessWidget {
               // ),
               () {
             context.read<RoutineProvider>().registerRoutine(
-                  content: '졸작...통과시켜줘',
+                  content: '푸시 알림 테스트3 🙈',
                   imgUrl:
                       'https://res.cloudinary.com/dqhllkoz8/image/upload/v1710138018/test/zphkge2wdfvswud8nmti.jpg',
-                  time: '03:13:00',
+                  time: '04:55:00',
                   startRepeatDate: '2024-03-01',
-                  repeatDays: ['MONDAY', 'WEDNESDAY', 'SATURDAY', 'SUNDAY'],
+                  repeatDays: ['SATURDAY', 'SUNDAY'],
                   destinationLongitude: '37.467092',
                   destinationLatitude: '126.923802',
                   date: context.read<DateProvider>().getDate(),
