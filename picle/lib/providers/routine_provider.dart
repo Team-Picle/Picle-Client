@@ -220,19 +220,21 @@ class RoutineProvider extends ChangeNotifier {
   }
 
   Future<void> finishRoutine(userId, routineId) async {
-    previewList.removeWhere((preview) => preview.routineId == routineId);
-
-    // try {
-    //   final uri = Uri.https(
-    //       serverEndpoint, apiPath['finishRoutine']!(userId, routineId));
-    //   await http.delete(uri, headers: {'Content-Type': 'application/json'});
-    //   previewList.removeWhere((preview) => preview.routineId == routineId);
-    // } catch (error) {
-    //   // Toast message 보여주기 '루틴을 종료할 수 없습니다'
-    //   // print('${response['code']}: ${response['message']}');
-    // }
+    try {
+      final uri = Uri.http(
+          serverEndpoint, apiPath['finishRoutine']!(userId, routineId));
+      await http.delete(uri, headers: {'Content-Type': 'application/json'});
+      previewList.removeWhere((preview) => preview.routineId == routineId);
+    } catch (error) {
+      print(error);
+      // Toast message 보여주기 '루틴을 종료할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
+    }
 
     notifyListeners();
+
+    // previewList.removeWhere((preview) => preview.routineId == routineId);
+    // notifyListeners();
   }
 
   Future<void> deleteRoutine({userId, routineId, date}) async {
