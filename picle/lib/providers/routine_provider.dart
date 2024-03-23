@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
 import 'package:picle/constants/index.dart';
 import 'package:picle/models/preview_model.dart';
@@ -14,99 +13,122 @@ class RoutineProvider extends ChangeNotifier {
   List<Preview> previewList = [];
   List<Routine> uncheckRoutineList = [];
   List<Routine> checkRoutineList = [];
+  bool isDisposed = false;
 
   RoutineProvider() {
     String today = DateTime.now() //
         .toString()
         .split(' ')[0];
-    fetchRoutineList(today);
-    fetchPreviewList(today);
+    fetchList(today);
   }
 
-  Future<void> fetchPreviewList(date) async {
-    final response = await rootBundle.loadString('lib/data/preview_list.json');
-    final data = json.decode(response);
+  @override
+  void dispose() {
+    isDisposed = true;
+    super.dispose();
+  }
 
-    if (data['code'] == 200) {
-      List<int> routineIdList = [...uncheckRoutineList, ...checkRoutineList]
-          .map((routine) => routine.routineIdentifier)
-          .toList();
-      previewList = [
-        for (Map<String, dynamic> preview in data['data'])
-          if (!routineIdList.contains(preview['routineId']))
-            Preview.fromJson(preview)
-      ];
-    } else {
-      previewList = [];
-      throw Exception('Fail to load date');
+  @override
+  notifyListeners() {
+    if (!isDisposed) {
+      super.notifyListeners();
     }
+  }
 
-    // try {
-    //   final queryParams = {
-    //     'date': date,
-    //   };
-    //   final uri = Uri.https(
-    //       serverEndpoint, apiPath['getPreviews']!(userId), queryParams);
-    //   final response =
-    //       await http.get(uri, headers: {'Content-Type': 'application/json'});
-    //   final responseBody = json.decode(response.body);
-
-    //   List<int> routineIdList =
-    //       [...uncheckRoutineList, ...checkRoutineList].map((routine) => routine.routineIdentifier).toList();
-    //   previewList = [
-    //     for (Map<String, dynamic> preview in responseBody['data'])
-    //       if (!routineIdList.contains(preview['routineId']))
-    //         Preview.fromJson(preview)
-    //   ];
-    // } catch (error) {
-    //   // Toast message 보여주기 '미리보기를 불로오지 못 했습니다'
-    //   // print('${response['code']}: ${response['message']}');
-    // }
+  Future<void> fetchList(date) async {
+    await fetchRoutineList(date);
+    await fetchPreviewList(date);
 
     notifyListeners();
   }
 
   Future<void> fetchRoutineList(date) async {
-    final response = await rootBundle.loadString('lib/data/routine_list.json');
-    final data = json.decode(response);
+    try {
+      final queryParams = {
+        'date': date,
+      };
+      final uri = Uri.http(
+          serverEndpoint, apiPath['getRoutines']!(userId), queryParams);
+      final response =
+          await http.get(uri, headers: {'Content-Type': 'application/json'});
+      final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
 
-    if (data['code'] == 200) {
       uncheckRoutineList = [
-        for (Map<String, dynamic> routine in data['data'])
+        for (Map<String, dynamic> routine in responseBody['data'])
           if (routine['isCompleted'] == false) Routine.fromJson(routine),
       ];
       checkRoutineList = [
-        for (Map<String, dynamic> routine in data['data'])
+        for (Map<String, dynamic> routine in responseBody['data'])
           if (routine['isCompleted'] == true) Routine.fromJson(routine),
       ];
-    } else {
-      throw Exception('Fail to load date');
+    } catch (error) {
+      print(error);
+      // Toast message 보여주기 '루틴을 불러오지 못 했습니다'
+      // print('${response['code']}: ${response['message']}');
     }
 
-    // try {
-    //   final queryParams = {
-    //     'date': date,
-    //   };
-    //   final uri = Uri.https(
-    //       serverEndpoint, apiPath['getRoutines']!(userId), queryParams);
-    //   final response =
-    //       await http.get(uri, headers: {'Content-Type': 'application/json'});
-    //   final responseBody = json.decode(response.body);
+    // final response = await rootBundle.loadString('lib/data/routine_list.json');
+    // final data = json.decode(response);
 
+    // if (data['code'] == 200) {
     //   uncheckRoutineList = [
-    //     for (Map<String, dynamic> routine in responseBody['data'])
+    //     for (Map<String, dynamic> routine in data['data'])
     //       if (routine['isCompleted'] == false) Routine.fromJson(routine),
     //   ];
     //   checkRoutineList = [
-    //     for (Map<String, dynamic> routine in responseBody['data'])
+    //     for (Map<String, dynamic> routine in data['data'])
     //       if (routine['isCompleted'] == true) Routine.fromJson(routine),
     //   ];
-    // } catch (error) {
-    //   // Toast message 보여주기 '루틴을 불러오지 못 했습니다'
-    //   // print('${response['code']}: ${response['message']}');
+    // } else {
+    //   throw Exception('Fail to load date');
+    // }
+    //
+    // notifyListeners();
+  }
+
+  Future<void> fetchPreviewList(date) async {
+    try {
+      final queryParams = {
+        'date': date,
+      };
+      final uri = Uri.http(
+          serverEndpoint, apiPath['getPreviews']!(userId), queryParams);
+      final response =
+          await http.get(uri, headers: {'Content-Type': 'application/json'});
+      final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+
+      List<int> routineIdList = [...uncheckRoutineList, ...checkRoutineList]
+          .map((routine) => routine.routineIdentifier)
+          .toList();
+      previewList = [
+        for (Map<String, dynamic> preview in responseBody['data'])
+          if (!routineIdList.contains(preview['routineId']))
+            Preview.fromJson(preview)
+      ];
+    } catch (error) {
+      print(error);
+      // Toast message 보여주기 '미리보기를 불로오지 못 했습니다'
+      // print('${response['code']}: ${response['message']}');
+    }
+
+    // final response = await rootBundle.loadString('lib/data/preview_list.json');
+    // final data = json.decode(response);
+
+    // if (data['code'] == 200) {
+    //   List<int> routineIdList = [...uncheckRoutineList, ...checkRoutineList]
+    //       .map((routine) => routine.routineIdentifier)
+    //       .toList();
+    //   previewList = [
+    //     for (Map<String, dynamic> preview in data['data'])
+    //       if (!routineIdList.contains(preview['routineId']))
+    //         Preview.fromJson(preview)
+    //   ];
+    // } else {
+    //   previewList = [];
+    //   throw Exception('Fail to load date');
     // }
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   Future<void> registerRoutine(
