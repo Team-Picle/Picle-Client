@@ -169,7 +169,7 @@ class RoutineProvider extends ChangeNotifier {
 
     notifyListeners();
   }
-
+  
   Future<void> addRoutine({userId, routineId, date, time}) async {
     try {
       final queryParams = {
