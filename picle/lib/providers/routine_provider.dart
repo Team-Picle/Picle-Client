@@ -169,8 +169,13 @@ class RoutineProvider extends ChangeNotifier {
 
     notifyListeners();
   }
-  
-  Future<void> addRoutine({userId, routineId, date, time}) async {
+
+  Future<void> addRoutine({
+    userId,
+    routineId,
+    date,
+    time,
+  }) async {
     try {
       final queryParams = {
         'date': date,
@@ -253,7 +258,11 @@ class RoutineProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  Future<void> deleteRoutine({userId, routineId, date}) async {
+  Future<void> deleteRoutine({
+    userId,
+    routineId,
+    date,
+  }) async {
     try {
       final uri = Uri.http(
           serverEndpoint, apiPath['deleteRoutine']!(userId, routineId));
@@ -278,8 +287,13 @@ class RoutineProvider extends ChangeNotifier {
     // await notifications.cancel(routineId);
   }
 
-  Future<void> updatePreview(
-      {userId, routineId, time, repeatDays, date}) async {
+  Future<void> updatePreview({
+    userId,
+    routineId,
+    time,
+    repeatDays,
+    date,
+  }) async {
     try {
       final uri = Uri.http(
           serverEndpoint, apiPath['updatePreview']!(userId, routineId));

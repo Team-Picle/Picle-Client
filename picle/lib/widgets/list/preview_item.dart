@@ -77,14 +77,8 @@ class PreviewItem extends StatelessWidget {
                       // await provider.updatePreview(
                       //   userId: userId,
                       //   routineId: routineId,
-                      //   time: '00:30:00',
-                      //   repeatDays: [
-                      //     'MONDAY',
-                      //     'TUESDAY',
-                      //     'WEDNESDAY',
-                      //     'THURSDAY',
-                      //     'FRIDAY'
-                      //   ],
+                      //   time: '14:30:00',
+                      //   repeatDays: ['TUESDAY', 'THURSDAY', 'FRIDAY'],
                       //   date: date,
                       // );
                     },
