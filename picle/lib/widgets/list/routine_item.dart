@@ -87,7 +87,10 @@ class RoutineItem extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   onPressed: () async {
                     await provider.deleteRoutine(
-                        userId: userId, routineId: routineId, date: '');
+                      userId: userId,
+                      routineId: routineId,
+                      date: date,
+                    );
                   },
                   icon: const Icon(Icons.more_horiz),
                 ),

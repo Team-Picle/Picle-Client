@@ -238,26 +238,28 @@ class RoutineProvider extends ChangeNotifier {
   }
 
   Future<void> deleteRoutine({userId, routineId, date}) async {
-    uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);
-    checkRoutineList.removeWhere((routine) => routine.routineId == routineId);
-    await fetchPreviewList(date);
-    await notifications.cancel(routineId);
+    try {
+      final uri = Uri.http(
+          serverEndpoint, apiPath['deleteRoutine']!(userId, routineId));
+      await http.delete(uri, headers: {'Content-Type': 'application/json'});
+      uncheckRoutineList
+          .removeWhere((routine) => routine.routineId == routineId);
+      checkRoutineList.removeWhere((routine) => routine.routineId == routineId);
 
-    // try {
-    //   final uri = Uri.https(
-    //       serverEndpoint, apiPath['deleteRoutine']!(userId, routineId));
-    //   await http.delete(uri, headers: {'Content-Type': 'application/json'});
-    //   uncheckRoutineList
-    //       .removeWhere((routine) => routine.routineId == routineId);
-    //   checkRoutineList.removeWhere((routine) => routine.routineId == routineId);
-    //   await fetchPreviewList(date);
-    //   await notifications.cancel(routineId);
-    // } catch (error) {
-    //   // Toast message 보여주기 '루틴을 삭제할 수 없습니다'
-    //   // print('${response['code']}: ${response['message']}');
-    // }
+      await notifications.cancel(routineId);
+      await fetchPreviewList(date);
+    } catch (error) {
+      print(error);
+      // Toast message 보여주기 '루틴을 삭제할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
+    }
 
     notifyListeners();
+
+    // uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);
+    // checkRoutineList.removeWhere((routine) => routine.routineId == routineId);
+    // await fetchPreviewList(date);
+    // await notifications.cancel(routineId);
   }
 
   Future<void> updatePreview({userId, routineId, time, repeatDays}) async {
