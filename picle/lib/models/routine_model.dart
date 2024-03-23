@@ -1,7 +1,7 @@
 class Routine {
   final int userId;
   final int routineId;
-  final int routineIdentifier;
+  final int? routineIdentifier;
   final String content;
   final String registrationImgUrl;
   final String date;
@@ -10,12 +10,11 @@ class Routine {
   double destinationLongitude;
   double destinationLatitude;
   final bool isCompleted;
-  final bool isPreview;
 
   Routine({
     required this.userId,
     required this.routineId,
-    required this.routineIdentifier,
+    this.routineIdentifier,
     required this.content,
     required this.registrationImgUrl,
     required this.date,
@@ -24,7 +23,6 @@ class Routine {
     required this.destinationLongitude,
     required this.destinationLatitude,
     required this.isCompleted,
-    required this.isPreview,
   });
 
   Routine.fromJson(Map<String, dynamic> json)
@@ -38,6 +36,5 @@ class Routine {
         startRepeatDate = json['startRepeatDate'],
         destinationLongitude = json['destinationLongitude'],
         destinationLatitude = json['destinationLatitude'],
-        isCompleted = json['isCompleted'],
-        isPreview = json['isPreview'];
+        isCompleted = json['isCompleted'];
 }

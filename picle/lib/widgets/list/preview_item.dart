@@ -73,20 +73,20 @@ class PreviewItem extends StatelessWidget {
                     ),
                     padding: EdgeInsets.zero,
                     onPressed: () async {
-                      // await provider.finishRoutine(userId, routineId);
-                      await provider.updatePreview(
-                        userId: userId,
-                        routineId: routineId,
-                        time: '00:30:00',
-                        repeatDays: [
-                          'MONDAY',
-                          'TUESDAY',
-                          'WEDNESDAY',
-                          'THURSDAY',
-                          'FRIDAY'
-                        ],
-                        date: date,
-                      );
+                      await provider.finishRoutine(userId, routineId);
+                      // await provider.updatePreview(
+                      //   userId: userId,
+                      //   routineId: routineId,
+                      //   time: '00:30:00',
+                      //   repeatDays: [
+                      //     'MONDAY',
+                      //     'TUESDAY',
+                      //     'WEDNESDAY',
+                      //     'THURSDAY',
+                      //     'FRIDAY'
+                      //   ],
+                      //   date: date,
+                      // );
                     },
                     icon: const Icon(Icons.more_horiz),
                   ))

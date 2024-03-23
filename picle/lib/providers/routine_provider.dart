@@ -99,7 +99,7 @@ class RoutineProvider extends ChangeNotifier {
       );
       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
 
-      List<int> routineIdList = [...uncheckRoutineList, ...checkRoutineList]
+      List<int?> routineIdList = [...uncheckRoutineList, ...checkRoutineList]
           .map((routine) => routine.routineIdentifier)
           .toList();
       previewList = [
@@ -304,53 +304,70 @@ class RoutineProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> verifyRoutine(
-      {userId, routineId, imgUrl, longitude, latitude, date}) async {
-    var target = uncheckRoutineList
-        .firstWhere((routine) => routine.routineId == routineId);
-    uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);
+  Future<void> verifyRoutine({
+    userId,
+    routineId,
+    imgUrl,
+    longitude,
+    latitude,
+    date,
+  }) async {
+    try {
+      final queryParams = {
+        'date': date,
+      };
+      final uri = Uri.http(serverEndpoint,
+          apiPath['verifyRoutine']!(userId, routineId), queryParams);
+      final jsonData = {
+        'verifiedImgUrl': imgUrl,
+        'currentLongitude': longitude,
+        'currentLatitude': latitude
+      };
+      final requestBody = json.encode(jsonData);
+      final response = await http.patch(
+        uri,
+        body: requestBody,
+        headers: {'Content-Type': 'application/json'},
+      );
+      final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
 
-    Map<String, dynamic> data = {
-      'userId': target.userId,
-      'routineId': target.routineId,
-      'routineIdentifier': target.routineIdentifier,
-      'content': target.content,
-      'registrationImgUrl': target.registrationImgUrl,
-      'date': target.date,
-      'time': target.time,
-      'startRepeatDate': target.startRepeatDate,
-      'destinationLongitude': target.destinationLongitude,
-      'destinationLatitude': target.destinationLatitude,
-      'isCompleted': true,
-      'isPreview': target.isPreview
-    };
-    checkRoutineList = [...checkRoutineList, Routine.fromJson(data)];
-    await notifications.cancel(routineId);
+      if (responseBody['data'] != null) {
+        Map<String, dynamic> data = responseBody['data'];
 
-    // try {
-    //   final queryParams = {'date': date};
-    //   final uri = Uri.https(serverEndpoint,
-    //       apiPath['verifyRoutine']!(userId, routineId), queryParams);
-    //   final jsonData = {
-    //     'verifiedImgUrl': imgUrl,
-    //     'currentLongitude': longitude,
-    //     'currentLatitude': latitude
-    //   };
-    //   final requestBody = json.encode(jsonData);
-    //   final response = await http.patch(uri,
-    //       body: requestBody, headers: {'Content-Type': 'application/json'});
-    //   final responseBody = json.decode(response.body);
-    //   Map<String, dynamic> data = responseBody['data'];
-    //   uncheckRoutineList
-    //       .removeWhere((routine) => routine.routineId == routineId);
-    //   checkRoutineList = [...checkRoutineList, Routine.fromJson(data)];
-    //   await notifications.cancel(routineId);
-    // } catch (error) {
-    //   print('[ERROR] verifyRoutine: $error');
-    //   // Toast message 보여주기 '루틴을 완료할 수 없습니다'
-    //   // print('${response['code']}: ${response['message']}');
-    // }
+        uncheckRoutineList
+            .removeWhere((routine) => routine.routineId == routineId);
+        checkRoutineList = [...checkRoutineList, Routine.fromJson(data)];
+        await notifications.cancel(routineId);
+      }
+    } catch (error) {
+      print('[ERROR] verifyRoutine: $error');
+      // Toast message 보여주기 '루틴을 완료할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
+    }
 
     notifyListeners();
+
+    // var target = uncheckRoutineList
+    //     .firstWhere((routine) => routine.routineId == routineId);
+    // uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);
+
+    // Map<String, dynamic> data = {
+    //   'userId': target.userId,
+    //   'routineId': target.routineId,
+    //   'routineIdentifier': target.routineIdentifier,
+    //   'content': target.content,
+    //   'registrationImgUrl': target.registrationImgUrl,
+    //   'date': target.date,
+    //   'time': target.time,
+    //   'startRepeatDate': target.startRepeatDate,
+    //   'destinationLongitude': target.destinationLongitude,
+    //   'destinationLatitude': target.destinationLatitude,
+    //   'isCompleted': true,
+    //   'isPreview': target.isPreview
+    // };
+    // checkRoutineList = [...checkRoutineList, Routine.fromJson(data)];
+    // await notifications.cancel(routineId);
+
+    // notifyListeners();
   }
 }

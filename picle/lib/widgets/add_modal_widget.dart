@@ -37,7 +37,7 @@ Routine routine = Routine(
   destinationLatitude: 37.549,
   registrationImgUrl: imgUrl,
   isCompleted: false,
-  isPreview: false,
+  // isPreview: false,
 );
 
 void addBottomModal({
