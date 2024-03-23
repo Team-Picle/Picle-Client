@@ -141,6 +141,7 @@ class RoutineProvider extends ChangeNotifier {
     repeatDays,
     destinationLongitude,
     destinationLatitude,
+    date,
   }) async {
     try {
       final url = Uri.http(serverEndpoint, apiPath['createPreview']!(userId));
@@ -154,12 +155,12 @@ class RoutineProvider extends ChangeNotifier {
         'destinationLatitude': destinationLatitude
       };
       final requestBody = json.encode(jsonData);
-      final response = await http.post(url,
-          body: requestBody, headers: {'Content-Type': 'application/json'});
-      final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
-
-      Map<String, dynamic> data = responseBody['data'];
-      previewList = [...previewList, Preview.fromJson(data)];
+      await http.post(
+        url,
+        body: requestBody,
+        headers: {'Content-Type': 'application/json'},
+      );
+      await fetchPreviewList(date);
     } catch (error) {
       print('[ERROR] registerRoutine: $error');
       // Toast message 보여주기 '루틴을 등록에 실패했습니다'

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picle/models/routine_model.dart';
+import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/list/preview_item.dart';
@@ -61,14 +62,15 @@ class RoutineList extends StatelessWidget {
               // ),
               () {
             context.read<RoutineProvider>().registerRoutine(
-                  content: '루틴 등록 테스트',
+                  content: '졸작...통과시켜줘',
                   imgUrl:
-                      'https://res.cloudinary.com/dqhllkoz8/image/upload/v1711210716/test/wntmearzoutd0shhk0h5.jpg',
-                  time: '01:30:00',
-                  startRepeatDate: '2024-03-24',
-                  repeatDays: ['MONDAY', 'WEDNESDAY', 'SUNDAY'],
+                      'https://res.cloudinary.com/dqhllkoz8/image/upload/v1710138018/test/zphkge2wdfvswud8nmti.jpg',
+                  time: '03:13:00',
+                  startRepeatDate: '2024-03-01',
+                  repeatDays: ['MONDAY', 'WEDNESDAY', 'SATURDAY', 'SUNDAY'],
                   destinationLongitude: '37.467092',
                   destinationLatitude: '126.923802',
+                  date: context.read<DateProvider>().getDate(),
                 );
           },
         ),
