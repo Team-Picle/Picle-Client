@@ -67,7 +67,11 @@ class _TodoItemState extends State<TodoItem> {
                   ),
                   activeColor: const Color(0xFF54C29B),
                   onChanged: (value) {
-                    provider.completeTodo(widget.userId, widget.id, value);
+                    provider.completeTodo(
+                      userId: widget.userId,
+                      todoId: widget.id,
+                      isCompleted: value,
+                    );
                   }),
             ),
           ),
@@ -115,8 +119,11 @@ class _TodoItemState extends State<TodoItem> {
                   setState(() {
                     isUpdate = false;
                   });
-                  provider.updateTodo(widget.userId, widget.id,
-                      content: _controller.text);
+                  provider.updateTodo(
+                    userId: widget.userId,
+                    todoId: widget.id,
+                    content: _controller.text,
+                  );
                 },
               ),
             ),

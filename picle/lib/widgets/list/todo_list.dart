@@ -6,6 +6,9 @@ import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/list/todo_item.dart';
 import 'package:provider/provider.dart';
 
+int userId = 1;
+String content = '투두 추가하기입니다!';
+
 class TodoList extends StatelessWidget {
   const TodoList({super.key});
 
@@ -45,7 +48,11 @@ class TodoList extends StatelessWidget {
           buttonText: '투두 등록하기',
           onPressed: () {
             String date = context.read<DateProvider>().getDate();
-            context.read<TodoProvider>().addTodo(1, '투두 추가입니다!', date);
+            context.read<TodoProvider>().addTodo(
+                  userId: userId,
+                  content: content,
+                  date: date,
+                );
           },
         ),
       ],
