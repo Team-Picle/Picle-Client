@@ -24,7 +24,7 @@ class _CalendarState extends State<Calendar> {
       firstDay: DateTime.utc(2010, 10, 16),
       lastDay: DateTime.utc(2030, 3, 14),
       focusedDay: _focusedDay,
-      startingDayOfWeek: StartingDayOfWeek.monday,
+      startingDayOfWeek: StartingDayOfWeek.sunday,
       availableCalendarFormats: const {
         CalendarFormat.month: 'Month',
         CalendarFormat.week: 'Week'
@@ -65,9 +65,9 @@ class _CalendarState extends State<Calendar> {
             const Icon(Icons.chevron_right, color: Color(0XFF54C29B)),
       ),
       calendarStyle: const CalendarStyle(
-        weekendTextStyle: TextStyle(color: Colors.red),
+        weekendTextStyle: TextStyle(color: Color(0XFF54C29B)),
         weekNumberTextStyle: TextStyle(
-          color: Colors.red,
+          color: Color(0XFF54C29B),
           fontSize: 12,
         ),
       ),
@@ -79,7 +79,7 @@ class _CalendarState extends State<Calendar> {
               child: Text(
                 day.weekday == DateTime.sunday ? '일' : '토',
                 style: const TextStyle(
-                  color: Colors.red,
+                  color: Color(0XFF54C29B),
                 ),
               ),
             );
