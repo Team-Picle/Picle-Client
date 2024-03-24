@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:picle/constants/index.dart';
 import 'package:picle/models/todo_model.dart';
@@ -18,47 +19,47 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<void> fetchTodoList(date) async {
-    try {
-      final queryParams = {
-        'date': date,
-      };
-      final uri =
-          Uri.http(serverEndpoint, apiPath['getTodos']!(userId), queryParams);
-      final response = await http.get(uri, headers: {
-        'Content-Type': 'application/json',
-        'Accept-Charset': 'utf-8',
-      });
-      final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+    // try {
+    //   final queryParams = {
+    //     'date': date,
+    //   };
+    //   final uri =
+    //       Uri.http(serverEndpoint, apiPath['getTodos']!(userId), queryParams);
+    //   final response = await http.get(uri, headers: {
+    //     'Content-Type': 'application/json',
+    //     'Accept-Charset': 'utf-8',
+    //   });
+    //   final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
 
-      uncheckTodoList = [
-        for (Map<String, dynamic> todo in responseBody['data'])
-          if (todo['isCompleted'] == false) Todo.fromJson(todo),
-      ];
-      checkTodoList = [
-        for (Map<String, dynamic> todo in responseBody['data'])
-          if (todo['isCompleted'] == true) Todo.fromJson(todo),
-      ];
-    } catch (error) {
-      print(error);
-      // Toast message 보여주기 '투두 불러오기에 실패했습니다'
-      // print('${response['code']}: ${response['message']}');
-    }
-
-    // final response = await rootBundle.loadString('lib/data/todo_list.json');
-    // final data = json.decode(response);
-
-    // if (data['code'] == 200) {
     //   uncheckTodoList = [
-    //     for (Map<String, dynamic> todo in data['data'])
-    //       if (!todo['isCompleted']) Todo.fromJson(todo),
+    //     for (Map<String, dynamic> todo in responseBody['data'])
+    //       if (todo['isCompleted'] == false) Todo.fromJson(todo),
     //   ];
     //   checkTodoList = [
-    //     for (Map<String, dynamic> todo in data['data'])
-    //       if (todo['isCompleted']) Todo.fromJson(todo),
+    //     for (Map<String, dynamic> todo in responseBody['data'])
+    //       if (todo['isCompleted'] == true) Todo.fromJson(todo),
     //   ];
-    // } else {
-    //   throw Exception('Fail to load date');
+    // } catch (error) {
+    //   print(error);
+    //   // Toast message 보여주기 '투두 불러오기에 실패했습니다'
+    //   // print('${response['code']}: ${response['message']}');
     // }
+
+    final response = await rootBundle.loadString('lib/data/todo_list.json');
+    final data = json.decode(response);
+
+    if (data['code'] == 200) {
+      uncheckTodoList = [
+        for (Map<String, dynamic> todo in data['data'])
+          if (!todo['isCompleted']) Todo.fromJson(todo),
+      ];
+      checkTodoList = [
+        for (Map<String, dynamic> todo in data['data'])
+          if (todo['isCompleted']) Todo.fromJson(todo),
+      ];
+    } else {
+      throw Exception('Fail to load date');
+    }
 
     notifyListeners();
   }

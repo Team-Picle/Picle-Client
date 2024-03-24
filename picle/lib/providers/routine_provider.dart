@@ -241,6 +241,17 @@ class RoutineProvider extends ChangeNotifier {
   }
 
   Future<void> finishRoutine(userId, routineId) async {
+//     previewList.removeWhere((preview) => preview.routineId == routineId);
+//     print(previewList);
+    // try {
+    //   final uri = Uri.https(
+    //       serverEndpoint, apiPath['finishRoutine']!(userId, routineId));
+    //   await http.delete(uri, headers: {'Content-Type': 'application/json'});
+    //   previewList.removeWhere((preview) => preview.routineId == routineId);
+    // } catch (error) {
+    //   // Toast message 보여주기 '루틴을 종료할 수 없습니다'
+    //   // print('${response['code']}: ${response['message']}');
+    // }
     try {
       final uri = Uri.http(
           serverEndpoint, apiPath['finishRoutine']!(userId, routineId));
@@ -296,19 +307,29 @@ class RoutineProvider extends ChangeNotifier {
   }) async {
     try {
       final uri = Uri.http(
-          serverEndpoint, apiPath['updatePreview']!(userId, routineId));
+//           serverEndpoint, apiPath['updateRoutine']!(userId, routineId));
+//           serverEndpoint, apiPath['updatePreview']!(userId, routineId));
+
       final jsonData = {
         if (time != null) 'time': time,
         if (repeatDays != null) 'repeatDays': repeatDays
       };
       final requestBody = json.encode(jsonData);
-      await http.patch(
-        uri,
-        body: requestBody,
-        headers: {'Content-Type': 'application/json'},
-      );
+//       final response = await http.patch(uri,
+//           body: requestBody, headers: {'Content-Type': 'application/json'});
+//       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+//       Map<String, dynamic> data = responseBody['data'];
+//       previewList = previewList
+//           .map((preview) =>
+//               preview.routineId == routineId ? Preview.fromJson(data) : preview)
+//           .toList();
+//       await http.patch(
+//         uri,
+//         body: requestBody,
+//         headers: {'Content-Type': 'application/json'},
+//       );
 
-      await fetchPreviewList(date);
+//       await fetchPreviewList(date);
     } catch (error) {
       print('[ERROR] updateRoutine: $error');
       // Toast message 보여주기 '루틴을 수정할 수 없습니다'
