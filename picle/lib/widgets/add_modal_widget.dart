@@ -32,12 +32,12 @@ Routine routine = Routine(
   time:
       '${selectedTime?.hour.toString().padLeft(2, '0')}:${selectedTime?.minute.toString().padLeft(2, '0')}',
   startRepeatDate: '2024-01-01',
-  repeatDays: ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"],
+  // repeatDays: ["FRIDAY", "TUESDAY", "WEDNESDAY", "MONDAY", "THURSDAY"],
   destinationLongitude: 126.9595,
   destinationLatitude: 37.549,
   registrationImgUrl: imgUrl,
   isCompleted: false,
-  isPreview: false,
+  // isPreview: false,
 );
 
 void addBottomModal({

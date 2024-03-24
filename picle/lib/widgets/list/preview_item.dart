@@ -58,10 +58,9 @@ class PreviewItem extends StatelessWidget {
                       await provider.addRoutine(
                         userId: userId,
                         routineId: routineId,
-                        content: content,
                         date: date,
                         time: time,
-                      ); // api 연결 시에는 content 삭제
+                      );
                     },
                     icon: const Icon(
                       Icons.add,
@@ -86,6 +85,7 @@ class PreviewItem extends StatelessWidget {
                       vertical: VisualDensity.minimumDensity,
                     ),
                     padding: EdgeInsets.zero,
+
                     onPressed: () async => showModalBottomSheet(
                       backgroundColor: Colors.white,
                       context: context,
@@ -326,6 +326,17 @@ class PreviewItem extends StatelessWidget {
                         },
                       ),
                     ),
+=======
+                    onPressed: () async {
+                      await provider.finishRoutine(userId, routineId);
+                      // await provider.updatePreview(
+                      //   userId: userId,
+                      //   routineId: routineId,
+                      //   time: '14:30:00',
+                      //   repeatDays: ['TUESDAY', 'THURSDAY', 'FRIDAY'],
+                      //   date: date,
+                      // );
+                    },
                     icon: const Icon(Icons.more_horiz),
                   ))
             ],

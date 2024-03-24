@@ -42,8 +42,7 @@ class _CalendarState extends State<Calendar> {
         context.read<DateProvider>().updateDate(selectedDay);
         String date = context.read<DateProvider>().getDate();
         context.read<TodoProvider>().fetchTodoList(date);
-        context.read<RoutineProvider>().fetchRoutineList(date);
-        context.read<RoutineProvider>().fetchPreviewList(date);
+        context.read<RoutineProvider>().fetchList(date);
       },
       calendarFormat: _calendarFormat,
       onFormatChanged: (format) {

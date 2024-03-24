@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:picle/models/routine_model.dart';
+import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
-import 'package:picle/widgets/add_modal_widget.dart';
 import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/list/preview_item.dart';
 import 'package:picle/widgets/list/routine_item.dart';
@@ -50,16 +50,31 @@ class RoutineList extends StatelessWidget {
           },
         )),
         DefaultButton(
-            buttonText: '루틴 등록하기',
-            onPressed: () => addBottomModal(
-                  context: context,
-                  title: '루틴을 입력하세요.',
-                  content: '루틴을 인증할 사진을 등록하고'
-                      '\n매일 같은 구도로 사진을 촬영해서 인증해보세요!',
-                  buttonText: '루틴 등록하기',
-                  needImg: true,
-                  needDate: true,
-                )),
+          buttonText: '루틴 등록하기',
+          onPressed:
+              // () => addBottomModal(
+              //   context: context,
+              //   title: '루틴을 입력하세요.',
+              //   content: '루틴을 인증할 사진을 등록하고'
+              //       '\n매일 같은 구도로 사진을 촬영해서 인증해보세요!',
+              //   buttonText: '루틴 등록하기',
+              //   needImg: true,
+              //   needDate: true,
+              // ),
+              () {
+            context.read<RoutineProvider>().registerRoutine(
+                  content: '푸시 알림 테스트3 🙈',
+                  imgUrl:
+                      'https://res.cloudinary.com/dqhllkoz8/image/upload/v1710138018/test/zphkge2wdfvswud8nmti.jpg',
+                  time: '04:55:00',
+                  startRepeatDate: '2024-03-01',
+                  repeatDays: ['SATURDAY', 'SUNDAY'],
+                  destinationLongitude: '37.467092',
+                  destinationLatitude: '126.923802',
+                  date: context.read<DateProvider>().getDate(),
+                );
+          },
+        ),
       ],
     );
   }

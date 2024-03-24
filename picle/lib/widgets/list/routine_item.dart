@@ -58,12 +58,14 @@ class RoutineItem extends StatelessWidget {
                       onChanged: (value) {
                         if (value == true) {
                           provider.verifyRoutine(
-                              userId: userId,
-                              routineId: routineId,
-                              imgUrl: '',
-                              longitude: 0.0,
-                              latitude: 0.0,
-                              date: '');
+                            userId: userId,
+                            routineId: routineId,
+                            imgUrl:
+                                'https://res.cloudinary.com/dqhllkoz8/image/upload/v1710137987/test/asppn6jnlitfhgdmwdm5.jpg',
+                            longitude: '38.01',
+                            latitude: '129.900001',
+                            date: date,
+                          );
                         }
                       }),
                 ),
@@ -87,7 +89,10 @@ class RoutineItem extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   onPressed: () async {
                     await provider.deleteRoutine(
-                        userId: userId, routineId: routineId, date: '');
+                      userId: userId,
+                      routineId: routineId,
+                      date: date,
+                    );
                   },
                   icon: const Icon(Icons.more_horiz),
                 ),
