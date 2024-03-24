@@ -326,17 +326,17 @@ class PreviewItem extends StatelessWidget {
                         },
                       ),
                     ),
-=======
-                    onPressed: () async {
-                      await provider.finishRoutine(userId, routineId);
-                      // await provider.updatePreview(
-                      //   userId: userId,
-                      //   routineId: routineId,
-                      //   time: '14:30:00',
-                      //   repeatDays: ['TUESDAY', 'THURSDAY', 'FRIDAY'],
-                      //   date: date,
-                      // );
-                    },
+
+                    // onPressed: () async {
+                    //   await provider.finishRoutine(userId, routineId);
+                    // await provider.updatePreview(
+                    //   userId: userId,
+                    //   routineId: routineId,
+                    //   time: '14:30:00',
+                    //   repeatDays: ['TUESDAY', 'THURSDAY', 'FRIDAY'],
+                    //   date: date,
+                    // );
+                    // },
                     icon: const Icon(Icons.more_horiz),
                   ))
             ],

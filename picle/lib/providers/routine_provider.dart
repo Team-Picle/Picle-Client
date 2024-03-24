@@ -307,14 +307,19 @@ class RoutineProvider extends ChangeNotifier {
   }) async {
     try {
       final uri = Uri.http(
-//           serverEndpoint, apiPath['updateRoutine']!(userId, routineId));
-//           serverEndpoint, apiPath['updatePreview']!(userId, routineId));
-
+          serverEndpoint, apiPath['updatePreview']!(userId, routineId));
       final jsonData = {
         if (time != null) 'time': time,
         if (repeatDays != null) 'repeatDays': repeatDays
       };
       final requestBody = json.encode(jsonData);
+      await http.patch(
+        uri,
+        body: requestBody,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      await fetchPreviewList(date);
 //       final response = await http.patch(uri,
 //           body: requestBody, headers: {'Content-Type': 'application/json'});
 //       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
