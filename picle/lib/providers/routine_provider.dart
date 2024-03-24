@@ -225,7 +225,7 @@ class RoutineProvider extends ChangeNotifier {
 
   Future<void> finishRoutine(userId, routineId) async {
     previewList.removeWhere((preview) => preview.routineId == routineId);
-
+    print(previewList);
     // try {
     //   final uri = Uri.https(
     //       serverEndpoint, apiPath['finishRoutine']!(userId, routineId));
@@ -264,7 +264,7 @@ class RoutineProvider extends ChangeNotifier {
 
   Future<void> updatePreview({userId, routineId, time, repeatDays}) async {
     try {
-      final uri = Uri.https(
+      final uri = Uri.http(
           serverEndpoint, apiPath['updateRoutine']!(userId, routineId));
       final jsonData = {
         if (time != null) 'time': time,
@@ -273,7 +273,7 @@ class RoutineProvider extends ChangeNotifier {
       final requestBody = json.encode(jsonData);
       final response = await http.patch(uri,
           body: requestBody, headers: {'Content-Type': 'application/json'});
-      final responseBody = json.decode(response.body);
+      final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
       Map<String, dynamic> data = responseBody['data'];
       previewList = previewList
           .map((preview) =>
