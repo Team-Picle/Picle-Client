@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
+import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/routine_time.dart';
 import 'package:provider/provider.dart';
 
@@ -87,13 +89,47 @@ class RoutineItem extends StatelessWidget {
                     vertical: VisualDensity.minimumDensity,
                   ),
                   padding: EdgeInsets.zero,
-                  onPressed: () async {
-                    await provider.deleteRoutine(
-                      userId: userId,
-                      routineId: routineId,
-                      date: date,
-                    );
-                  },
+                  onPressed: () async => showModalBottomSheet(
+                    backgroundColor: Colors.white,
+                    context: context,
+                    builder: (BuildContext context2) => StatefulBuilder(
+                      builder: (BuildContext context, setState) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                SvgPicture.asset(
+                                    'lib/images/home_indicator.svg'),
+                                const SizedBox(height: 15),
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    DefaultButton(
+                                      onPressed: () async {
+                                        await provider.deleteRoutine(
+                                          userId: userId,
+                                          routineId: routineId,
+                                          date: date,
+                                        );
+                                        Navigator.pop(context2);
+                                      },
+                                      buttonText: '삭제하기',
+                                    ),
+                                    const SizedBox(height: 40),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                   icon: const Icon(Icons.more_horiz),
                 ),
               )
