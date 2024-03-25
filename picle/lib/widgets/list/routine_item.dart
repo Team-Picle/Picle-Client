@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/image_provider.dart';
@@ -11,12 +13,14 @@ import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/routine_time.dart';
 import 'package:provider/provider.dart';
 
-var imgUrl = '';
 const longitude = '';
 const latitude = '';
 XFile? image;
 final picker = ImagePicker();
 const cloudName = 'dqhllkoz8';
+LatLng? currentLocation;
+String imgUrl = '';
+bool disabled = true;
 
 class RoutineItem extends StatefulWidget {
   final int userId;
@@ -72,11 +76,12 @@ class _RoutineItemState extends State<RoutineItem> {
                       activeColor: const Color(0xFF54C29B),
                       onChanged: (value) {
                         image = null;
+                        imgUrl = '';
                         if (value == true) {
                           showModalBottomSheet(
                             backgroundColor: Colors.white,
                             context: context,
-                            builder: (BuildContext context2) => StatefulBuilder(
+                            builder: (BuildContext context) => StatefulBuilder(
                               builder: (BuildContext context, setState) {
                                 return Container(
                                   padding: const EdgeInsets.symmetric(
@@ -109,106 +114,138 @@ class _RoutineItemState extends State<RoutineItem> {
                                         const SizedBox(height: 20),
                                         GestureDetector(
                                           onTap: () async {
+                                            try {
+                                              LocationPermission permission =
+                                                  await Geolocator
+                                                      .requestPermission();
+                                              if (permission ==
+                                                  LocationPermission.denied) {
+                                                setState(() {
+                                                  print(
+                                                      'Location permission denied.');
+                                                  currentLocation =
+                                                      const LatLng(37.545605,
+                                                          126.963605);
+                                                });
+                                              }
+                                              Position position =
+                                                  await Geolocator
+                                                      .getCurrentPosition(
+                                                          desiredAccuracy:
+                                                              LocationAccuracy
+                                                                  .high);
+                                              setState(() {
+                                                currentLocation = LatLng(
+                                                    position.latitude,
+                                                    position.longitude);
+                                              });
+                                            } catch (e) {
+                                              print(
+                                                  'Error getting current location: $e');
+                                              setState(() {
+                                                currentLocation = const LatLng(
+                                                    37.545605,
+                                                    126.963605); // 명신관으로 기본 위치 설정
+                                              });
+                                            }
                                             showDialog(
                                               context: context,
+                                              barrierDismissible:
+                                                  true, // 뒷배경을 터치하여 다이얼로그를 닫을 수 있도록 설정
                                               builder: (BuildContext context) {
-                                                return GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.pop(context);
-                                                    image = null;
-                                                  },
-                                                  child: Center(
-                                                    child: GestureDetector(
-                                                      onTap: () {},
-                                                      child:
-                                                          CupertinoAlertDialog(
-                                                        title: const Text(
-                                                          '이미지 등록',
-                                                          style: TextStyle(
-                                                              fontSize: 18),
-                                                        ),
-                                                        content: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            const SizedBox(
-                                                                height: 10),
-                                                            CupertinoDialogAction(
-                                                              child: const Text(
-                                                                  '갤러리에서 선택'),
-                                                              onPressed:
-                                                                  () async {
-                                                                try {
-                                                                  final selectedImage =
-                                                                      await picker.pickImage(
-                                                                          source:
-                                                                              ImageSource.gallery);
-                                                                  setState(() {
-                                                                    image =
-                                                                        selectedImage;
-                                                                  });
-                                                                  var publicId =
-                                                                      await uploadImage(
-                                                                          image,
-                                                                          widget
-                                                                              .routineId
-                                                                              .toString());
-                                                                  imgUrl =
-                                                                      'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                } catch (e) {
-                                                                  print(
-                                                                      'Error occurred while picking image: $e');
-                                                                }
-                                                              },
-                                                            ),
-                                                            CupertinoDialogAction(
-                                                              child: const Text(
-                                                                  '카메라 실행'),
-                                                              onPressed:
-                                                                  () async {
-                                                                try {
-                                                                  final selectedImage =
-                                                                      await picker.pickImage(
-                                                                          source:
-                                                                              ImageSource.camera);
-                                                                  setState(() {
-                                                                    image =
-                                                                        selectedImage;
-                                                                  });
-                                                                  var publicId =
-                                                                      await uploadImage(
-                                                                          image,
-                                                                          widget
-                                                                              .routineId
-                                                                              .toString());
-                                                                  imgUrl =
-                                                                      'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                } catch (e) {
-                                                                  print(
-                                                                      'Error occurred while picking image: $e');
-                                                                }
-                                                              },
-                                                            ),
-                                                            CupertinoDialogAction(
-                                                              child: const Text(
-                                                                '취소',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .grey),
-                                                              ),
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                            ),
-                                                          ],
-                                                        ),
+                                                return CupertinoAlertDialog(
+                                                  title: const Text(
+                                                    '이미지 등록',
+                                                    style:
+                                                        TextStyle(fontSize: 18),
+                                                  ),
+                                                  content: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      CupertinoDialogAction(
+                                                        child: const Text(
+                                                            '갤러리에서 선택'),
+                                                        onPressed: () async {
+                                                          try {
+                                                            final selectedImage =
+                                                                await picker
+                                                                    .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery,
+                                                            );
+                                                            setState(() {
+                                                              image =
+                                                                  selectedImage;
+                                                            });
+                                                            Navigator.pop(
+                                                                context);
+                                                            // var publicId =
+                                                            //     await uploadImage(
+                                                            //   image,
+                                                            //   widget.routineId
+                                                            //       .toString(),
+                                                            // );
+                                                            // imgUrl =
+                                                            //     'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
+                                                            print(
+                                                                "갤러리: $imgUrl");
+                                                          } catch (e) {
+                                                            print(
+                                                                'Error occurred while picking image: $e');
+                                                          }
+                                                        },
                                                       ),
-                                                    ),
+                                                      CupertinoDialogAction(
+                                                        child: const Text(
+                                                            '카메라 실행'),
+                                                        onPressed: () async {
+                                                          try {
+                                                            final selectedImage =
+                                                                await picker
+                                                                    .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .camera,
+                                                            );
+                                                            setState(() {
+                                                              image =
+                                                                  selectedImage;
+                                                            });
+                                                            Navigator.pop(
+                                                                context);
+                                                            // var publicId =
+                                                            //     await uploadImage(
+                                                            //   image,
+                                                            //   widget.routineId
+                                                            //       .toString(),
+                                                            // );
+                                                            // imgUrl =
+                                                            //     'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
+                                                            print(
+                                                                '카메라: $imgUrl');
+                                                          } catch (e) {
+                                                            print(
+                                                                'Error occurred while picking image: $e');
+                                                          }
+                                                        },
+                                                      ),
+                                                      CupertinoDialogAction(
+                                                        child: const Text(
+                                                          '취소',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.grey),
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                    ],
                                                   ),
                                                 );
                                               },
@@ -239,17 +276,25 @@ class _RoutineItemState extends State<RoutineItem> {
                                             const SizedBox(height: 20),
                                             DefaultButton(
                                               onPressed: () async {
-                                                provider.verifyRoutine(
+                                                var publicId =
+                                                    await uploadImage(
+                                                  image,
+                                                  widget.routineId.toString(),
+                                                );
+                                                imgUrl =
+                                                    'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
+                                                print("루틴 인증:  $imgUrl");
+                                                await provider.verifyRoutine(
                                                   userId: widget.userId,
                                                   routineId: widget.routineId,
-                                                  imgUrl:
-                                                      'https://res.cloudinary.com/dqhllkoz8/image/upload/v1710137987/test/asppn6jnlitfhgdmwdm5.jpg',
-                                                  longitude: '38.01',
-                                                  latitude: '129.900001',
+                                                  imgUrl: imgUrl,
+                                                  longitude: currentLocation!
+                                                      .longitude,
+                                                  latitude:
+                                                      currentLocation!.latitude,
                                                   date: date,
                                                 );
-
-                                                Navigator.pop(context2);
+                                                Navigator.pop(context);
                                               },
                                               buttonText: '루틴 인증하기',
                                             ),
