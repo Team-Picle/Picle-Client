@@ -57,13 +57,7 @@ class RoutineList extends StatelessWidget {
                 buttonText: '루틴 등록하기',
                 needImg: true,
                 needDate: true,
-              ).then((_) {
-                selectedDays.clear();
-                imgUrl = '';
-                destinationLongitude = '';
-                destinationLatitude = '';
-                time = '';
-              });
+              );
               // context.read<RoutineProvider>().registerRoutine(
               //       content: routineContent,
               //       imgUrl:
@@ -374,13 +368,7 @@ Future<void> addBottomModal({
                       }
                       dayList = selectedDays.toList();
                       routineContent = titleController.text;
-                      setState(() {
-                        selectedDays = {};
-                        selectedDate = DateTime.now();
-                        selectedTime = DateTime.now();
-                        timePicked = false;
-                        image = null;
-                      });
+
                       Provider.of<RoutineProvider>(context, listen: false)
                           .registerRoutine(
                         content: routineContent,
@@ -406,9 +394,18 @@ Future<void> addBottomModal({
         );
       },
     ),
-  ).then((value) {
+  ).then((_) {
+    content = '';
+    time = '';
     timePicked = false;
+    selectedDays.clear();
     destinationPicked = false;
+    destinationLongitude = '';
+    destinationLatitude = '';
+    image = null;
+    imgUrl = '';
+    selectedDate = DateTime.now();
+    selectedTime = DateTime.now();
   });
 }
 
