@@ -40,43 +40,8 @@ class RoutineList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(child: Consumer<RoutineProvider>(
-          builder: (context, provider, child) {
-            List<dynamic> combinedList = [
-              ...provider.uncheckRoutineList,
-              ...provider.checkRoutineList,
-              ...provider.previewList,
-            ];
-
-            return ListView.builder(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                primary: false,
-                itemCount: combinedList.length,
-                itemBuilder: (_, index) {
-                  dynamic item = combinedList[index];
-                  dynamic listItem = item is Routine
-                      ? RoutineItem(
-                          userId: item.userId,
-                          routineId: item.routineId,
-                          content: item.content,
-                          isChecked: item.isCompleted,
-                          time: item.time,
-                        )
-                      : PreviewItem(
-                          userId: item.userId,
-                          routineId: item.routineId,
-                          content: item.content,
-                          time: item.time,
-                        );
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3.0),
-                    child: listItem,
-                  );
-                });
-          },
-        )),
-        DefaultButton(
-            buttonText: '루틴 등록하기',
+        IconButton(
+            icon: const Icon(Icons.add),
             onPressed: () async {
               await addBottomModal(
                 context: context,
@@ -114,6 +79,43 @@ class RoutineList extends StatelessWidget {
             //       );
             // },
             ),
+        Expanded(
+          child: Consumer<RoutineProvider>(
+            builder: (context, provider, child) {
+              List<dynamic> combinedList = [
+                ...provider.uncheckRoutineList,
+                ...provider.checkRoutineList,
+                ...provider.previewList,
+              ];
+
+              return ListView.builder(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  primary: false,
+                  itemCount: combinedList.length,
+                  itemBuilder: (_, index) {
+                    dynamic item = combinedList[index];
+                    dynamic listItem = item is Routine
+                        ? RoutineItem(
+                            userId: item.userId,
+                            routineId: item.routineId,
+                            content: item.content,
+                            isChecked: item.isCompleted,
+                            time: item.time,
+                          )
+                        : PreviewItem(
+                            userId: item.userId,
+                            routineId: item.routineId,
+                            content: item.content,
+                            time: item.time,
+                          );
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 3.0),
+                      child: listItem,
+                    );
+                  });
+            },
+          ),
+        ),
       ],
     );
   }

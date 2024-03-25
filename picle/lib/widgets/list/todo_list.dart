@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:picle/models/todo_model.dart';
 import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/todo_provider.dart';
-import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/list/todo_item.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +36,14 @@ class _TodoListState extends State<TodoList> {
 
     return Column(
       children: [
+        IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            setState(() {
+              isCreating = true;
+            });
+          },
+        ),
         if (isCreating)
           TextField(
             controller: _controller,
@@ -97,14 +104,6 @@ class _TodoListState extends State<TodoList> {
               );
             },
           ),
-        ),
-        DefaultButton(
-          buttonText: '투두 등록하기',
-          onPressed: () {
-            setState(() {
-              isCreating = true;
-            });
-          },
         ),
       ],
     );

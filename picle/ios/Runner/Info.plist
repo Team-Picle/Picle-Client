@@ -25,11 +25,9 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>801dc4cda8fc9ecbbf58c83ab229179b</string>
+				<string>com.googleusercontent.apps.944405135898-lm3f445mduatu46ob7hrn7egmu6lds3s</string>
 			</array>
 		</dict>
 	</array>
@@ -40,18 +38,14 @@
 		<string>kakaokompassauth</string>
 		<string>kakaolink</string>
 	</array>
-	<key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <!-- google login -->
-        <string>com.googleusercontent.apps.944405135898-lm3f445mduatu46ob7hrn7egmu6lds3s</string>
-      </array>
-      </dict>
-    </array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string></string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
