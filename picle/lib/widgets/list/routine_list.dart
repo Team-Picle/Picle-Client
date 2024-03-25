@@ -112,6 +112,7 @@ class RoutineList extends StatelessWidget {
                             userId: item.userId,
                             routineId: item.routineId,
                             content: item.content,
+                            repeatDays: item.repeatDays,
                             time: item.time,
                           );
                     return Padding(
