@@ -75,6 +75,7 @@ class _TodoListState extends State<TodoList> {
                     content: _controller.text,
                     date: date,
                   );
+              _controller.text = '';
             },
           ),
         Expanded(
