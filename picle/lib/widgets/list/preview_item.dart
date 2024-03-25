@@ -279,6 +279,8 @@ class PreviewItem extends StatelessWidget {
                                                                         .toList(),
                                                                 date: date,
                                                               );
+                                                              selectedDays
+                                                                  .clear();
                                                               Navigator.pop(
                                                                   context);
                                                               Navigator.pop(
