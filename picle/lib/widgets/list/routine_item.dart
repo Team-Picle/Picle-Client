@@ -253,7 +253,7 @@ class _RoutineItemState extends State<RoutineItem> {
                                           },
                                           child: Row(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                CrossAxisAlignment.center,
                                             children: [
                                               SvgPicture.asset(
                                                   'lib/images/picture_icon.svg'),
@@ -265,6 +265,11 @@ class _RoutineItemState extends State<RoutineItem> {
                                                   fontSize: 16,
                                                 ),
                                               ),
+                                              if (image != null)
+                                                const Icon(
+                                                  Icons.check,
+                                                  color: Color(0xFF54C29B),
+                                                ),
                                             ],
                                           ),
                                         ),
@@ -281,8 +286,11 @@ class _RoutineItemState extends State<RoutineItem> {
                                                   image,
                                                   widget.routineId.toString(),
                                                 );
-                                                imgUrl =
-                                                    'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
+
+                                                if (image != null) {
+                                                  imgUrl =
+                                                      'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
+                                                }
                                                 print("루틴 인증:  $imgUrl");
                                                 await provider.verifyRoutine(
                                                   userId: widget.userId,
@@ -307,7 +315,11 @@ class _RoutineItemState extends State<RoutineItem> {
                                 );
                               },
                             ),
-                          );
+                          ).then((_) {
+                            image = null;
+                            imgUrl = '';
+                            currentLocation = null;
+                          });
                         } else {
                           // 체크 해제 시 isChecked 업데이트
                         }

@@ -144,6 +144,12 @@ class RoutineProvider extends ChangeNotifier {
     destinationLatitude,
     date,
   }) async {
+    // print('content: $content');
+    // print('repeatDays: $repeatDays');
+    // print('imgUrl: $imgUrl');
+    // print('destinationLongitude: $destinationLongitude');
+    // print('destinationLatitude: $destinationLatitude');
+
     if (content == '' ||
         imgUrl == '' ||
         startRepeatDate == '' ||
@@ -368,6 +374,20 @@ class RoutineProvider extends ChangeNotifier {
     latitude,
     date,
   }) async {
+    // print('imgUrl: $imgUrl');
+    // print('longitude: $longitude');
+    // print('latitude: $latitude');
+
+    if (imgUrl == '') {
+      showToast(text: '이미지를 등록해주세요');
+      return;
+    }
+
+    if (longitude == '' || latitude == '') {
+      showToast(text: '현재 위치를 받아올 수 없습니다');
+      return;
+    }
+
     try {
       final queryParams = {
         'date': date,
