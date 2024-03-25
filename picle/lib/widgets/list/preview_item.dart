@@ -283,7 +283,8 @@ class PreviewItem extends StatelessWidget {
                                                                     routineId,
                                                                 time: time,
                                                                 repeatDays:
-                                                                    selectedDays,
+                                                                    selectedDays
+                                                                        .toList(),
                                                               );
                                                               Navigator.pop(
                                                                   context);
