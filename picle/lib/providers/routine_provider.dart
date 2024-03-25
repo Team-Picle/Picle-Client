@@ -6,6 +6,7 @@ import 'package:picle/constants/index.dart';
 import 'package:picle/models/preview_model.dart';
 import 'package:picle/models/routine_model.dart';
 import 'package:picle/notification.dart';
+import 'package:picle/widgets/toast.dart';
 
 var userId = 1;
 
@@ -378,6 +379,8 @@ class RoutineProvider extends ChangeNotifier {
             .removeWhere((routine) => routine.routineId == routineId);
         checkRoutineList = [...checkRoutineList, Routine.fromJson(data)];
         await notifications.cancel(routineId);
+      } else {
+        showToast(text: responseBody['message']);
       }
     } catch (error) {
       print('[ERROR] verifyRoutine: $error');
