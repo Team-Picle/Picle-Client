@@ -52,17 +52,17 @@ class RoutineList extends StatelessWidget {
                 needImg: true,
                 needDate: true,
               );
-              context.read<RoutineProvider>().registerRoutine(
-                    content: routineContent,
-                    imgUrl:
-                        'https://res.cloudinary.com/dqhllkoz8/image/upload/v1710138018/test/zphkge2wdfvswud8nmti.jpg',
-                    time: time,
-                    startRepeatDate: startRepeatDate,
-                    repeatDays: dayList,
-                    destinationLongitude: destinationLongitude,
-                    destinationLatitude: destinationLatitude,
-                    date: context.read<DateProvider>().getDate(),
-                  );
+              // context.read<RoutineProvider>().registerRoutine(
+              //       content: routineContent,
+              //       imgUrl:
+              //           'https://res.cloudinary.com/dqhllkoz8/image/upload/v1710138018/test/zphkge2wdfvswud8nmti.jpg',
+              //       time: time,
+              //       startRepeatDate: startRepeatDate,
+              //       repeatDays: dayList,
+              //       destinationLongitude: destinationLongitude,
+              //       destinationLatitude: destinationLatitude,
+              //       date: context.read<DateProvider>().getDate(),
+              //     );
             }
 
             //     () {
@@ -138,8 +138,8 @@ Future<void> addBottomModal({
   showModalBottomSheet(
     backgroundColor: Colors.white,
     context: context,
-    builder: (BuildContext context) => StatefulBuilder(
-      builder: (BuildContext context, setState) {
+    builder: (BuildContext context2) => StatefulBuilder(
+      builder: (BuildContext context2, setState) {
         // 화면 높이에 따라 조절
         double screenHeight = MediaQuery.of(context).size.height;
         double bottomSheetHeight = screenHeight * 0.35;
@@ -160,9 +160,9 @@ Future<void> addBottomModal({
               GestureDetector(
                 onTap: () {
                   Navigator.push(
-                    context,
+                    context2,
                     MaterialPageRoute(
-                      builder: (context) =>
+                      builder: (context2) =>
                           const GoogleMapsWidget(), // GoogleMapsWidget으로 이동
                     ),
                   );
@@ -199,10 +199,10 @@ Future<void> addBottomModal({
                 onTap: () async {
                   showDialog(
                     context: context,
-                    builder: (BuildContext context) {
+                    builder: (BuildContext context2) {
                       return GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.pop(context2);
                           image = null;
                         },
                         child: Center(
@@ -227,7 +227,7 @@ Future<void> addBottomModal({
                                         setState(() {
                                           image = selectedImage;
                                         });
-                                        Navigator.pop(context);
+                                        Navigator.pop(context2);
                                       } catch (e) {
                                         print(
                                             'Error occurred while picking image: $e');
@@ -244,7 +244,7 @@ Future<void> addBottomModal({
                                         setState(() {
                                           image = selectedImage;
                                         });
-                                        Navigator.pop(context);
+                                        Navigator.pop(context2);
                                       } catch (e) {
                                         print(
                                             'Error occurred while picking image: $e');
@@ -257,7 +257,7 @@ Future<void> addBottomModal({
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                     onPressed: () {
-                                      Navigator.pop(context);
+                                      Navigator.pop(context2);
                                       image = null;
                                     },
                                   ),
@@ -353,8 +353,21 @@ Future<void> addBottomModal({
                         timePicked = false;
                         image = null;
                       });
+                      Provider.of<RoutineProvider>(context, listen: false)
+                          .registerRoutine(
+                        content: routineContent,
+                        imgUrl:
+                            'https://res.cloudinary.com/dqhllkoz8/image/upload/v1710138018/test/zphkge2wdfvswud8nmti.jpg',
+                        time: time,
+                        startRepeatDate: startRepeatDate,
+                        repeatDays: dayList,
+                        destinationLongitude: destinationLongitude,
+                        destinationLatitude: destinationLatitude,
+                        date: Provider.of<DateProvider>(context, listen: false)
+                            .getDate(),
+                      );
 
-                      Navigator.pop(context);
+                      Navigator.pop(context2);
                       print(imgUrl);
                     },
                     buttonText: buttonText,
