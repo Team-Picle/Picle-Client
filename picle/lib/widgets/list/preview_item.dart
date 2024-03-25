@@ -18,7 +18,7 @@ DateTime? nowTime;
 Set<String> selectedDays = {};
 DateTime selectedDate = DateTime.now();
 DateTime? selectedTime;
-bool timePicked = false;
+// bool timePicked = false;
 bool destinationPicked = false;
 
 class PreviewItem extends StatelessWidget {
@@ -196,17 +196,22 @@ class PreviewItem extends StatelessWidget {
                                                           GestureDetector(
                                                             onTap: () async {
                                                               nowTime = null;
-                                                              timePicked =
-                                                                  time != null
-                                                                      ? true
-                                                                      : false;
+                                                              // timePicked =
+                                                              //     time != null
+                                                              //         ? true
+                                                              //         : false;
                                                               DateFormat
                                                                   format =
                                                                   DateFormat(
                                                                       'HH:mm');
-                                                              selectedTime =
-                                                                  format.parse(
-                                                                      time!);
+
+                                                              if (time !=
+                                                                  null) {
+                                                                selectedTime =
+                                                                    format.parse(
+                                                                        time!);
+                                                              }
+
                                                               DateTime?
                                                                   pickedTime =
                                                                   await showTimePickerModal(
@@ -244,8 +249,11 @@ class PreviewItem extends StatelessWidget {
                                                                 const SizedBox(
                                                                     width: 16),
                                                                 Text(
-                                                                  timePicked
-                                                                      ? '$time'
+                                                                  time != null
+                                                                      ? time!
+                                                                          .substring(
+                                                                              0,
+                                                                              5)
                                                                       : '없음',
                                                                   style:
                                                                       const TextStyle(
@@ -382,7 +390,7 @@ Future<DateTime?> showTimePickerModal(BuildContext context) async {
                       Navigator.pop(context);
                       nowTime = null;
                       selectedTime = null;
-                      timePicked = false;
+                      // timePicked = false;
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -422,7 +430,7 @@ Future<DateTime?> showTimePickerModal(BuildContext context) async {
                       routine['time'] =
                           '${selectedTime?.hour.toString().padLeft(2, '0')}:${selectedTime?.minute.toString().padLeft(2, '0')}';
                       Navigator.pop(context, selectedTime);
-                      timePicked = true;
+                      // timePicked = true;
                       selectedTime = null;
                     },
                     style: ButtonStyle(
