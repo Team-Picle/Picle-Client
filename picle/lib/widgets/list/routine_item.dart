@@ -265,6 +265,9 @@ class _RoutineItemState extends State<RoutineItem> {
                                                   fontSize: 16,
                                                 ),
                                               ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
                                               if (image != null)
                                                 const Icon(
                                                   Icons.check,
