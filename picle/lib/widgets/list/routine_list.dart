@@ -18,20 +18,26 @@ import 'package:provider/provider.dart';
 const cloudName = 'dqhllkoz8';
 final picker = ImagePicker();
 String routineContent = '';
+
 Set<String> selectedDays = {};
 List<String> dayList = [];
-DateTime selectedDate = DateTime.now();
+
 DateTime? selectedTime;
 bool timePicked = false;
+String time = '';
+
 String imgUrl = '';
 XFile? image;
+
 bool destinationPicked = false;
-String destinationLongitude = '126.9595';
-String destinationLatitude = '37.549';
+String destinationLongitude = '';
+String destinationLatitude = '';
+
 int routineId = 100;
+
+DateTime selectedDate = DateTime.now();
 String startRepeatDate =
     '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}';
-String time = '';
 
 class RoutineList extends StatelessWidget {
   const RoutineList({super.key});
@@ -51,7 +57,13 @@ class RoutineList extends StatelessWidget {
                 buttonText: '루틴 등록하기',
                 needImg: true,
                 needDate: true,
-              );
+              ).then((_) {
+                selectedDays.clear();
+                imgUrl = '';
+                destinationLongitude = '';
+                destinationLatitude = '';
+                time = '';
+              });
               // context.read<RoutineProvider>().registerRoutine(
               //       content: routineContent,
               //       imgUrl:
@@ -155,20 +167,22 @@ Future<void> addBottomModal({
         }
 
         Widget renderAddImg() {
+          print(destinationPicked);
           return Column(
             children: [
               GestureDetector(
-                onTap: () {
-                  Navigator.push(
+                onTap: () async {
+                  await Navigator.push(
                     context2,
                     MaterialPageRoute(
                       builder: (context2) =>
                           const GoogleMapsWidget(), // GoogleMapsWidget으로 이동
                     ),
                   );
+                  setState(() {});
                 },
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(width: 4),
                     SvgPicture.asset('lib/images/gps_icon.svg'),
@@ -180,15 +194,19 @@ Future<void> addBottomModal({
                         fontSize: 16,
                       ),
                     ),
-                    // const SizedBox(width: 20),
-                    // if (destinationPicked == true) // 사용자의 위치가 등록된 경우
-                    //   Text(
-                    //     '위도: ${routine.destinationLatitude.toStringAsFixed(4)}, 경도: ${routine.destinationLongitude.toStringAsFixed(4)}',
-                    //     style: const TextStyle(
-                    //       fontSize: 12,
-                    //       color: Colors.grey,
-                    //     ),
+                    const SizedBox(width: 10),
+                    if (destinationPicked == true) // 사용자의 위치가 등록된 경우
+                      const Icon(
+                        Icons.check,
+                        color: Color(0xFF54C29B),
+                      ),
+                    // Text(
+                    //   '위도: ${routine.destinationLatitude.toStringAsFixed(4)}, 경도: ${routine.destinationLongitude.toStringAsFixed(4)}',
+                    //   style: const TextStyle(
+                    //     fontSize: 12,
+                    //     color: Colors.grey,
                     //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -271,7 +289,7 @@ Future<void> addBottomModal({
                   );
                 },
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SvgPicture.asset('lib/images/picture_icon.svg'),
                     const SizedBox(width: 12),
@@ -282,6 +300,14 @@ Future<void> addBottomModal({
                         fontSize: 16,
                       ),
                     ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    if (image != null)
+                      const Icon(
+                        Icons.check,
+                        color: Color(0xFF54C29B),
+                      ),
                   ],
                 ),
               ),
@@ -342,8 +368,10 @@ Future<void> addBottomModal({
                     onPressed: () async {
                       var publicId =
                           await uploadImage(image, routineId.toString());
-                      imgUrl =
-                          'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
+                      if (image != null) {
+                        imgUrl =
+                            'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
+                      }
                       dayList = selectedDays.toList();
                       routineContent = titleController.text;
                       setState(() {
@@ -367,7 +395,6 @@ Future<void> addBottomModal({
                       );
 
                       Navigator.pop(context2);
-                      print(imgUrl);
                     },
                     buttonText: buttonText,
                   ),
@@ -379,7 +406,10 @@ Future<void> addBottomModal({
         );
       },
     ),
-  );
+  ).then((value) {
+    timePicked = false;
+    destinationPicked = false;
+  });
 }
 
 class GoogleMapsWidget extends StatefulWidget {

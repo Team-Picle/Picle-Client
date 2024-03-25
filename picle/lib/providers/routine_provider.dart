@@ -144,6 +144,15 @@ class RoutineProvider extends ChangeNotifier {
     destinationLatitude,
     date,
   }) async {
+    if (content == '' ||
+        imgUrl == '' ||
+        startRepeatDate == '' ||
+        repeatDays.isEmpty ||
+        destinationLongitude == '' ||
+        destinationLatitude == '') {
+      showToast(text: '필수 입력를 모두 완성해주세요');
+      return;
+    }
     try {
       final url = Uri.http(serverEndpoint, apiPath['createPreview']!(userId));
       final jsonData = {
@@ -156,12 +165,18 @@ class RoutineProvider extends ChangeNotifier {
         'destinationLatitude': destinationLatitude
       };
       final requestBody = json.encode(jsonData);
-      await http.post(
+      final response = await http.post(
         url,
         body: requestBody,
         headers: {'Content-Type': 'application/json'},
       );
-      await fetchPreviewList(date);
+      final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+
+      if (responseBody['data'] != null) {
+        await fetchPreviewList(date);
+      } else {
+        showToast(text: responseBody['message']);
+      }
     } catch (error) {
       print('[ERROR] registerRoutine: $error');
       // Toast message 보여주기 '루틴을 등록에 실패했습니다'
