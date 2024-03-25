@@ -25,6 +25,7 @@ class PreviewItem extends StatelessWidget {
   final int userId;
   final int routineId;
   final String content;
+  final List<dynamic> repeatDays;
   String? time;
 
   PreviewItem({
@@ -32,11 +33,13 @@ class PreviewItem extends StatelessWidget {
     required this.userId,
     required this.routineId,
     required this.content,
+    required this.repeatDays,
     this.time,
   });
 
   @override
   Widget build(BuildContext context) {
+    selectedDays = {...repeatDays};
     String date = Provider.of<DateProvider>(context).getDate();
     TextEditingController titleController = TextEditingController();
     return Consumer<RoutineProvider>(
@@ -269,7 +272,10 @@ class PreviewItem extends StatelessWidget {
                                                           ),
                                                           const SizedBox(
                                                               height: 10),
-                                                          const DayPicker(),
+                                                          DayPicker(
+                                                            repeatDays:
+                                                                repeatDays,
+                                                          ),
                                                           const SizedBox(
                                                               height: 20),
                                                           DefaultButton(
@@ -480,17 +486,39 @@ Future<DateTime?> showTimePickerModal(BuildContext context) async {
 }
 
 class DayPicker extends StatefulWidget {
-  const DayPicker({Key? key}) : super(key: key);
+  final List<dynamic> repeatDays;
+  List<String> daysOfWeek = [
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY',
+    'SUNDAY'
+  ];
+
+  DayPicker({
+    super.key,
+    required this.repeatDays,
+  });
 
   @override
   State<DayPicker> createState() => _DayPickerState();
 }
 
 class _DayPickerState extends State<DayPicker> {
-  List<bool> isSelected = List.generate(7, (index) => false);
+  late List<bool> isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    isSelected = List.generate(
+        7, (index) => widget.repeatDays.contains(widget.daysOfWeek[index]));
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(isSelected);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
       child: Row(
@@ -530,6 +558,17 @@ class _DayPickerState extends State<DayPicker> {
         }),
       ),
     );
+  }
+
+  int getDayIndex(String day) {
+    if (day == 'Monday') return 0;
+    if (day == 'Tuesday') return 1;
+    if (day == 'Wednesday') return 2;
+    if (day == 'Thursday') return 3;
+    if (day == 'Friday') return 4;
+    if (day == 'Saturday') return 5;
+    if (day == 'Sunday') return 6;
+    return -1;
   }
 
   String getDayName(int index) {
