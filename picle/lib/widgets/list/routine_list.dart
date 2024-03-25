@@ -161,7 +161,6 @@ Future<void> addBottomModal({
         }
 
         Widget renderAddImg() {
-          print(destinationPicked);
           return Column(
             children: [
               GestureDetector(
@@ -832,6 +831,8 @@ class _RenderAddDateState extends State<RenderAddDate> {
             timePicked = false;
             selectedTime = null;
             DateTime? pickedTime = await showTimePickerModal(context);
+
+            print(pickedTime);
 
             if (pickedTime != null) {
               setState(() {

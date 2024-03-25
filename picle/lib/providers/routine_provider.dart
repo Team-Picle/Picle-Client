@@ -164,7 +164,7 @@ class RoutineProvider extends ChangeNotifier {
       final jsonData = {
         'content': content,
         'registrationImgUrl': imgUrl,
-        'time': time,
+        if (time != null) 'time': time,
         'startRepeatDate': startRepeatDate,
         'repeatDays': repeatDays,
         'destinationLongitude': destinationLongitude,
@@ -177,6 +177,8 @@ class RoutineProvider extends ChangeNotifier {
         headers: {'Content-Type': 'application/json'},
       );
       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+
+      print(responseBody);
 
       if (responseBody['data'] != null) {
         await fetchPreviewList(date);
@@ -327,6 +329,9 @@ class RoutineProvider extends ChangeNotifier {
     repeatDays,
     date,
   }) async {
+    print('time: $time');
+    print('repeatDays: $repeatDays');
+
     try {
       final uri = Uri.http(
           serverEndpoint, apiPath['updatePreview']!(userId, routineId));
