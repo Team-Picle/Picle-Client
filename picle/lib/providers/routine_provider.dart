@@ -372,6 +372,8 @@ class RoutineProvider extends ChangeNotifier {
       );
       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
 
+      print(responseBody);
+
       if (responseBody['data'] != null) {
         Map<String, dynamic> data = responseBody['data'];
 

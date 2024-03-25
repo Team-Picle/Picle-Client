@@ -356,8 +356,7 @@ Future<void> addBottomModal({
                       Provider.of<RoutineProvider>(context, listen: false)
                           .registerRoutine(
                         content: routineContent,
-                        imgUrl:
-                            'https://res.cloudinary.com/dqhllkoz8/image/upload/v1710138018/test/zphkge2wdfvswud8nmti.jpg',
+                        imgUrl: imgUrl,
                         time: time,
                         startRepeatDate: startRepeatDate,
                         repeatDays: dayList,
