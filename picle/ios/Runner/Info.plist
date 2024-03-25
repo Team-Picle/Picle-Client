@@ -77,5 +77,8 @@
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string></string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
+
 </dict>
 </plist>

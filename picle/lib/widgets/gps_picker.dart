@@ -75,6 +75,13 @@ class _GoogleMapsWidgetState extends State<GoogleMapsWidget> {
 
   void _getCurrentLocation() async {
     try {
+      LocationPermission permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        setState(() {
+          print('Location permission denied.');
+          currentLocation = const LatLng(37.545605, 126.963605);
+        });
+      }
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
       setState(() {
@@ -83,8 +90,7 @@ class _GoogleMapsWidgetState extends State<GoogleMapsWidget> {
     } catch (e) {
       print('Error getting current location: $e');
       setState(() {
-        currentLocation =
-            const LatLng(37.545605, 126.963605); // 서울의 한 가운데 위치로 설정
+        currentLocation = const LatLng(37.545605, 126.963605); // 명신관으로 기본 위치 설정
       });
     }
   }
