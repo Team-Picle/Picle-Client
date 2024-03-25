@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                       await UserApi.instance.loginWithKakaoAccount();
                       // print('카카오계정으로 로그인 성공');
                     } catch (error) {
-                      // print('카카오계정으로 로그인 실패 $error');
+                      print('카카오계정으로 로그인 실패 $error');
                     }
 
                     try {
