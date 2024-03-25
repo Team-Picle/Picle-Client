@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-void showImageSourceDialog(BuildContext context) async {
+Future<XFile?> showImageSourceDialog(BuildContext context) async {
   final picker = ImagePicker();
   XFile? image;
 
@@ -68,5 +68,5 @@ void showImageSourceDialog(BuildContext context) async {
       );
     },
   );
-  return null;
+  return image;
 }

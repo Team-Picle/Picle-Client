@@ -6,13 +6,14 @@ import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/widgets/date_picker.dart';
 import 'package:picle/widgets/default_button.dart';
-import 'package:picle/widgets/routine_modify_modal.dart';
+
 import 'package:picle/widgets/routine_time.dart';
 import 'package:provider/provider.dart';
 
 const imgUrl = '';
 const longitude = '';
 const latitude = '';
+
 DateTime nowDate = DateTime.now();
 DateTime? nowTime;
 Set<String> selectedDays = {};
