@@ -446,6 +446,13 @@ class _GoogleMapsWidgetState extends State<GoogleMapsWidget> {
 
   void _getCurrentLocation() async {
     try {
+      LocationPermission permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        setState(() {
+          print('Location permission denied.');
+          currentLocation = const LatLng(37.545605, 126.963605);
+        });
+      }
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
       setState(() {
