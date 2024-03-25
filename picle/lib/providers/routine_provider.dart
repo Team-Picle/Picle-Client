@@ -421,6 +421,7 @@ class RoutineProvider extends ChangeNotifier {
             .removeWhere((routine) => routine.routineId == routineId);
         checkRoutineList = [...checkRoutineList, Routine.fromJson(data)];
         await notifications.cancel(routineId);
+        showToast(text: '인증에 성공했습니다!');
       } else {
         showToast(text: responseBody['message']);
       }
