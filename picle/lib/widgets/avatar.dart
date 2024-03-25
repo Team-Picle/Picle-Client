@@ -17,7 +17,7 @@ class Avatar extends StatelessWidget {
           width: 14,
         ),
         Text(
-          'nickname',
+          '개디언즈',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
