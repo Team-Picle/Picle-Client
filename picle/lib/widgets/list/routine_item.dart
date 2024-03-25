@@ -296,10 +296,16 @@ class _RoutineItemState extends State<RoutineItem> {
                                                   userId: widget.userId,
                                                   routineId: widget.routineId,
                                                   imgUrl: imgUrl,
-                                                  longitude: currentLocation!
-                                                      .longitude,
+                                                  longitude:
+                                                      currentLocation != null
+                                                          ? currentLocation!
+                                                              .longitude
+                                                          : '',
                                                   latitude:
-                                                      currentLocation!.latitude,
+                                                      currentLocation != null
+                                                          ? currentLocation!
+                                                              .latitude
+                                                          : '',
                                                   date: date,
                                                 );
                                                 Navigator.pop(context);
