@@ -6,7 +6,6 @@ import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/widgets/date_picker.dart';
 import 'package:picle/widgets/default_button.dart';
-
 import 'package:picle/widgets/routine_time.dart';
 import 'package:provider/provider.dart';
 
@@ -151,9 +150,8 @@ class PreviewItem extends StatelessWidget {
                                                               'lib/images/home_indicator.svg'),
                                                           const SizedBox(
                                                               height: 10),
-                                                          TextField(
-                                                            controller:
-                                                                titleController,
+                                                          Text(
+                                                            content,
                                                             style:
                                                                 const TextStyle(
                                                               fontWeight:
@@ -161,44 +159,38 @@ class PreviewItem extends StatelessWidget {
                                                                       .w600,
                                                               fontSize: 25,
                                                             ),
-                                                            decoration:
-                                                                const InputDecoration(
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                            ),
                                                           ),
                                                           const SizedBox(
                                                               height: 10),
-                                                          Row(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              const Text(
-                                                                '시작 날짜',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  fontSize: 16,
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                  width: 16),
-                                                              Text(
-                                                                '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}',
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  fontSize: 16,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
+                                                          // Row(
+                                                          //   crossAxisAlignment:
+                                                          //       CrossAxisAlignment
+                                                          //           .start,
+                                                          //   children: [
+                                                          //     const Text(
+                                                          //       '시작 날짜',
+                                                          //       style:
+                                                          //           TextStyle(
+                                                          //         fontWeight:
+                                                          //             FontWeight
+                                                          //                 .w600,
+                                                          //         fontSize: 16,
+                                                          //       ),
+                                                          //     ),
+                                                          //     const SizedBox(
+                                                          //         width: 16),
+                                                          //     Text(
+                                                          //       '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}',
+                                                          //       style:
+                                                          //           const TextStyle(
+                                                          //         fontWeight:
+                                                          //             FontWeight
+                                                          //                 .w500,
+                                                          //         fontSize: 16,
+                                                          //       ),
+                                                          //     ),
+                                                          //   ],
+                                                          // ),
                                                           const SizedBox(
                                                               height: 10),
                                                           GestureDetector(
@@ -285,6 +277,7 @@ class PreviewItem extends StatelessWidget {
                                                                 repeatDays:
                                                                     selectedDays
                                                                         .toList(),
+                                                                date: date,
                                                               );
                                                               Navigator.pop(
                                                                   context);
