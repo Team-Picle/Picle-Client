@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:picle/models/feed_model.dart';
 
 class ImageList extends StatelessWidget {
   final bool isExplore;
   final likeCounts = [0, 0, 0, 3, 2, 2, 1, 3, 1, 2];
+  final List<Feed> feeds;
 
   ImageList({
     Key? key,
     required this.isExplore,
+    required this.feeds,
   }) : super(key: key);
 
   @override
@@ -15,9 +18,9 @@ class ImageList extends StatelessWidget {
     return ListView.builder(
       itemCount: 10,
       itemBuilder: (context, index) {
-        // 이미지, 날짜 등 수정 필요
-        const imageUrl = 'https://via.placeholder.com/150';
-        final date = '2024-03-${21 - index}'; // 예시 날짜
+        final feed = feeds[index];
+        final imageUrl = feed.verifiedImageUrl;
+        final date = feed.date;
         int likeCount = likeCounts[index];
         return ImageListItem(
           imageUrl: imageUrl,
