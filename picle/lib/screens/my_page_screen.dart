@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:picle/models/user_challenge_model.dart';
 import 'package:picle/providers/user_challenge_provider.dart';
+import 'package:picle/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class MyPageScreen extends StatelessWidget {
@@ -17,11 +18,15 @@ class MyPageScreen extends StatelessWidget {
           ChangeNotifierProvider<UserChallengeProvider>(
             create: (_) => UserChallengeProvider(),
           ),
+          ChangeNotifierProvider<UserProvider>(
+            create: (_) => UserProvider(),
+          ),
         ],
         builder: (context, child) {
           context.read<UserChallengeProvider>().fetchUserChallengeList();
           List<UserChallenge> userChallengeList =
               context.watch<UserChallengeProvider>().userChallengeList;
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

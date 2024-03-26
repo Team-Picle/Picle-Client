@@ -17,4 +17,5 @@ final apiPath = {
       '/api/v1/routine/update/$userId/$routineId',
   'verifyRoutine': (userId, routineId) =>
       '/api/v1/routine/verify/$userId/$routineId',
+  'registerUser': () => '/api/v1/user/registration',
 };

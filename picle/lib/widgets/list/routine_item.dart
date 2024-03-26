@@ -124,8 +124,8 @@ class _RoutineItemState extends State<RoutineItem> {
                                                   print(
                                                       'Location permission denied.');
                                                   currentLocation =
-                                                      const LatLng(37.545605,
-                                                          126.963605);
+                                                      const LatLng(-37.545605,
+                                                          -126.963605);
                                                 });
                                               }
                                               Position position =
@@ -144,8 +144,8 @@ class _RoutineItemState extends State<RoutineItem> {
                                                   'Error getting current location: $e');
                                               setState(() {
                                                 currentLocation = const LatLng(
-                                                    37.545605,
-                                                    126.963605); // 명신관으로 기본 위치 설정
+                                                    -37.545605,
+                                                    -126.963605); // 명신관으로 기본 위치 설정
                                               });
                                             }
                                             showDialog(
