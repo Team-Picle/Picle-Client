@@ -5,6 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:picle/app.dart';
 import 'package:picle/models/user_model.dart';
+import 'package:picle/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -13,79 +15,103 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Flexible(
-            flex: 3,
-            child: Center(
-              child: SvgPicture.asset('lib/images/picle_logo.svg'),
-            ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    final GoogleSignInAccount? googleUser =
-                        await GoogleSignIn().signIn();
-                    if (googleUser != null) {
-                      UserModel userModel = UserModel(
-                        id: googleUser.id,
-                        nickname: googleUser.displayName,
-                        imageUrl: googleUser.photoUrl,
-                        platform: "GOOGLE",
-                      );
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const App()));
-                    }
-                  }, // Image tapped
-                  child: Image.asset(
-                    'lib/images/login_with_google.png',
-                    fit: BoxFit.cover, // Fixes border issues
-                  ),
+    return Consumer<UserProvider>(
+      builder: (context, provider, child) {
+        return Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              Flexible(
+                flex: 3,
+                child: Center(
+                  child: SvgPicture.asset('lib/images/picle_logo.svg'),
                 ),
-                const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () async {
-                    try {
-                      await UserApi.instance.loginWithKakaoAccount();
-                      // print('카카오계정으로 로그인 성공');
-                    } catch (error) {
-                      print('카카오계정으로 로그인 실패 $error');
-                    }
+              ),
+              Flexible(
+                flex: 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        final GoogleSignInAccount? googleUser =
+                            await GoogleSignIn().signIn();
+                        if (googleUser != null) {
+                          await provider.registerUser(
+                            clientKey: googleUser.id,
+                            nickname: googleUser.displayName,
+                            profileImage: googleUser.photoUrl,
+                            socialPlatform: "GOOGLE",
+                          );
 
-                    try {
-                      User user = await UserApi.instance.me();
-                      UserModel userModel = UserModel(
-                        id: user.id.toString(),
-                        nickname: user.kakaoAccount?.profile?.nickname,
-                        imageUrl: user.kakaoAccount?.profile?.profileImageUrl,
-                        platform: 'KAKAO',
-                      );
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const App()));
-                      //   print("id: ${userModel.id}"
-                      //       "\nnickname: ${userModel.nickname}"
-                      //       "\nimageUrl: ${userModel.imageUrl}"
-                      //       "\nplatform: ${userModel.platform}");
-                    } catch (error) {
-                      // print('사용자 정보 요청 실패 $error');
-                    }
-                  }, // Image tapped
-                  child: Image.asset(
-                    'lib/images/login_with_kakao.png',
-                    fit: BoxFit.cover, // Fixes border issues
-                  ),
+                          // UserModel userModel = UserModel(
+                          //   id: googleUser.id,
+                          //   nickname: googleUser.displayName,
+                          //   imageUrl: googleUser.photoUrl,
+                          //   platform: "GOOGLE",
+                          // );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const App()));
+                        }
+                      }, // Image tapped
+                      child: Image.asset(
+                        'lib/images/login_with_google.png',
+                        fit: BoxFit.cover, // Fixes border issues
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: () async {
+                        try {
+                          await UserApi.instance.loginWithKakaoAccount();
+                          // print('카카오계정으로 로그인 성공');
+                        } catch (error) {
+                          print('카카오계정으로 로그인 실패 $error');
+                        }
+
+                        try {
+                          User user = await UserApi.instance.me();
+
+                          await provider.registerUser(
+                            clientKey: user.id.toString(),
+                            nickname: user.kakaoAccount?.profile?.nickname,
+                            profileImage:
+                                user.kakaoAccount?.profile?.profileImageUrl,
+                            socialPlatform: "KAKAO",
+                          );
+
+                          // UserModel userModel = UserModel(
+                          //   id: user.id.toString(),
+                          //   nickname: user.kakaoAccount?.profile?.nickname,
+                          //   imageUrl: user.kakaoAccount?.profile?.profileImageUrl,
+                          //   platform: 'KAKAO',
+                          // );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const App()));
+                          //   print("id: ${userModel.id}"
+                          //       "\nnickname: ${userModel.nickname}"
+                          //       "\nimageUrl: ${userModel.imageUrl}"
+                          //       "\nplatform: ${userModel.platform}");
+                        } catch (error) {
+                          // print('사용자 정보 요청 실패 $error');
+                        }
+                      }, // Image tapped
+                      child: Image.asset(
+                        'lib/images/login_with_kakao.png',
+                        fit: BoxFit.cover, // Fixes border issues
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/providers/todo_provider.dart';
+import 'package:picle/providers/user_provider.dart';
 import 'package:picle/widgets/avatar.dart';
 import 'package:picle/widgets/calender.dart';
 import 'package:picle/widgets/schedule_list.dart';
@@ -24,6 +25,9 @@ class MainScreen extends StatelessWidget {
             ),
             ChangeNotifierProvider<DateProvider>(
               create: (_) => DateProvider(),
+            ),
+            ChangeNotifierProvider<UserProvider>(
+              create: (_) => UserProvider(),
             ),
           ],
           builder: (context, child) {
