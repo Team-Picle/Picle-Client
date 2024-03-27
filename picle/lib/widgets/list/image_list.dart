@@ -4,12 +4,16 @@ import 'package:flutter_svg/svg.dart';
 class ImageListItem extends StatefulWidget {
   final String imageUrl;
   final String date;
+  final String nickname;
+  final String profileImage;
   final bool isExplore;
   final int likeCount;
 
   const ImageListItem({
     required this.imageUrl,
     required this.date,
+    required this.nickname,
+    required this.profileImage,
     required this.isExplore,
     Key? key,
     required this.likeCount,
@@ -37,9 +41,10 @@ class _ImageListItemState extends State<ImageListItem> {
                 height: 40,
               ),
               const SizedBox(width: 12),
-              const Text(
-                "익명의 눈송이",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              Text(
+                widget.nickname,
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
             ],
           ),
@@ -54,6 +59,8 @@ class _ImageListItemState extends State<ImageListItem> {
                   Image.network(
                     widget.imageUrl,
                     fit: BoxFit.cover,
+                    width: 150,
+                    height: 300,
                   ),
                 ],
               ),
