@@ -1,13 +1,9 @@
 import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:picle/constants/api_path.dart';
 import 'package:picle/constants/index.dart';
 import 'package:picle/models/user_model.dart';
-import 'package:picle/notification.dart';
-import 'package:picle/widgets/toast.dart';
 
 class UserProvider extends ChangeNotifier {
   int userId = -1;

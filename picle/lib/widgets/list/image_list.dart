@@ -1,44 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ImageList extends StatelessWidget {
-  final bool isExplore;
-  final likeCounts = [0, 0, 0, 3, 2, 2, 1, 3, 1, 2];
-
-  ImageList({
-    Key? key,
-    required this.isExplore,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        // 이미지, 날짜 등 수정 필요
-        const imageUrl = 'https://via.placeholder.com/150';
-        final date = '2024-03-${21 - index}'; // 예시 날짜
-        int likeCount = likeCounts[index];
-        return ImageListItem(
-          imageUrl: imageUrl,
-          date: date,
-          isExplore: isExplore,
-          likeCount: likeCount,
-        );
-      },
-    );
-  }
-}
-
 class ImageListItem extends StatefulWidget {
   final String imageUrl;
   final String date;
+  final String nickname;
+  final String profileImage;
   final bool isExplore;
   final int likeCount;
 
   const ImageListItem({
     required this.imageUrl,
     required this.date,
+    required this.nickname,
+    required this.profileImage,
     required this.isExplore,
     Key? key,
     required this.likeCount,
@@ -65,10 +40,11 @@ class _ImageListItemState extends State<ImageListItem> {
                 width: 40,
                 height: 40,
               ),
-              const SizedBox(width: 16),
-              const Text(
-                "눈송이",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              const SizedBox(width: 12),
+              Text(
+                widget.nickname,
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
             ],
           ),
@@ -83,6 +59,8 @@ class _ImageListItemState extends State<ImageListItem> {
                   Image.network(
                     widget.imageUrl,
                     fit: BoxFit.cover,
+                    width: 150,
+                    height: 300,
                   ),
                 ],
               ),
