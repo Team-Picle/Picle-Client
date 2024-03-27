@@ -8,19 +8,20 @@ import 'package:picle/models/routine_model.dart';
 import 'package:picle/notification.dart';
 import 'package:picle/widgets/toast.dart';
 
-var userId = 1;
-
 class RoutineProvider extends ChangeNotifier {
   List<Preview> previewList = [];
   List<Routine> uncheckRoutineList = [];
   List<Routine> checkRoutineList = [];
   bool isDisposed = false;
 
-  RoutineProvider() {
+  RoutineProvider(userId) {
     String today = DateTime.now() //
         .toString()
         .split(' ')[0];
-    fetchList(today);
+    fetchList(
+      userId: userId,
+      date: today,
+    );
   }
 
   @override
@@ -36,14 +37,26 @@ class RoutineProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchList(date) async {
-    await fetchRoutineList(date);
-    await fetchPreviewList(date);
+  Future<void> fetchList({
+    required userId,
+    required date,
+  }) async {
+    await fetchRoutineList(
+      userId: userId,
+      date: date,
+    );
+    await fetchPreviewList(
+      userId: userId,
+      date: date,
+    );
 
     notifyListeners();
   }
 
-  Future<void> fetchRoutineList(date) async {
+  Future<void> fetchRoutineList({
+    required userId,
+    required date,
+  }) async {
     try {
       final queryParams = {
         'date': date,
@@ -87,7 +100,10 @@ class RoutineProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  Future<void> fetchPreviewList(date) async {
+  Future<void> fetchPreviewList({
+    required userId,
+    required date,
+  }) async {
     try {
       final queryParams = {
         'date': date,
@@ -135,14 +151,15 @@ class RoutineProvider extends ChangeNotifier {
   }
 
   Future<void> registerRoutine({
-    content,
-    imgUrl,
+    required userId,
+    required content,
+    required imgUrl,
     time,
-    startRepeatDate,
-    repeatDays,
-    destinationLongitude,
-    destinationLatitude,
-    date,
+    required startRepeatDate,
+    required repeatDays,
+    required destinationLongitude,
+    required destinationLatitude,
+    required date,
   }) async {
     // print('content: $content');
     // print('repeatDays: $repeatDays');
@@ -181,7 +198,10 @@ class RoutineProvider extends ChangeNotifier {
       print(responseBody);
 
       if (responseBody['data'] != null) {
-        await fetchPreviewList(date);
+        await fetchPreviewList(
+          userId: userId,
+          date: date,
+        );
       } else {
         showToast(text: responseBody['message']);
       }
@@ -195,10 +215,10 @@ class RoutineProvider extends ChangeNotifier {
   }
 
   Future<void> addRoutine({
-    userId,
-    routineId,
-    date,
-    time,
+    required userId,
+    required routineId,
+    required date,
+    required time,
   }) async {
     try {
       final queryParams = {
@@ -264,7 +284,10 @@ class RoutineProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  Future<void> finishRoutine(userId, routineId) async {
+  Future<void> finishRoutine({
+    required userId,
+    required routineId,
+  }) async {
 //     previewList.removeWhere((preview) => preview.routineId == routineId);
 //     print(previewList);
     // try {
@@ -294,9 +317,9 @@ class RoutineProvider extends ChangeNotifier {
   }
 
   Future<void> deleteRoutine({
-    userId,
-    routineId,
-    date,
+    required userId,
+    required routineId,
+    required date,
   }) async {
     try {
       final uri = Uri.http(
@@ -307,7 +330,10 @@ class RoutineProvider extends ChangeNotifier {
       checkRoutineList.removeWhere((routine) => routine.routineId == routineId);
 
       await notifications.cancel(routineId);
-      await fetchPreviewList(date);
+      await fetchPreviewList(
+        userId: userId,
+        date: date,
+      );
     } catch (error) {
       print('[ERROR] deleteRoutine: $error');
       // Toast message 보여주기 '루틴을 삭제할 수 없습니다'
@@ -323,11 +349,11 @@ class RoutineProvider extends ChangeNotifier {
   }
 
   Future<void> updatePreview({
-    userId,
-    routineId,
+    required userId,
+    required routineId,
+    required date,
     time,
     repeatDays,
-    date,
   }) async {
     print('time: $time');
     print('repeatDays: $repeatDays');
@@ -346,7 +372,10 @@ class RoutineProvider extends ChangeNotifier {
         headers: {'Content-Type': 'application/json'},
       );
 
-      await fetchPreviewList(date);
+      await fetchPreviewList(
+        userId: userId,
+        date: date,
+      );
 //       final response = await http.patch(uri,
 //           body: requestBody, headers: {'Content-Type': 'application/json'});
 //       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
@@ -372,12 +401,12 @@ class RoutineProvider extends ChangeNotifier {
   }
 
   Future<void> verifyRoutine({
-    userId,
-    routineId,
-    imgUrl,
-    longitude,
-    latitude,
-    date,
+    required userId,
+    required routineId,
+    required imgUrl,
+    required longitude,
+    required latitude,
+    required date,
   }) async {
     // print('imgUrl: $imgUrl');
     // print('longitude: $longitude');

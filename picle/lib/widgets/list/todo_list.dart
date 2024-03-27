@@ -49,7 +49,7 @@ class _TodoListState extends State<TodoList> {
             controller: _controller,
             autofocus: true,
             decoration: const InputDecoration(
-              hintText: '수정할 내용을 입력해주세요.',
+              hintText: '투두 내용을 입력해주세요.',
               contentPadding: EdgeInsets.symmetric(vertical: 0),
               border: InputBorder.none,
               enabledBorder: UnderlineInputBorder(

@@ -173,7 +173,9 @@ class _TodoItemState extends State<TodoItem> {
                                   DefaultButton(
                                     onPressed: () async {
                                       await provider.deleteTodo(
-                                          widget.userId, widget.id);
+                                        userId: widget.userId,
+                                        todoId: widget.id,
+                                      );
                                       Navigator.pop(context);
                                     },
                                     buttonText: '삭제하기',

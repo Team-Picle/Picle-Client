@@ -320,8 +320,8 @@ class PreviewItem extends StatelessWidget {
                                       DefaultButton(
                                         onPressed: () async {
                                           await provider.finishRoutine(
-                                            userId,
-                                            routineId,
+                                            userId: userId,
+                                            routineId: routineId,
                                           );
                                           Navigator.pop(context2);
                                         },

@@ -5,19 +5,25 @@ import 'package:http/http.dart' as http;
 import 'package:picle/constants/index.dart';
 import 'package:picle/models/todo_model.dart';
 
-var userId = 1;
+// var userId = 1;
 
 class TodoProvider extends ChangeNotifier {
   List<Todo> uncheckTodoList = [];
   List<Todo> checkTodoList = [];
 
   TodoProvider() {
-    fetchTodoList(DateTime.now() //
-        .toString()
-        .split(' ')[0]);
+    // fetchTodoList(
+    //   userId: userId,
+    //   date: DateTime.now() //
+    //       .toString()
+    //       .split(' ')[0],
+    // );
   }
 
-  Future<void> fetchTodoList(date) async {
+  Future<void> fetchTodoList({
+    required userId,
+    required date,
+  }) async {
     try {
       final queryParams = {
         'date': date,
@@ -66,9 +72,9 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<void> addTodo({
-    userId,
-    content,
-    date,
+    required userId,
+    required content,
+    required date,
   }) async {
     try {
       final jsonData = {
@@ -96,7 +102,10 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteTodo(userId, todoId) async {
+  Future<void> deleteTodo({
+    required userId,
+    required todoId,
+  }) async {
     try {
       final uri =
           Uri.http(serverEndpoint, apiPath['deleteTodo']!(userId, todoId));
@@ -115,9 +124,9 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<void> completeTodo({
-    userId,
-    todoId,
-    isCompleted,
+    required userId,
+    required todoId,
+    required isCompleted,
   }) async {
     try {
       final uri =
@@ -174,8 +183,8 @@ class TodoProvider extends ChangeNotifier {
   }
 
   Future<void> updateTodo({
-    userId,
-    todoId,
+    required userId,
+    required todoId,
     content,
     date,
   }) async {

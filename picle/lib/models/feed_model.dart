@@ -2,14 +2,14 @@ class Feed {
   final int routineId;
   final String profileImage;
   final String nickname;
-  final String verifiedImageUrl;
+  final String verifiedImgUrl;
   final String date;
 
   Feed({
     required this.routineId,
     required this.profileImage,
     required this.nickname,
-    required this.verifiedImageUrl,
+    required this.verifiedImgUrl,
     required this.date,
   });
 
@@ -17,6 +17,6 @@ class Feed {
       : routineId = json['routineId'],
         profileImage = json['profileImage'],
         nickname = json['nickname'],
-        verifiedImageUrl = json['verifiedImageUrl'],
+        verifiedImgUrl = json['verifiedImgUrl'],
         date = json['date'];
 }

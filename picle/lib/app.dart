@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:picle/providers/feed_provider.dart';
-import 'package:picle/providers/user_provider.dart';
-import 'package:picle/screens/main_screen.dart';
-import 'package:picle/screens/challenge_screen.dart';
-import 'package:picle/screens/social_screen.dart';
-import 'package:picle/screens/my_page_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+import 'package:picle/screens/challenge_screen.dart';
+import 'package:picle/screens/main_screen.dart';
+import 'package:picle/screens/my_page_screen.dart';
+import 'package:picle/screens/social_screen.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -38,51 +35,45 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => FeedProvider()),
-      ],
-      child: MaterialApp(
-        home: Scaffold(
-          appBar: AppBar(
-            title: SvgPicture.asset(
-              'lib/images/picle_logo.svg',
-              height: 25,
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: SvgPicture.asset(
+            'lib/images/picle_logo.svg',
+            height: 25,
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.notifications_outlined),
             ),
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.notifications_outlined),
-              ),
-            ],
-          ),
-          body: _pages[_currentIndex],
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            onTap: onTabTapped,
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: const Color(0xFF54C29B),
-            unselectedItemColor: const Color(0XFFC8C8C8),
-            items: [
-              BottomNavigationBarItem(
-                icon: _buildSvgIcon('lib/icons/home.svg', 0),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: _buildSvgIcon('lib/icons/challenge.svg', 1),
-                label: 'Challenge',
-              ),
-              BottomNavigationBarItem(
-                icon: _buildSvgIcon('lib/icons/social.svg', 2),
-                label: 'Social',
-              ),
-              BottomNavigationBarItem(
-                icon: _buildSvgIcon('lib/icons/mypage.svg', 3),
-                label: 'My page',
-              ),
-            ],
-          ),
+          ],
+        ),
+        body: _pages[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: onTabTapped,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: const Color(0xFF54C29B),
+          unselectedItemColor: const Color(0XFFC8C8C8),
+          items: [
+            BottomNavigationBarItem(
+              icon: _buildSvgIcon('lib/icons/home.svg', 0),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: _buildSvgIcon('lib/icons/challenge.svg', 1),
+              label: 'Challenge',
+            ),
+            BottomNavigationBarItem(
+              icon: _buildSvgIcon('lib/icons/social.svg', 2),
+              label: 'Social',
+            ),
+            BottomNavigationBarItem(
+              icon: _buildSvgIcon('lib/icons/mypage.svg', 3),
+              label: 'My page',
+            ),
+          ],
         ),
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:picle/models/user_challenge_model.dart';
 import 'package:picle/providers/user_challenge_provider.dart';
 import 'package:picle/providers/user_provider.dart';
@@ -18,9 +17,6 @@ class MyPageScreen extends StatelessWidget {
           ChangeNotifierProvider<UserChallengeProvider>(
             create: (_) => UserChallengeProvider(),
           ),
-          ChangeNotifierProvider<UserProvider>(
-            create: (_) => UserProvider(),
-          ),
         ],
         builder: (context, child) {
           context.read<UserChallengeProvider>().fetchUserChallengeList();
@@ -33,26 +29,21 @@ class MyPageScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset('lib/images/profile.svg'),
-                ],
+              CircleAvatar(
+                backgroundImage: NetworkImage(
+                    context.read<UserProvider>().user.profileImage!),
+                backgroundColor: const Color(0XFF54C29B),
+                radius: 40,
               ),
               const SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
+              Text(
+                context.read<UserProvider>().user.nickname!,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                ),
               ),
               const SizedBox(
                 height: 8,
