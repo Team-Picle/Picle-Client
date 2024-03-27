@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:picle/constants/api_path.dart';
@@ -13,8 +14,7 @@ class UserProvider extends ChangeNotifier {
   bool isDisposed = false;
 
   UserProvider() {
-    print('aa');
-    registerUser();
+    // registerUser();
   }
 
   @override
@@ -53,17 +53,19 @@ class UserProvider extends ChangeNotifier {
       );
 
       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+
       print(responseBody);
+
       if (responseBody['data'] != null) {
         Map<String, dynamic> data = responseBody['data'];
-        userId = int.parse(UserModel.fromJson(data).id);
+        userId = UserModel.fromJson(data).id;
         nickname = UserModel.fromJson(data).nickname;
-        profileImage = UserModel.fromJson(data).imageUrl;
+        profileImage = UserModel.fromJson(data).profileImage;
 
         notifyListeners();
       }
     } catch (error) {
-      print('[ERROR] addRoutine: $error');
+      print('[ERROR] registerUser: $error');
     }
   }
 }

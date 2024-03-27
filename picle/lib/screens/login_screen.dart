@@ -150,10 +150,10 @@ class LoginScreen extends StatelessWidget {
     try {
       User user = await UserApi.instance.me();
       UserModel userModel = UserModel(
-        id: user.id.toString(),
+        id: user.id,
         nickname: user.kakaoAccount?.profile?.nickname,
-        imageUrl: user.kakaoAccount?.profile?.profileImageUrl,
-        platform: 'KAKAO',
+        profileImage: user.kakaoAccount?.profile?.profileImageUrl,
+        // platform: 'KAKAO',
       );
       //   print("id: ${userModel.id}"
       //       "\nnickname: ${userModel.nickname}"
