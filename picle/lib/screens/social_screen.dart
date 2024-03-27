@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:picle/models/feed_model.dart';
 import 'package:picle/providers/feed_provider.dart';
 import 'package:picle/providers/user_provider.dart';
 import 'package:picle/widgets/list/all_feed_list.dart';
@@ -15,6 +16,10 @@ class SocialScreen extends StatefulWidget {
 class _SocialScreenState extends State<SocialScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
+
+  late List<Feed> allFeeds;
+  final bool isExplore = false;
+  final likeCounts = [0, 0, 0, 3, 2, 2, 1, 3, 1, 2];
 
   @override
   void initState() {

@@ -33,12 +33,13 @@ class UserProvider extends ChangeNotifier {
         headers: {'Content-Type': 'application/json'},
       );
       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+
       print(responseBody);
 
       Map<String, dynamic> data = responseBody['data'];
       user = UserModel.fromJson(data);
     } catch (error) {
-      print('[ERROR] addRoutine: $error');
+      print('[ERROR] registerUser: $error');
     }
     notifyListeners();
   }

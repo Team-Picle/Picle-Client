@@ -44,7 +44,6 @@ class FeedProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         myFeeds = responseData.map((data) => Feed.fromJson(data)).toList();
-
         notifyListeners();
       } else {
         throw Exception('Failed to load feeds');
@@ -66,7 +65,6 @@ class FeedProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         allFeeds = responseData.map((data) => Feed.fromJson(data)).toList();
-
         notifyListeners();
       } else {
         throw Exception('Failed to load feeds');
