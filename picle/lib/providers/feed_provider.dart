@@ -8,12 +8,12 @@ var userId = 1;
 
 class FeedProvider extends ChangeNotifier {
   List<Feed> myFeeds = [];
+  List<Feed> allFeeds = [];
   bool isDisposed = false;
 
-  Future<void> fetchMyList(userId) async {
-    await fetchMyFeeds();
-
-    notifyListeners();
+  FeedProvider() {
+    fetchMyFeeds();
+    fetchAllFeeds();
   }
 
   @override
@@ -35,16 +35,13 @@ class FeedProvider extends ChangeNotifier {
       final response =
           await http.get(uri, headers: {'Content-Type': 'application/json'});
       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
-      if (response.statusCode == 200) {
-        final List<dynamic> responseData = responseBody['data'];
-        myFeeds = responseData.map((data) => Feed.fromJson(data)).toList();
-        notifyListeners();
-        print("리스트: $myFeeds");
-      } else {
-        throw Exception('Failed to load feeds');
-      }
-    } catch (error) {
-      print('Error fetching feeds: $error');
+
+      myFeeds = [for (var feed in responseBody['data']) Feed.fromJson(feed)];
+      print(responseBody);
+
+      notifyListeners();
+    } catch (e) {
+      throw Exception('Failed to fetch data: $e');
     }
   }
 
@@ -53,16 +50,14 @@ class FeedProvider extends ChangeNotifier {
       final uri = Uri.http(serverEndpoint, apiPath['getAllFeeds']!());
       final response =
           await http.get(uri, headers: {'Content-Type': 'application/json'});
-      if (response.statusCode == 200) {
-        final List<dynamic> responseData = jsonDecode(response.body)['data'];
-        myFeeds = responseData.map((data) => Feed.fromJson(data)).toList();
-        notifyListeners();
-        print("리스트: $myFeeds");
-      } else {
-        throw Exception('Failed to load feeds');
-      }
-    } catch (error) {
-      print('Error fetching feeds: $error');
+      final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+
+      allFeeds = [for (var feed in responseBody['data']) Feed.fromJson(feed)];
+      print(responseBody);
+
+      notifyListeners();
+    } catch (e) {
+      throw Exception('Failed to fetch data: $e');
     }
   }
 }

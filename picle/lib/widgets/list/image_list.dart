@@ -1,37 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:picle/models/feed_model.dart';
-
-class ImageList extends StatelessWidget {
-  final bool isExplore;
-  final likeCounts = [0, 0, 0, 3, 2, 2, 1, 3, 1, 2];
-  final List<Feed> feeds;
-
-  ImageList({
-    Key? key,
-    required this.isExplore,
-    required this.feeds,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        final feed = feeds[index];
-        final imageUrl = feed.verifiedImageUrl;
-        final date = feed.date;
-        int likeCount = likeCounts[index];
-        return ImageListItem(
-          imageUrl: imageUrl,
-          date: date,
-          isExplore: isExplore,
-          likeCount: likeCount,
-        );
-      },
-    );
-  }
-}
 
 class ImageListItem extends StatefulWidget {
   final String imageUrl;
@@ -68,9 +36,9 @@ class _ImageListItemState extends State<ImageListItem> {
                 width: 40,
                 height: 40,
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 12),
               const Text(
-                "눈송이",
+                "익명의 눈송이",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
             ],
