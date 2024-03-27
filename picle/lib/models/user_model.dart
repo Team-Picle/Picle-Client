@@ -1,7 +1,8 @@
 class UserModel {
-  final int id;
-  final String? platform;
-  final String? nickname, profileImage;
+  int id;
+  String? nickname;
+  String? profileImage;
+  String? platform;
 
   UserModel({
     required this.id,
@@ -10,19 +11,9 @@ class UserModel {
     this.platform,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['id'],
-      nickname: json['nickname'],
-      profileImage: json['profileImage'],
-      platform: json['platform'],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'nickname': nickname,
-        'profileImage': profileImage,
-        'platform': platform,
-      };
+  UserModel.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        nickname = json['nickname'],
+        profileImage = json['profileImage'],
+        platform = json['platform'];
 }

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:picle/notification.dart';
+import 'package:picle/providers/date_provider.dart';
+import 'package:picle/providers/user_provider.dart';
 import 'package:picle/screens/splash_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   await initializeDateFormatting();
@@ -34,21 +37,31 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PICLE',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-          backgroundColor: Colors.white,
-          accentColor: const Color(0xFF54C29B),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserProvider>(
+          create: (_) => UserProvider(),
         ),
-        textTheme: const TextTheme(
-          displayLarge: TextStyle(
-            color: Colors.black,
+        ChangeNotifierProvider<DateProvider>(
+          create: (_) => DateProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'PICLE',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch(
+            backgroundColor: Colors.white,
+            accentColor: const Color(0xFF54C29B),
           ),
+          textTheme: const TextTheme(
+            displayLarge: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+          cardColor: const Color(0xFFEDEEF0),
         ),
-        cardColor: const Color(0xFFEDEEF0),
+        home: const SplashScreen(),
       ),
-      home: const SplashScreen(),
     );
   }
 }

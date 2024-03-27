@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
 import 'package:picle/providers/todo_provider.dart';
+import 'package:picle/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -20,6 +21,8 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
+    final userId = context.read<UserProvider>().user.id;
+
     return TableCalendar(
       firstDay: DateTime.utc(2010, 10, 16),
       lastDay: DateTime.utc(2030, 3, 14),
@@ -41,8 +44,14 @@ class _CalendarState extends State<Calendar> {
         });
         context.read<DateProvider>().updateDate(selectedDay);
         String date = context.read<DateProvider>().getDate();
-        context.read<TodoProvider>().fetchTodoList(date);
-        context.read<RoutineProvider>().fetchList(date);
+        context.read<TodoProvider>().fetchTodoList(
+              userId: userId,
+              date: date,
+            );
+        context.read<RoutineProvider>().fetchList(
+              userId: userId,
+              date: date,
+            );
       },
       calendarFormat: _calendarFormat,
       onFormatChanged: (format) {

@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:picle/app.dart';
-import 'package:picle/models/user_model.dart';
 import 'package:picle/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -36,25 +35,26 @@ class LoginScreen extends StatelessWidget {
                       onTap: () async {
                         final GoogleSignInAccount? googleUser =
                             await GoogleSignIn().signIn();
-                        if (googleUser != null) {
-                          await provider.registerUser(
-                            clientKey: googleUser.id,
-                            nickname: googleUser.displayName,
-                            profileImage: googleUser.photoUrl,
-                            socialPlatform: "GOOGLE",
-                          );
-
-                          // UserModel userModel = UserModel(
-                          //   id: googleUser.id,
-                          //   nickname: googleUser.displayName,
-                          //   imageUrl: googleUser.photoUrl,
-                          //   platform: "GOOGLE",
-                          // );
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const App()));
+                        if (googleUser == null) {
+                          return;
                         }
+
+                        await provider.registerUser(
+                          clientKey: googleUser.id,
+                          nickname: googleUser.displayName,
+                          profileImage: googleUser.photoUrl,
+                          socialPlatform: "GOOGLE",
+                        );
+                        // UserModel userModel = UserModel(
+                        //   id: googleUser.id,
+                        //   nickname: googleUser.displayName,
+                        //   imageUrl: googleUser.photoUrl,
+                        //   platform: "GOOGLE",
+                        // );
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const App()));
                       }, // Image tapped
                       child: Image.asset(
                         'lib/images/login_with_google.png',
@@ -149,12 +149,12 @@ class LoginScreen extends StatelessWidget {
 
     try {
       User user = await UserApi.instance.me();
-      UserModel userModel = UserModel(
-        id: user.id,
-        nickname: user.kakaoAccount?.profile?.nickname,
-        profileImage: user.kakaoAccount?.profile?.profileImageUrl,
-        // platform: 'KAKAO',
-      );
+      // UserModel userModel = UserModel(
+      //   id: user.id.toString(),
+      //   nickname: user.kakaoAccount?.profile?.nickname,
+      //   imageUrl: user.kakaoAccount?.profile?.profileImageUrl,
+      //   platform: 'KAKAO',
+      // );
       //   print("id: ${userModel.id}"
       //       "\nnickname: ${userModel.nickname}"
       //       "\nimageUrl: ${userModel.imageUrl}"

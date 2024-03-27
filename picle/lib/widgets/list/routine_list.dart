@@ -10,6 +10,7 @@ import 'package:picle/models/routine_model.dart';
 import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/image_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
+import 'package:picle/providers/user_provider.dart';
 import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/list/preview_item.dart';
 import 'package:picle/widgets/list/routine_item.dart';
@@ -44,6 +45,15 @@ class RoutineList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userId = context.read<UserProvider>().user.id;
+    final date = context.read<DateProvider>().date;
+
+    context.read<RoutineProvider>().fetchList(
+          userId: userId,
+          date: date,
+        );
+    print('RoutineList-userId: $userId');
+
     return Column(
       children: [
         IconButton(
@@ -371,6 +381,7 @@ Future<void> addBottomModal({
 
                       Provider.of<RoutineProvider>(context, listen: false)
                           .registerRoutine(
+                        userId: context.read<UserProvider>().user.id,
                         content: routineContent,
                         imgUrl: imgUrl,
                         time: time,

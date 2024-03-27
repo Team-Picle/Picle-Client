@@ -1,19 +1,22 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:picle/constants/api_path.dart';
 import 'package:picle/models/feed_model.dart';
-
-var userId = 1;
 
 class FeedProvider extends ChangeNotifier {
   List<Feed> myFeeds = [];
   List<Feed> allFeeds = [];
   bool isDisposed = false;
 
-  FeedProvider() {
-    fetchMyFeeds();
-    fetchAllFeeds();
+  FeedProvider(userId) {
+    fetchMyFeeds(
+      userId: userId,
+    );
+    fetchAllFeeds(
+      userId: userId,
+    );
   }
 
   @override
@@ -29,35 +32,45 @@ class FeedProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchMyFeeds() async {
+  Future<void> fetchMyFeeds({
+    required userId,
+  }) async {
     try {
       final uri = Uri.http(serverEndpoint, apiPath['getMyFeeds']!(userId));
       final response =
           await http.get(uri, headers: {'Content-Type': 'application/json'});
       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+      final List<dynamic> responseData = responseBody['data'];
 
-      myFeeds = [for (var feed in responseBody['data']) Feed.fromJson(feed)];
-      print(responseBody);
-
-      notifyListeners();
-    } catch (e) {
-      throw Exception('Failed to fetch data: $e');
+      if (response.statusCode == 200) {
+        myFeeds = responseData.map((data) => Feed.fromJson(data)).toList();
+        notifyListeners();
+      } else {
+        throw Exception('Failed to load feeds');
+      }
+    } catch (error) {
+      print('Error fetching feeds: $error');
     }
   }
 
-  Future<void> fetchAllFeeds() async {
+  Future<void> fetchAllFeeds({
+    required userId,
+  }) async {
     try {
       final uri = Uri.http(serverEndpoint, apiPath['getAllFeeds']!());
       final response =
           await http.get(uri, headers: {'Content-Type': 'application/json'});
       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+      final List<dynamic> responseData = responseBody['data'];
 
-      allFeeds = [for (var feed in responseBody['data']) Feed.fromJson(feed)];
-      print(responseBody);
-
-      notifyListeners();
-    } catch (e) {
-      throw Exception('Failed to fetch data: $e');
+      if (response.statusCode == 200) {
+        allFeeds = responseData.map((data) => Feed.fromJson(data)).toList();
+        notifyListeners();
+      } else {
+        throw Exception('Failed to load feeds');
+      }
+    } catch (error) {
+      print('Error fetching feeds: $error');
     }
   }
 }
