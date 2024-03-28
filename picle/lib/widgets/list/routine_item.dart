@@ -167,40 +167,6 @@ class _RoutineItemState extends State<RoutineItem> {
                                                           height: 10),
                                                       CupertinoDialogAction(
                                                         child: const Text(
-                                                            '갤러리에서 선택'),
-                                                        onPressed: () async {
-                                                          try {
-                                                            final selectedImage =
-                                                                await picker
-                                                                    .pickImage(
-                                                              source:
-                                                                  ImageSource
-                                                                      .gallery,
-                                                            );
-                                                            setState(() {
-                                                              image =
-                                                                  selectedImage;
-                                                            });
-                                                            Navigator.pop(
-                                                                context);
-                                                            // var publicId =
-                                                            //     await uploadImage(
-                                                            //   image,
-                                                            //   widget.routineId
-                                                            //       .toString(),
-                                                            // );
-                                                            // imgUrl =
-                                                            //     'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
-                                                            print(
-                                                                "갤러리: $imgUrl");
-                                                          } catch (e) {
-                                                            print(
-                                                                'Error occurred while picking image: $e');
-                                                          }
-                                                        },
-                                                      ),
-                                                      CupertinoDialogAction(
-                                                        child: const Text(
                                                             '카메라 실행'),
                                                         onPressed: () async {
                                                           try {
