@@ -71,17 +71,6 @@ class _AllFeedItemState extends State<AllFeedItem> {
                   ),
                 ),
               ),
-              Positioned(
-                right: 15.0,
-                bottom: 20.0,
-                child: Text(
-                  'Date: ${widget.date}',
-                  style: const TextStyle(
-                    fontSize: 12.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
             ],
           ),
         ),
