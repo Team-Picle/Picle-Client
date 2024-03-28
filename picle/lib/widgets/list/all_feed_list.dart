@@ -14,6 +14,7 @@ class AllFeeds extends StatelessWidget {
         List<Feed> allFeeds = provider.allFeeds;
 
         return ListView.builder(
+          reverse: true,
           itemCount: allFeeds.length,
           primary: false,
           itemBuilder: (context, index) {
