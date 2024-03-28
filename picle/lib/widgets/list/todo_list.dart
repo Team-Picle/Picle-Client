@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:picle/models/todo_model.dart';
 import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/todo_provider.dart';
+import 'package:picle/providers/user_provider.dart';
 import 'package:picle/widgets/list/todo_item.dart';
 import 'package:provider/provider.dart';
-
-int userId = 1;
 
 class TodoList extends StatefulWidget {
   const TodoList({super.key});
@@ -32,6 +31,7 @@ class _TodoListState extends State<TodoList> {
 
   @override
   Widget build(BuildContext context) {
+    int userId = context.read<UserProvider>().user.id;
     String date = context.read<DateProvider>().getDate();
 
     return Column(

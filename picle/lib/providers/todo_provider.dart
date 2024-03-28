@@ -11,13 +11,13 @@ class TodoProvider extends ChangeNotifier {
   List<Todo> uncheckTodoList = [];
   List<Todo> checkTodoList = [];
 
-  TodoProvider() {
-    // fetchTodoList(
-    //   userId: userId,
-    //   date: DateTime.now() //
-    //       .toString()
-    //       .split(' ')[0],
-    // );
+  TodoProvider(userId) {
+    fetchTodoList(
+      userId: userId,
+      date: DateTime.now() //
+          .toString()
+          .split(' ')[0],
+    );
   }
 
   Future<void> fetchTodoList({
@@ -51,24 +51,6 @@ class TodoProvider extends ChangeNotifier {
     }
 
     notifyListeners();
-
-    // final response = await rootBundle.loadString('lib/data/todo_list.json');
-    // final data = json.decode(response);
-
-    // if (data['code'] == 200) {
-    //   uncheckTodoList = [
-    //     for (Map<String, dynamic> todo in data['data'])
-    //       if (!todo['isCompleted']) Todo.fromJson(todo),
-    //   ];
-    //   checkTodoList = [
-    //     for (Map<String, dynamic> todo in data['data'])
-    //       if (todo['isCompleted']) Todo.fromJson(todo),
-    //   ];
-    // } else {
-    //   throw Exception('Fail to load date');
-    // }
-
-    // notifyListeners();
   }
 
   Future<void> addTodo({
@@ -88,6 +70,8 @@ class TodoProvider extends ChangeNotifier {
         'Accept-Charset': 'utf-8',
       });
       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+
+      print(responseBody);
 
       uncheckTodoList = [
         ...uncheckTodoList,
@@ -154,32 +138,6 @@ class TodoProvider extends ChangeNotifier {
     }
 
     notifyListeners();
-
-    // if (isCompleted) {
-    //   var todo = uncheckTodoList.firstWhere((todo) => todo.id == todoId);
-    //   Map<String, dynamic> data = {
-    //     'id': todoId,
-    //     'userId': userId,
-    //     'content': todo.content,
-    //     'date': todo.date,
-    //     'isCompleted': isCompleted
-    //   };
-    //   uncheckTodoList.removeWhere((todo) => todo.id == todoId);
-    //   checkTodoList = [...checkTodoList, Todo.fromJson(data)];
-    // } else {
-    //   var todo = checkTodoList.firstWhere((todo) => todo.id == todoId);
-    //   Map<String, dynamic> data = {
-    //     'id': todoId,
-    //     'userId': userId,
-    //     'content': todo.content,
-    //     'date': todo.date,
-    //     'isCompleted': isCompleted
-    //   };
-    //   checkTodoList.removeWhere((todo) => todo.id == todoId);
-    //   uncheckTodoList = [...uncheckTodoList, Todo.fromJson(data)];
-    // }
-
-    // notifyListeners();
   }
 
   Future<void> updateTodo({
@@ -215,28 +173,5 @@ class TodoProvider extends ChangeNotifier {
     }
 
     notifyListeners();
-
-    // uncheckTodoList = uncheckTodoList
-    //     .map((todo) => todo.id == todoId
-    //         ? Todo(
-    //             id: todoId,
-    //             userId: userId,
-    //             content: content!,
-    //             date: todo.date,
-    //             isCompleted: todo.isCompleted)
-    //         : todo)
-    //     .toList();
-    // checkTodoList = checkTodoList
-    //     .map((todo) => todo.id == todoId
-    //         ? Todo(
-    //             id: todoId,
-    //             userId: userId,
-    //             content: content!,
-    //             date: todo.date,
-    //             isCompleted: todo.isCompleted)
-    //         : todo)
-    //     .toList();
-
-    // notifyListeners();
   }
 }

@@ -45,15 +45,6 @@ class RoutineList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userId = context.read<UserProvider>().user.id;
-    final date = context.read<DateProvider>().date;
-
-    context.read<RoutineProvider>().fetchList(
-          userId: userId,
-          date: date,
-        );
-    print('RoutineList-userId: $userId');
-
     return Column(
       children: [
         IconButton(
@@ -68,33 +59,7 @@ class RoutineList extends StatelessWidget {
                 needImg: true,
                 needDate: true,
               );
-              // context.read<RoutineProvider>().registerRoutine(
-              //       content: routineContent,
-              //       imgUrl:
-              //           'https://res.cloudinary.com/dqhllkoz8/image/upload/v1710138018/test/zphkge2wdfvswud8nmti.jpg',
-              //       time: time,
-              //       startRepeatDate: startRepeatDate,
-              //       repeatDays: dayList,
-              //       destinationLongitude: destinationLongitude,
-              //       destinationLatitude: destinationLatitude,
-              //       date: context.read<DateProvider>().getDate(),
-              //     );
-            }
-
-            //     () {
-            //   context.read<RoutineProvider>().registerRoutine(
-            //         content: '푸시 알림 테스트3 🙈',
-            //         imgUrl:
-            //             'https://res.cloudinary.com/dqhllkoz8/image/upload/v1710138018/test/zphkge2wdfvswud8nmti.jpg',
-            //         time: '04:55:00',
-            //         startRepeatDate: '2024-03-01',
-            //         repeatDays: ['SATURDAY', 'SUNDAY'],
-            //         destinationLongitude: '37.467092',
-            //         destinationLatitude: '126.923802',
-            //         date: context.read<DateProvider>().getDate(),
-            //       );
-            // },
-            ),
+            }),
         Expanded(
           child: Consumer<RoutineProvider>(
             builder: (context, provider, child) {

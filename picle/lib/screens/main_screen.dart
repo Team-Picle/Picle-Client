@@ -20,7 +20,7 @@ class MainScreen extends StatelessWidget {
                 RoutineProvider(context.read<UserProvider>().user.id),
           ),
           ChangeNotifierProvider<TodoProvider>(
-            create: (_) => TodoProvider(),
+            create: (_) => TodoProvider(context.read<UserProvider>().user.id),
           ),
         ],
         child: SingleChildScrollView(
