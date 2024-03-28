@@ -3,7 +3,7 @@ class Feed {
   final String profileImage;
   final String nickname;
   final String verifiedImgUrl;
-  final String date;
+  final String? date;
 
   Feed({
     required this.routineId,

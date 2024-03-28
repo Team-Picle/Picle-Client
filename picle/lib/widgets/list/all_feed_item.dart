@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AllFeedItem extends StatefulWidget {
   final String imageUrl;
-  final String date;
+  final String? date;
   final String nickname;
   final String profileImage;
 

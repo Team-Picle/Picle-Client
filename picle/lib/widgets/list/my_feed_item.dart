@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyFeedItem extends StatefulWidget {
   final String imageUrl;
-
-  final String date;
+  final String? date;
   final String profileImage;
   final int likeCount;
 
