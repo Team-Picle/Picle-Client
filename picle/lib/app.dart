@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:picle/screens/challenge_screen.dart';
 import 'package:picle/screens/main_screen.dart';
 import 'package:picle/screens/my_page_screen.dart';
 import 'package:picle/screens/social_screen.dart';
@@ -16,7 +15,6 @@ class _AppState extends State<App> {
   int _currentIndex = 0;
   final List<Widget> _pages = [
     const MainScreen(),
-    const ChallengeScreen(),
     const SocialScreen(),
     const MyPageScreen()
   ];
@@ -42,12 +40,6 @@ class _AppState extends State<App> {
             'lib/images/picle_logo.svg',
             height: 25,
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.notifications_outlined),
-            ),
-          ],
         ),
         body: _pages[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
@@ -62,15 +54,11 @@ class _AppState extends State<App> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: _buildSvgIcon('lib/icons/challenge.svg', 1),
-              label: 'Challenge',
-            ),
-            BottomNavigationBarItem(
-              icon: _buildSvgIcon('lib/icons/social.svg', 2),
+              icon: _buildSvgIcon('lib/icons/social.svg', 1),
               label: 'Social',
             ),
             BottomNavigationBarItem(
-              icon: _buildSvgIcon('lib/icons/mypage.svg', 3),
+              icon: _buildSvgIcon('lib/icons/mypage.svg', 2),
               label: 'My page',
             ),
           ],
