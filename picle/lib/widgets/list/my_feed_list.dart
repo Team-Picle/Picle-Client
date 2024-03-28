@@ -14,9 +14,9 @@ class MyFeeds extends StatelessWidget {
     return Consumer<FeedProvider>(
       builder: (context, provider, child) {
         List<Feed> myFeeds = provider.myFeeds;
+        myFeeds = myFeeds.reversed.toList();
 
         return ListView.builder(
-          reverse: true,
           itemCount: myFeeds.length,
           primary: false,
           itemBuilder: (context, index) {
