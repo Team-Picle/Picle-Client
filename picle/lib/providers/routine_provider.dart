@@ -77,7 +77,27 @@ class RoutineProvider extends ChangeNotifier {
       ];
     } catch (error) {
       print('[ERROR] fetchRoutineList: $error');
+      // Toast message 보여주기 '루틴을 불러오지 못 했습니다'
+      // print('${response['code']}: ${response['message']}');
     }
+
+    // final response = await rootBundle.loadString('lib/data/routine_list.json');
+    // final data = json.decode(response);
+
+    // if (data['code'] == 200) {
+    //   uncheckRoutineList = [
+    //     for (Map<String, dynamic> routine in data['data'])
+    //       if (routine['isCompleted'] == false) Routine.fromJson(routine),
+    //   ];
+    //   checkRoutineList = [
+    //     for (Map<String, dynamic> routine in data['data'])
+    //       if (routine['isCompleted'] == true) Routine.fromJson(routine),
+    //   ];
+    // } else {
+    //   throw Exception('Fail to load date');
+    // }
+    //
+    // notifyListeners();
   }
 
   Future<void> fetchPreviewList({
@@ -106,7 +126,28 @@ class RoutineProvider extends ChangeNotifier {
       ];
     } catch (error) {
       print('[ERROR] fetchPreviewList: $error');
+      // Toast message 보여주기 '미리보기를 불로오지 못 했습니다'
+      // print('${response['code']}: ${response['message']}');
     }
+
+    // final response = await rootBundle.loadString('lib/data/preview_list.json');
+    // final data = json.decode(response);
+
+    // if (data['code'] == 200) {
+    //   List<int> routineIdList = [...uncheckRoutineList, ...checkRoutineList]
+    //       .map((routine) => routine.routineIdentifier)
+    //       .toList();
+    //   previewList = [
+    //     for (Map<String, dynamic> preview in data['data'])
+    //       if (!routineIdList.contains(preview['routineId']))
+    //         Preview.fromJson(preview)
+    //   ];
+    // } else {
+    //   previewList = [];
+    //   throw Exception('Fail to load date');
+    // }
+
+    // notifyListeners();
   }
 
   Future<void> registerRoutine({
@@ -120,6 +161,12 @@ class RoutineProvider extends ChangeNotifier {
     required destinationLatitude,
     required date,
   }) async {
+    // print('content: $content');
+    // print('repeatDays: $repeatDays');
+    // print('imgUrl: $imgUrl');
+    // print('destinationLongitude: $destinationLongitude');
+    // print('destinationLatitude: $destinationLatitude');
+
     if (content == '' ||
         imgUrl == '' ||
         startRepeatDate == '' ||
@@ -160,6 +207,8 @@ class RoutineProvider extends ChangeNotifier {
       }
     } catch (error) {
       print('[ERROR] registerRoutine: $error');
+      // Toast message 보여주기 '루틴을 등록에 실패했습니다'
+      // print('${response['code']}: ${response['message']}');
     }
 
     notifyListeners();
@@ -204,13 +253,52 @@ class RoutineProvider extends ChangeNotifier {
       );
     } catch (error) {
       print('[ERROR] addRoutine: $error');
+      // Toast message 보여주기 '루틴 추가에 실패했습니다'
+      // print('${response['code']}: ${response['message']}');
     }
+
+    // Map<String, dynamic> data = {
+    //   'userId': userId,
+    //   'routineId': id,
+    //   'routineIdentifier': routineId,
+    //   'content': content,
+    //   'registrationImgUrl': '',
+    //   'date': '',
+    //   'startRepeatDate': '',
+    //   'repeatDays': [],
+    //   'destinationLongitude': 0.0,
+    //   'destinationLatitude': 0.0,
+    //   'isCompleted': false,
+    //   'isPreview': false,
+    //   if (time != null) 'time': time,
+    // };
+    // uncheckRoutineList = [...uncheckRoutineList, Routine.fromJson(data)];
+    // previewList.removeWhere((preview) => preview.routineId == routineId);
+
+    // final dateTime = '$date $time';
+    // if (time != null) {
+    //   showNotification(id: id, content: content, date: dateTime);
+    // }
+    // id = id + 1;
+    //
+    // notifyListeners();
   }
 
   Future<void> finishRoutine({
     required userId,
     required routineId,
   }) async {
+//     previewList.removeWhere((preview) => preview.routineId == routineId);
+//     print(previewList);
+    // try {
+    //   final uri = Uri.https(
+    //       serverEndpoint, apiPath['finishRoutine']!(userId, routineId));
+    //   await http.delete(uri, headers: {'Content-Type': 'application/json'});
+    //   previewList.removeWhere((preview) => preview.routineId == routineId);
+    // } catch (error) {
+    //   // Toast message 보여주기 '루틴을 종료할 수 없습니다'
+    //   // print('${response['code']}: ${response['message']}');
+    // }
     try {
       final uri = Uri.http(
           serverEndpoint, apiPath['finishRoutine']!(userId, routineId));
@@ -218,9 +306,14 @@ class RoutineProvider extends ChangeNotifier {
       previewList.removeWhere((preview) => preview.routineId == routineId);
     } catch (error) {
       print('[ERROR] finishRoutine: $error');
+      // Toast message 보여주기 '루틴을 종료할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
     }
 
     notifyListeners();
+
+    // previewList.removeWhere((preview) => preview.routineId == routineId);
+    // notifyListeners();
   }
 
   Future<void> deleteRoutine({
@@ -243,9 +336,16 @@ class RoutineProvider extends ChangeNotifier {
       );
     } catch (error) {
       print('[ERROR] deleteRoutine: $error');
+      // Toast message 보여주기 '루틴을 삭제할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
     }
 
     notifyListeners();
+
+    // uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);
+    // checkRoutineList.removeWhere((routine) => routine.routineId == routineId);
+    // await fetchPreviewList(date);
+    // await notifications.cancel(routineId);
   }
 
   Future<void> updatePreview({
@@ -276,8 +376,25 @@ class RoutineProvider extends ChangeNotifier {
         userId: userId,
         date: date,
       );
+//       final response = await http.patch(uri,
+//           body: requestBody, headers: {'Content-Type': 'application/json'});
+//       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
+//       Map<String, dynamic> data = responseBody['data'];
+//       previewList = previewList
+//           .map((preview) =>
+//               preview.routineId == routineId ? Preview.fromJson(data) : preview)
+//           .toList();
+//       await http.patch(
+//         uri,
+//         body: requestBody,
+//         headers: {'Content-Type': 'application/json'},
+//       );
+
+//       await fetchPreviewList(date);
     } catch (error) {
       print('[ERROR] updateRoutine: $error');
+      // Toast message 보여주기 '루틴을 수정할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
     }
 
     notifyListeners();
@@ -291,6 +408,10 @@ class RoutineProvider extends ChangeNotifier {
     required latitude,
     required date,
   }) async {
+    // print('imgUrl: $imgUrl');
+    // print('longitude: $longitude');
+    // print('latitude: $latitude');
+
     if (imgUrl == '') {
       showToast(text: '이미지를 등록해주세요');
       return;
@@ -335,8 +456,33 @@ class RoutineProvider extends ChangeNotifier {
       }
     } catch (error) {
       print('[ERROR] verifyRoutine: $error');
+      // Toast message 보여주기 '루틴을 완료할 수 없습니다'
+      // print('${response['code']}: ${response['message']}');
     }
 
     notifyListeners();
+
+    // var target = uncheckRoutineList
+    //     .firstWhere((routine) => routine.routineId == routineId);
+    // uncheckRoutineList.removeWhere((routine) => routine.routineId == routineId);
+
+    // Map<String, dynamic> data = {
+    //   'userId': target.userId,
+    //   'routineId': target.routineId,
+    //   'routineIdentifier': target.routineIdentifier,
+    //   'content': target.content,
+    //   'registrationImgUrl': target.registrationImgUrl,
+    //   'date': target.date,
+    //   'time': target.time,
+    //   'startRepeatDate': target.startRepeatDate,
+    //   'destinationLongitude': target.destinationLongitude,
+    //   'destinationLatitude': target.destinationLatitude,
+    //   'isCompleted': true,
+    //   'isPreview': target.isPreview
+    // };
+    // checkRoutineList = [...checkRoutineList, Routine.fromJson(data)];
+    // await notifications.cancel(routineId);
+
+    // notifyListeners();
   }
 }
