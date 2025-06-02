@@ -5,8 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:picle/constants/index.dart';
 import 'package:picle/models/todo_model.dart';
 
-// var userId = 1;
-
 class TodoProvider extends ChangeNotifier {
   List<Todo> uncheckTodoList = [];
   List<Todo> checkTodoList = [];
@@ -46,8 +44,6 @@ class TodoProvider extends ChangeNotifier {
       ];
     } catch (error) {
       print('[ERROR] fetchTodoList: $error');
-      // Toast message 보여주기 '투두 불러오기에 실패했습니다'
-      // print('${response['code']}: ${response['message']}');
     }
 
     notifyListeners();
@@ -79,8 +75,6 @@ class TodoProvider extends ChangeNotifier {
       ];
     } catch (error) {
       print('[ERROR] addTodo: $error');
-      // Toast message 보여주기 '투두를 추가할 수 없습니다'
-      // print('${response['code']}: ${response['message']}');
     }
 
     notifyListeners();
@@ -100,8 +94,6 @@ class TodoProvider extends ChangeNotifier {
       checkTodoList.removeWhere((todo) => todo.id == todoId);
     } catch (error) {
       print('[ERROR] deleteTodo: $error');
-      // Toast message 보여주기 '투두 삭제에 실패했습니다'
-      // print('${response['code']}: ${response['message']}');
     }
 
     notifyListeners();
@@ -133,8 +125,6 @@ class TodoProvider extends ChangeNotifier {
       }
     } catch (error) {
       print('[ERROR] completeTodo: $error');
-      // Toast message 보여주기 '투두를 수정할 수 없습니다'
-      // print('${response['code']}: ${response['message']}');
     }
 
     notifyListeners();
@@ -168,8 +158,6 @@ class TodoProvider extends ChangeNotifier {
           .toList();
     } catch (error) {
       print('[ERROR] updateTodo: $error');
-      // Toast message 보여주기 '투두를 수정할 수 없습니다'
-      // print('${response['code']}: ${response['message']}');
     }
 
     notifyListeners();

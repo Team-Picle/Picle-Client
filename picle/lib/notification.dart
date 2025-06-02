@@ -5,7 +5,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 final notifications = FlutterLocalNotificationsPlugin();
 
-//1. 앱로드시 실행할 기본설정
+// 1. 앱로드 시 실행할 기본설정
 initNotification(context) async {
   tz.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
@@ -21,18 +21,8 @@ initNotification(context) async {
 
   const initializationSettings =
       InitializationSettings(android: androidSetting, iOS: iosSetting);
-  await notifications.initialize(
-    initializationSettings,
-    //알림 누를때 함수실행하고 싶으면
-    //     onSelectNotification: (payload) {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => const App(),
-    //     ),
-    //   );
-    // }
-  );
+
+  await notifications.initialize(initializationSettings);
 }
 
 showNotification({
