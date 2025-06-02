@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:picle/models/user_challenge_model.dart';
 import 'package:picle/providers/user_challenge_provider.dart';
 import 'package:picle/providers/user_provider.dart';
+import 'package:picle/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 
 class MyPageScreen extends StatelessWidget {
@@ -52,7 +53,18 @@ class MyPageScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await context.read<UserProvider>().logout();
+
+                      if (context.mounted) {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const LoginScreen()),
+                          (route) => false, // 모든 화면 스택 제거
+                        );
+                      }
+                    },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
@@ -78,7 +90,7 @@ class MyPageScreen extends StatelessWidget {
                       elevation: const MaterialStatePropertyAll(0),
                     ),
                     child: const Text(
-                      '수정',
+                      '로그아웃',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 13,

@@ -14,8 +14,8 @@ void main() async {
 
   // runApp() 호출 전 Flutter SDK 초기화
   KakaoSdk.init(
-    nativeAppKey: '801dc4cda8fc9ecbbf58c83ab229179b',
-    javaScriptAppKey: 'a992cef1da01df7485dfef6422b819b9',
+    nativeAppKey: '38651a79131f37f0b597525173fd94d1',
+    javaScriptAppKey: 'd689aa003ea28b77b574cfaa255ffef0',
   );
   runApp(const MyApp());
 }

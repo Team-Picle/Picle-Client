@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:picle/constants/index.dart';
-import 'package:picle/models/preview_model.dart';
+import 'package:picle/models/preview_model.dart' as model;
 import 'package:picle/models/routine_model.dart';
 import 'package:picle/notification.dart';
 import 'package:picle/widgets/toast.dart';
 
 class RoutineProvider extends ChangeNotifier {
-  List<Preview> previewList = [];
+  List<model.Preview> previewList = [];
   List<Routine> uncheckRoutineList = [];
   List<Routine> checkRoutineList = [];
   bool isDisposed = false;
@@ -122,7 +122,7 @@ class RoutineProvider extends ChangeNotifier {
       previewList = [
         for (Map<String, dynamic> preview in responseBody['data'])
           if (!routineIdList.contains(preview['routineId']))
-            Preview.fromJson(preview)
+            model.Preview.fromJson(preview)
       ];
     } catch (error) {
       print('[ERROR] fetchPreviewList: $error');

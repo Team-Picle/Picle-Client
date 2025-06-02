@@ -2,6 +2,35 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>이 앱은 로컬 네트워크 연결이 필요합니다.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
+	</dict>
+	<key>KAKAO_APP_KEY</key>
+	<string>kakao38651a79131f37f0b597525173fd94d1</string>
+	<key>LSApplicationQueriesSchemes</key>
+  	<array>
+      <!-- common -->
+      <string>kakao38651a79131f37f0b597525173fd94d1</string>
+
+      <!-- KakaoTalk login -->
+			<string>kakaotalk</string>
+      <string>kakaokompassauth</string>
+      <string>storykompassauth</string>
+
+      <!-- KakaoLink -->
+      <string>kakaolink</string>         
+      <string>kakaotalk-5.9.7</string>
+  </array>
+	<key>com.apple.security.network.client</key>
+	<true/>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -25,19 +54,17 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>kakao38651a79131f37f0b597525173fd94d1</string>
 				<string>com.googleusercontent.apps.944405135898-lm3f445mduatu46ob7hrn7egmu6lds3s</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>kakaokompassauth</string>
-		<string>kakaolink</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>

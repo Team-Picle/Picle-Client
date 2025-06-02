@@ -5,12 +5,13 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:picle/app.dart';
 import 'package:picle/providers/user_provider.dart';
+import 'package:picle/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  // static const String baseUrl = "http://localhost:8080/social";
+  // static const String baseUrl = "172.30.1.37:8080";
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,8 @@ class LoginScreen extends StatelessWidget {
                           profileImage: googleUser.photoUrl,
                           socialPlatform: "GOOGLE",
                         );
+
+                        await saveLoginPlatform("GOOGLE"); // 또는 "GOOGLE"
                         // UserModel userModel = UserModel(
                         //   id: googleUser.id,
                         //   nickname: googleUser.displayName,
@@ -64,6 +67,10 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 20),
                     GestureDetector(
                       onTap: () async {
+                        // kakao app login
+                        // await kakaoLogin();
+
+                        // origin
                         try {
                           await UserApi.instance.loginWithKakaoAccount();
                           // print('카카오계정으로 로그인 성공');
@@ -81,6 +88,8 @@ class LoginScreen extends StatelessWidget {
                                 user.kakaoAccount?.profile?.profileImageUrl,
                             socialPlatform: "KAKAO",
                           );
+
+                          await saveLoginPlatform("KAKAO");
 
                           // UserModel userModel = UserModel(
                           //   id: user.id.toString(),
@@ -121,7 +130,7 @@ class LoginScreen extends StatelessWidget {
     if (await isKakaoTalkInstalled()) {
       try {
         await UserApi.instance.loginWithKakaoTalk();
-        // print('카카오톡으로 로그인 성공');
+        print('카카오톡으로 로그인 성공');
       } catch (error) {
         // print('카카오톡으로 로그인 실패 $error');
 
@@ -133,17 +142,17 @@ class LoginScreen extends StatelessWidget {
         // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
         try {
           await UserApi.instance.loginWithKakaoAccount();
-          // print('카카오계정으로 로그인 성공');
+          print('카카오계정으로 로그인 성공');
         } catch (error) {
-          // print('카카오계정으로 로그인 실패 $error');
+          print('카카오계정으로 로그인 실패 $error');
         }
       }
     } else {
       try {
         await UserApi.instance.loginWithKakaoAccount();
-        // print('카카오계정으로 로그인 성공');
+        print('카카오계정으로 로그인 성공');
       } catch (error) {
-        // print('카카오계정으로 로그인 실패 $error');
+        print('카카오계정으로 로그인 실패 $error');
       }
     }
 
