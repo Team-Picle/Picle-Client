@@ -75,13 +75,17 @@ class _SplashScreenState extends State<SplashScreen> {
     final googleUser = await GoogleSignIn().signInSilently();
 
     if (googleUser != null) {
-      await context.read<UserProvider>().registerUser(
-            clientKey: googleUser.id,
-            nickname: googleUser.displayName,
-            profileImage: googleUser.photoUrl,
-            socialPlatform: "GOOGLE",
-          );
-      _moveToApp();
+      try {
+        await context.read<UserProvider>().registerUser(
+              clientKey: googleUser.id,
+              nickname: googleUser.displayName,
+              profileImage: googleUser.photoUrl,
+              socialPlatform: "GOOGLE",
+            );
+        _moveToApp();
+      } catch (_) {
+        _moveToLogin();
+      }
     } else {
       _moveToLogin();
     }

@@ -47,7 +47,7 @@ class UserProvider extends ChangeNotifier {
       Map<String, dynamic> data = responseBody['data'];
       user = UserModel.fromJson(data);
     } catch (error) {
-      print('[ERROR] registerUser: $error');
+      throw Exception('registerUser 중 에러 발생: $error');
     }
     notifyListeners();
   }
