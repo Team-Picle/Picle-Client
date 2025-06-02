@@ -37,12 +37,7 @@ class UserProvider extends ChangeNotifier {
         headers: {'Content-Type': 'application/json'},
       );
 
-      print('status: ${response.statusCode}');
-      print('body: ${response.body}');
-
       final responseBody = jsonDecode(utf8.decode(response.bodyBytes));
-
-      print(responseBody);
 
       Map<String, dynamic> data = responseBody['data'];
       user = UserModel.fromJson(data);
@@ -62,7 +57,6 @@ class UserProvider extends ChangeNotifier {
       await logoutGoogle();
     }
 
-    // 로그인 플랫폼 정보 초기화
     await prefs.remove('login_platform');
   }
 
@@ -72,19 +66,17 @@ class UserProvider extends ChangeNotifier {
 
       if (await googleSignIn.isSignedIn()) {
         await googleSignIn.signOut();
-        print('구글 로그아웃 완료');
       }
-    } catch (e) {
-      print('구글 로그아웃 실패: $e');
+    } catch (error) {
+      print('구글 로그아웃 실패: $error');
     }
   }
 
   Future<void> logoutKakao() async {
     try {
       await UserApi.instance.logout();
-      print('카카오 로그아웃 완료');
-    } catch (e) {
-      print('카카오 로그아웃 실패: $e');
+    } catch (error) {
+      print('카카오 로그아웃 실패: $error');
     }
   }
 }

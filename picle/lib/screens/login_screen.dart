@@ -11,8 +11,6 @@ import 'package:provider/provider.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  // static const String baseUrl = "172.30.1.37:8080";
-
   @override
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(
@@ -36,6 +34,7 @@ class LoginScreen extends StatelessWidget {
                       onTap: () async {
                         final GoogleSignInAccount? googleUser =
                             await GoogleSignIn().signIn();
+
                         if (googleUser == null) {
                           return;
                         }
@@ -48,13 +47,8 @@ class LoginScreen extends StatelessWidget {
                             socialPlatform: "GOOGLE",
                           );
 
-                          await saveLoginPlatform("GOOGLE"); // 또는 "GOOGLE"
-                          // UserModel userModel = UserModel(
-                          //   id: googleUser.id,
-                          //   nickname: googleUser.displayName,
-                          //   imageUrl: googleUser.photoUrl,
-                          //   platform: "GOOGLE",
-                          // );
+                          await saveLoginPlatform("GOOGLE");
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -95,20 +89,10 @@ class LoginScreen extends StatelessWidget {
 
                           await saveLoginPlatform("KAKAO");
 
-                          // UserModel userModel = UserModel(
-                          //   id: user.id.toString(),
-                          //   nickname: user.kakaoAccount?.profile?.nickname,
-                          //   imageUrl: user.kakaoAccount?.profile?.profileImageUrl,
-                          //   platform: 'KAKAO',
-                          // );
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const App()));
-                          //   print("id: ${userModel.id}"
-                          //       "\nnickname: ${userModel.nickname}"
-                          //       "\nimageUrl: ${userModel.imageUrl}"
-                          //       "\nplatform: ${userModel.platform}");
                         } catch (error) {
                           print(error);
                         }

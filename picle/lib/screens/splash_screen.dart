@@ -1,23 +1,3 @@
-// import 'package:animated_splash_screen/animated_splash_screen.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:page_transition/page_transition.dart';
-// import 'package:picle/screens/login_screen.dart';
-
-// class SplashScreen extends StatelessWidget {
-//   const SplashScreen({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedSplashScreen(
-//       splash: SvgPicture.asset('lib/images/picle_logo.svg'),
-//       nextScreen: const LoginScreen(),
-//       splashTransition: SplashTransition.fadeTransition,
-//       pageTransitionType: PageTransitionType.fade,
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -40,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _handleStartUpLogic(); // context 안전하게 사용 가능
+      _handleStartUpLogic();
     });
   }
 
@@ -57,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _handleStartUpLogic() async {
-    await Future.delayed(const Duration(seconds: 2)); // 로고 표시 시간
+    await Future.delayed(const Duration(seconds: 2));
 
     final prefs = await SharedPreferences.getInstance();
     final savedPlatform = prefs.getString('login_platform');

@@ -11,14 +11,14 @@ class ImagePreviewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100, // 원하는 높이로 조절
+      height: 100,
       width: double.infinity,
       child: image != null
           ? Image.file(
               File(image!.path),
               fit: BoxFit.cover,
             )
-          : const Placeholder(), // 대체 UI를 여기에 넣어주세요. 예를 들어 Placeholder 사용
+          : const Placeholder(),
     );
   }
 }

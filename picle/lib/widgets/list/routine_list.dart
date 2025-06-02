@@ -164,18 +164,11 @@ Future<void> addBottomModal({
                       ),
                     ),
                     const SizedBox(width: 10),
-                    if (destinationPicked == true) // 사용자의 위치가 등록된 경우
+                    if (destinationPicked == true)
                       const Icon(
                         Icons.check,
                         color: Color(0xFF54C29B),
                       ),
-                    // Text(
-                    //   '위도: ${routine.destinationLatitude.toStringAsFixed(4)}, 경도: ${routine.destinationLongitude.toStringAsFixed(4)}',
-                    //   style: const TextStyle(
-                    //     fontSize: 12,
-                    //     color: Colors.grey,
-                    //   ),
-                    // ),
                   ],
                 ),
               ),
@@ -684,11 +677,10 @@ Future<DateTime?> showTimePickerModal(BuildContext context) async {
                           MaterialStateProperty.all<Size>(const Size(140, 48)),
                       overlayColor: MaterialStateProperty.resolveWith<Color>(
                           (Set<MaterialState> states) {
-                        // Pressed 상태일 때의 overlay color 지정
                         if (states.contains(MaterialState.pressed)) {
                           return const Color.fromARGB(40, 84, 194, 106);
                         }
-                        // 기본 overlay color 지정
+
                         return Colors.transparent;
                       }),
                       elevation: const MaterialStatePropertyAll(0),
@@ -808,8 +800,6 @@ class _RenderAddDateState extends State<RenderAddDate> {
             timePicked = false;
             selectedTime = null;
             DateTime? pickedTime = await showTimePickerModal(context);
-
-            print(pickedTime);
 
             if (pickedTime != null) {
               setState(() {

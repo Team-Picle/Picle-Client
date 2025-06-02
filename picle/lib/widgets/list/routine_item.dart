@@ -144,14 +144,12 @@ class _RoutineItemState extends State<RoutineItem> {
                                                   'Error getting current location: $e');
                                               setState(() {
                                                 currentLocation = const LatLng(
-                                                    -37.545605,
-                                                    -126.963605); // 명신관으로 기본 위치 설정
+                                                    -37.545605, -126.963605);
                                               });
                                             }
                                             showDialog(
                                               context: context,
-                                              barrierDismissible:
-                                                  true, // 뒷배경을 터치하여 다이얼로그를 닫을 수 있도록 설정
+                                              barrierDismissible: true,
                                               builder: (BuildContext context) {
                                                 return CupertinoAlertDialog(
                                                   title: const Text(
@@ -183,14 +181,7 @@ class _RoutineItemState extends State<RoutineItem> {
                                                             });
                                                             Navigator.pop(
                                                                 context);
-                                                            // var publicId =
-                                                            //     await uploadImage(
-                                                            //   image,
-                                                            //   widget.routineId
-                                                            //       .toString(),
-                                                            // );
-                                                            // imgUrl =
-                                                            //     'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
+
                                                             print(
                                                                 '카메라: $imgUrl');
                                                           } catch (e) {
@@ -260,7 +251,7 @@ class _RoutineItemState extends State<RoutineItem> {
                                                   imgUrl =
                                                       'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
                                                 }
-                                                print("루틴 인증:  $imgUrl");
+
                                                 await provider.verifyRoutine(
                                                   userId: widget.userId,
                                                   routineId: widget.routineId,

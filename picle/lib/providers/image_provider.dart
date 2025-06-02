@@ -34,12 +34,10 @@ Future<String> uploadImage(XFile? imageFile, String imageName) async {
 
     final response = await request.send();
     if (response.statusCode == 200) {
-      // 업로드 성공
       final responseBody = await response.stream.bytesToString();
       final Map<String, dynamic> jsonResponse = json.decode(responseBody);
       return jsonResponse['public_id'].toString();
     } else {
-      // 업로드 실패
       print('Failed to upload image. Status code: ${response.statusCode}');
       return '';
     }

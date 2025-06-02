@@ -25,7 +25,6 @@ class _MyFeedItemState extends State<MyFeedItem> {
       children: [
         Card(
           color: Colors.white,
-          // margin: const EdgeInsets.all(13.0),
           child: Stack(
             children: [
               Column(
@@ -34,7 +33,6 @@ class _MyFeedItemState extends State<MyFeedItem> {
                   Image.network(
                     widget.imageUrl,
                     fit: BoxFit.cover,
-                    // width: 150,
                     height: 362,
                   ),
                 ],

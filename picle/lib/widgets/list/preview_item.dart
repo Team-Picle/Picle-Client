@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:picle/providers/date_provider.dart';
 import 'package:picle/providers/routine_provider.dart';
-import 'package:picle/widgets/date_picker.dart';
 import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/routine_time.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +17,6 @@ DateTime? nowTime;
 Set<String> selectedDays = {};
 DateTime selectedDate = DateTime.now();
 DateTime? selectedTime;
-// bool timePicked = false;
 bool destinationPicked = false;
 
 class PreviewItem extends StatelessWidget {
@@ -88,7 +86,6 @@ class PreviewItem extends StatelessWidget {
                       vertical: VisualDensity.minimumDensity,
                     ),
                     padding: EdgeInsets.zero,
-
                     onPressed: () async => showModalBottomSheet(
                       backgroundColor: Colors.white,
                       context: context,
@@ -164,45 +161,11 @@ class PreviewItem extends StatelessWidget {
                                                             ),
                                                           ),
                                                           const SizedBox(
-                                                              height: 10),
-                                                          // Row(
-                                                          //   crossAxisAlignment:
-                                                          //       CrossAxisAlignment
-                                                          //           .start,
-                                                          //   children: [
-                                                          //     const Text(
-                                                          //       '시작 날짜',
-                                                          //       style:
-                                                          //           TextStyle(
-                                                          //         fontWeight:
-                                                          //             FontWeight
-                                                          //                 .w600,
-                                                          //         fontSize: 16,
-                                                          //       ),
-                                                          //     ),
-                                                          //     const SizedBox(
-                                                          //         width: 16),
-                                                          //     Text(
-                                                          //       '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}',
-                                                          //       style:
-                                                          //           const TextStyle(
-                                                          //         fontWeight:
-                                                          //             FontWeight
-                                                          //                 .w500,
-                                                          //         fontSize: 16,
-                                                          //       ),
-                                                          //     ),
-                                                          //   ],
-                                                          // ),
-                                                          const SizedBox(
-                                                              height: 10),
+                                                              height: 20),
                                                           GestureDetector(
                                                             onTap: () async {
                                                               nowTime = null;
-                                                              // timePicked =
-                                                              //     time != null
-                                                              //         ? true
-                                                              //         : false;
+
                                                               DateFormat
                                                                   format =
                                                                   DateFormat(
@@ -337,17 +300,6 @@ class PreviewItem extends StatelessWidget {
                         },
                       ),
                     ),
-
-                    // onPressed: () async {
-                    //   await provider.finishRoutine(userId, routineId);
-                    // await provider.updatePreview(
-                    //   userId: userId,
-                    //   routineId: routineId,
-                    //   time: '14:30:00',
-                    //   repeatDays: ['TUESDAY', 'THURSDAY', 'FRIDAY'],
-                    //   date: date,
-                    // );
-                    // },
                     icon: const Icon(Icons.more_horiz),
                   ))
             ],
@@ -376,7 +328,7 @@ Future<DateTime?> showTimePickerModal(BuildContext context) async {
             SizedBox(
               height: bottomSheetHeight,
               child: GestureDetector(
-                onTap: () {}, // 모달창 바깥을 터치해도 닫히지 않도록 빈 GestureDetector 추가
+                onTap: () {},
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.time,
                   initialDateTime: null,
@@ -414,11 +366,10 @@ Future<DateTime?> showTimePickerModal(BuildContext context) async {
                           MaterialStateProperty.all<Size>(const Size(140, 48)),
                       overlayColor: MaterialStateProperty.resolveWith<Color>(
                           (Set<MaterialState> states) {
-                        // Pressed 상태일 때의 overlay color 지정
                         if (states.contains(MaterialState.pressed)) {
                           return const Color.fromARGB(40, 84, 194, 106);
                         }
-                        // 기본 overlay color 지정
+
                         return Colors.transparent;
                       }),
                       elevation: const MaterialStatePropertyAll(0),
@@ -433,10 +384,7 @@ Future<DateTime?> showTimePickerModal(BuildContext context) async {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      routine['time'] =
-                          '${selectedTime?.hour.toString().padLeft(2, '0')}:${selectedTime?.minute.toString().padLeft(2, '0')}';
                       Navigator.pop(context, selectedTime);
-                      // timePicked = true;
                       selectedTime = null;
                     },
                     style: ButtonStyle(
@@ -518,7 +466,6 @@ class _DayPickerState extends State<DayPicker> {
 
   @override
   Widget build(BuildContext context) {
-    print(isSelected);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
       child: Row(
