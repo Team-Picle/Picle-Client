@@ -1,4 +1,4 @@
-const serverEndpoint = '192.168.0.25:8080';
+const serverEndpoint = '192.168.0.18:8080';
 
 final apiPath = {
   'getTodos': (userId) => '/api/v1/todo/getByDate/$userId',
