@@ -4,8 +4,6 @@ import 'package:picle/providers/feed_provider.dart';
 import 'package:picle/widgets/list/my_feed_item.dart';
 import 'package:provider/provider.dart';
 
-final likeCounts = [0, 0, 0, 3, 2, 2, 1, 3, 1, 2];
-
 class MyFeeds extends StatelessWidget {
   const MyFeeds({super.key});
 
@@ -25,8 +23,7 @@ class MyFeeds extends StatelessWidget {
             return MyFeedItem(
               imageUrl: feed.verifiedImgUrl,
               date: feed.date,
-              profileImage: feed.profileImage,
-              likeCount: likeCounts[index % 10],
+              likeCount: feed.likeCount!,
             );
           },
         );

@@ -21,10 +21,11 @@ class AllFeeds extends StatelessWidget {
             Feed feed = allFeeds[index];
 
             return AllFeedItem(
+              routineId: feed.routineId,
               imageUrl: feed.verifiedImgUrl,
-              date: feed.date,
-              nickname: feed.nickname,
-              profileImage: feed.profileImage,
+              nickname: feed.nickname!,
+              profileImage: feed.profileImage!,
+              isLike: feed.isLike!,
             );
           },
         );

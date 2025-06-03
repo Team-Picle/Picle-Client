@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 class MyFeedItem extends StatefulWidget {
   final String imageUrl;
   final String? date;
-  final String profileImage;
   final int likeCount;
 
   const MyFeedItem({
     required this.imageUrl,
     required this.date,
-    required this.profileImage,
-    Key? key,
     required this.likeCount,
+    Key? key,
   }) : super(key: key);
 
   @override

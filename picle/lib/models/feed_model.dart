@@ -1,22 +1,28 @@
 class Feed {
   final int routineId;
-  final String profileImage;
-  final String nickname;
   final String verifiedImgUrl;
+  final String? profileImage;
+  final String? nickname;
   final String? date;
+  int? likeCount;
+  bool? isLike;
 
   Feed({
     required this.routineId,
-    required this.profileImage,
-    required this.nickname,
     required this.verifiedImgUrl,
-    required this.date,
+    this.profileImage,
+    this.nickname,
+    this.date,
+    this.likeCount,
+    this.isLike,
   });
 
   Feed.fromJson(Map<String, dynamic> json)
       : routineId = json['routineId'],
+        verifiedImgUrl = json['verifiedImgUrl'],
         profileImage = json['profileImage'],
         nickname = json['nickname'],
-        verifiedImgUrl = json['verifiedImgUrl'],
-        date = json['date'];
+        date = json['date'],
+        likeCount = json['likeCount'] as int?,
+        isLike = json['isLike'] as bool?;
 }

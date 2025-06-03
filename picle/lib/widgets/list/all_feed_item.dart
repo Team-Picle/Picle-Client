@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:picle/providers/feed_provider.dart';
+import 'package:picle/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class AllFeedItem extends StatefulWidget {
+  final int routineId;
   final String imageUrl;
-  final String? date;
   final String nickname;
   final String profileImage;
+  final bool isLike;
 
   const AllFeedItem({
+    required this.routineId,
     required this.imageUrl,
-    required this.date,
     required this.nickname,
     required this.profileImage,
+    required this.isLike,
     Key? key,
   }) : super(key: key);
 
@@ -19,8 +24,6 @@ class AllFeedItem extends StatefulWidget {
 }
 
 class _AllFeedItemState extends State<AllFeedItem> {
-  bool isLiked = false;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -59,13 +62,21 @@ class _AllFeedItemState extends State<AllFeedItem> {
                 bottom: 3.0,
                 child: IconButton(
                   onPressed: () {
-                    setState(() {
-                      isLiked = !isLiked;
-                    });
+                    final int userId = context.read<UserProvider>().userId;
+
+                    if (widget.isLike) {
+                      context
+                          .read<FeedProvider>()
+                          .unlike(userId: userId, routineId: widget.routineId);
+                    } else {
+                      context
+                          .read<FeedProvider>()
+                          .like(userId: userId, routineId: widget.routineId);
+                    }
                   },
                   icon: Icon(
-                    isLiked ? Icons.favorite : Icons.favorite_border,
-                    color: isLiked ? Colors.red : Colors.white,
+                    widget.isLike ? Icons.favorite : Icons.favorite_border,
+                    color: widget.isLike ? Colors.red : Colors.white,
                   ),
                 ),
               ),

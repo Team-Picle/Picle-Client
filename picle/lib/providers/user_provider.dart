@@ -15,6 +15,8 @@ class UserProvider extends ChangeNotifier {
     profileImage: '',
   );
 
+  int get userId => user.id;
+
   Future<void> registerUser({
     required clientKey,
     nickname,
