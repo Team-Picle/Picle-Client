@@ -42,7 +42,6 @@ showNotification({
     presentSound: true,
   );
 
-// 특정 시간 알림
   DateTime dateTime = DateTime.parse(date);
   notifications.zonedSchedule(
       id,

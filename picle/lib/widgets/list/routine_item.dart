@@ -13,14 +13,11 @@ import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/routine_time.dart';
 import 'package:provider/provider.dart';
 
-const longitude = '';
-const latitude = '';
 XFile? image;
 final picker = ImagePicker();
 const cloudName = 'dqhllkoz8';
 LatLng? currentLocation;
 String imgUrl = '';
-bool disabled = true;
 
 class RoutineItem extends StatefulWidget {
   final int userId;
@@ -242,10 +239,7 @@ class _RoutineItemState extends State<RoutineItem> {
                                             DefaultButton(
                                               onPressed: () async {
                                                 var publicId =
-                                                    await uploadImage(
-                                                  image,
-                                                  widget.routineId.toString(),
-                                                );
+                                                    await uploadImage(image);
 
                                                 if (image != null) {
                                                   imgUrl =
@@ -286,8 +280,6 @@ class _RoutineItemState extends State<RoutineItem> {
                             imgUrl = '';
                             currentLocation = null;
                           });
-                        } else {
-                          // 체크 해제 시 isChecked 업데이트
                         }
                       }),
                 ),

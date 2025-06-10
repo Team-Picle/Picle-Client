@@ -15,9 +15,7 @@ class RoutineProvider extends ChangeNotifier {
   bool isDisposed = false;
 
   RoutineProvider(userId) {
-    String today = DateTime.now() //
-        .toString()
-        .split(' ')[0];
+    String today = DateTime.now().toString().split(' ')[0];
     fetchList(
       userId: userId,
       date: today,

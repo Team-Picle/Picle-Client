@@ -34,8 +34,6 @@ bool destinationPicked = false;
 String destinationLongitude = '';
 String destinationLatitude = '';
 
-int routineId = 100;
-
 DateTime selectedDate = DateTime.now();
 String startRepeatDate =
     '${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}';
@@ -122,7 +120,6 @@ Future<void> addBottomModal({
     context: context,
     builder: (BuildContext context2) => StatefulBuilder(
       builder: (BuildContext context2, setState) {
-        // 화면 높이에 따라 조절
         double screenHeight = MediaQuery.of(context).size.height;
         double bottomSheetHeight = screenHeight * 0.35;
 
@@ -144,8 +141,7 @@ Future<void> addBottomModal({
                   await Navigator.push(
                     context2,
                     MaterialPageRoute(
-                      builder: (context2) =>
-                          const GoogleMapsWidget(), // GoogleMapsWidget으로 이동
+                      builder: (context2) => const GoogleMapsWidget(),
                     ),
                   );
                   setState(() {});
@@ -328,8 +324,7 @@ Future<void> addBottomModal({
                   const SizedBox(height: 30),
                   DefaultButton(
                     onPressed: () async {
-                      var publicId =
-                          await uploadImage(image, routineId.toString());
+                      var publicId = await uploadImage(image);
                       if (image != null) {
                         imgUrl =
                             'https://res.cloudinary.com/$cloudName/image/upload/$publicId.jpg';
@@ -471,7 +466,7 @@ class _GoogleMapsWidgetState extends State<GoogleMapsWidget> {
     } catch (e) {
       print('Error getting current location: $e');
       setState(() {
-        currentLocation = const LatLng(37.545605, 126.963605); // 명신관으로 기본 위치 설정
+        currentLocation = const LatLng(37.545605, 126.963605);
       });
     }
   }
@@ -497,12 +492,11 @@ class _DayPickerState extends State<DayPicker> {
           return GestureDetector(
             onTap: () {
               setState(() {
-                isSelected[index] = !isSelected[index]; // 버튼을 누를 때마다 선택 여부를 토글
+                isSelected[index] = !isSelected[index];
                 if (isSelected[index]) {
-                  selectedDays.add(getDayFullName(index)); // 선택된 경우, 리스트에 추가
+                  selectedDays.add(getDayFullName(index));
                 } else {
-                  selectedDays
-                      .remove(getDayFullName(index)); // 선택 해제된 경우, 리스트에서 제거
+                  selectedDays.remove(getDayFullName(index));
                 }
               });
             },
@@ -591,7 +585,7 @@ Future<DateTime?> showDatePickerModal(
             SizedBox(
               height: bottomSheetHeight,
               child: GestureDetector(
-                onTap: () {}, // 모달창 바깥을 터치해도 닫히지 않도록 빈 GestureDetector 추가
+                onTap: () {},
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.date,
                   initialDateTime: initialDate,
@@ -639,7 +633,7 @@ Future<DateTime?> showTimePickerModal(BuildContext context) async {
             SizedBox(
               height: bottomSheetHeight,
               child: GestureDetector(
-                onTap: () {}, // 모달창 바깥을 터치해도 닫히지 않도록 빈 GestureDetector 추가
+                onTap: () {},
                 child: CupertinoDatePicker(
                   mode: CupertinoDatePickerMode.time,
                   initialDateTime: null,

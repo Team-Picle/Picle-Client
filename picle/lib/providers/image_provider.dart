@@ -5,7 +5,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-Future<String> uploadImage(XFile? imageFile, String imageName) async {
+Future<String> uploadImage(XFile? imageFile) async {
   const cloudName = 'dqhllkoz8';
   const apiKey = '183691545148966';
   const apiSecret = 'm-LCpANScVbTD2mU3Y1fG_wWwaE';
@@ -21,7 +21,7 @@ Future<String> uploadImage(XFile? imageFile, String imageName) async {
       await http.MultipartFile.fromPath(
         'file',
         imageFile!.path,
-        filename: imageName,
+        filename: 'verification_image',
         contentType: MediaType('image', 'jpeg'),
       ),
     );
@@ -65,11 +65,9 @@ class GetImage extends StatelessWidget {
       imageUrl: imageUrl,
       width: width,
       height: height,
-      placeholder: (context, url) =>
-          const CircularProgressIndicator(), // 이미지 로딩 중에 표시될 위젯
-      errorWidget: (context, url, error) =>
-          const Icon(Icons.error), // 이미지 로딩 중 오류가 발생할 때 표시될 위젯
-      fit: BoxFit.cover, // 이미지를 적절한 크기로 맞추기 위해 사용됨
+      placeholder: (context, url) => const CircularProgressIndicator(),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
+      fit: BoxFit.cover,
     );
   }
 }

@@ -8,10 +8,6 @@ import 'package:picle/widgets/default_button.dart';
 import 'package:picle/widgets/routine_time.dart';
 import 'package:provider/provider.dart';
 
-const imgUrl = '';
-const longitude = '';
-const latitude = '';
-
 DateTime nowDate = DateTime.now();
 DateTime? nowTime;
 Set<String> selectedDays = {};
@@ -348,7 +344,6 @@ Future<DateTime?> showTimePickerModal(BuildContext context) async {
                       Navigator.pop(context);
                       nowTime = null;
                       selectedTime = null;
-                      // timePicked = false;
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -474,12 +469,11 @@ class _DayPickerState extends State<DayPicker> {
           return GestureDetector(
             onTap: () {
               setState(() {
-                isSelected[index] = !isSelected[index]; // 버튼을 누를 때마다 선택 여부를 토글
+                isSelected[index] = !isSelected[index];
                 if (isSelected[index]) {
-                  selectedDays.add(getDayFullName(index)); // 선택된 경우, 리스트에 추가
+                  selectedDays.add(getDayFullName(index));
                 } else {
-                  selectedDays
-                      .remove(getDayFullName(index)); // 선택 해제된 경우, 리스트에서 제거
+                  selectedDays.remove(getDayFullName(index));
                 }
               });
             },

@@ -16,11 +16,10 @@ final ButtonStyle buttonStyle = ButtonStyle(
       MaterialStateProperty.all<Size>(const Size(double.maxFinite, 48)),
   overlayColor:
       MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-    // Pressed 상태일 때의 overlay color를 지정합니다.
     if (states.contains(MaterialState.pressed)) {
       return const Color.fromARGB(40, 84, 194, 106);
     }
-    // 기본 overlay color를 지정합니다.
+
     return Colors.transparent;
   }),
   elevation: const MaterialStatePropertyAll(0),

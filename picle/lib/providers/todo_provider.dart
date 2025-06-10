@@ -12,9 +12,7 @@ class TodoProvider extends ChangeNotifier {
   TodoProvider(userId) {
     fetchTodoList(
       userId: userId,
-      date: DateTime.now() //
-          .toString()
-          .split(' ')[0],
+      date: DateTime.now().toString().split(' ')[0],
     );
   }
 
